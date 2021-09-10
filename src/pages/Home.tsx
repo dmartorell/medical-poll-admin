@@ -2,9 +2,9 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 
 const Home = () => (
-  <main>
-    <Box />
-  </main>
+  <Box as="main">
+    hello
+  </Box>
     );
 
 export default Home;
