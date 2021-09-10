@@ -1,33 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
- Stack, HStack, Box, Heading, Image, Button, Avatar,
+ Stack,
+ HStack,
+ Menu,
+ MenuButton,
+ MenuItem,
+ MenuList,
+ Box,
+ Heading,
+ Image,
+ Button,
+ Avatar,
 } from '@chakra-ui/react';
 import { BsBoxArrowRight } from 'react-icons/bs';
+import { BiChevronDown } from 'react-icons/bi';
+import { fetchProjectNames } from '../helpers/fetchDB';
 
-const NavBar = () => (
-  <Stack direction="row" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%">
-    <Box maxWidth="1400px" backgroundColor="white" w="100%" pt={6}>
-      <Stack direction="row" px="24px" justifyContent="space-between">
-        <HStack spacing={2} alignItems="center">
-          <Box boxSize="40px">
-            <Image
-              objectFit="cover"
-              src="src/assets/icons/alzeimer.png"
-              alt="logo"
-            />
-          </Box>
-          <Heading as="h1" size="lg" color="blue.700">Admin</Heading>
-        </HStack>
-        <HStack>
-          <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-          <Button colorScheme="facebook" size="sm" text variant="ghost" rightIcon={<BsBoxArrowRight />}>
-            Log Out
-          </Button>
-        </HStack>
-      </Stack>
-    </Box>
-  </Stack>
+const NavBar = () => {
+  const [projectNames, setProjectNames] = useState([]);
+  useEffect(() => {
+    fetchProjectNames().then((data: any) => setProjectNames(data));
+  }, []);
+
+  return (
+    <Stack direction="row" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%">
+      <Box maxWidth="1400px" backgroundColor="white" w="100%" pt={6}>
+        <Stack direction="row" px="24px" justifyContent="space-between">
+          <HStack spacing={2} alignItems="center">
+            <Box boxSize="40px">
+              <Image
+                objectFit="cover"
+                src="src/assets/icons/alzeimer.png"
+                alt="logo"
+              />
+            </Box>
+            <Heading as="h1" size="lg" color="blue.700">Admin</Heading>
+          </HStack>
+          <HStack>
+            <Menu>
+              <MenuButton size="sm" as={Button} rightIcon={<BiChevronDown />}>
+                Projects
+              </MenuButton>
+              <MenuList>
+                {
+                  projectNames.length
+                  && projectNames.map((project) => <MenuItem>{project.project_name}</MenuItem>)
+                }
+              </MenuList>
+            </Menu>
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Button colorScheme="facebook" size="sm" variant="ghost" rightIcon={<BsBoxArrowRight />}>
+              Log Out
+            </Button>
+          </HStack>
+        </Stack>
+      </Box>
+    </Stack>
 
     );
+ };
 
 export default NavBar;

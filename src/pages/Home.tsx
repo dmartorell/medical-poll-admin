@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 
 const Home = () => (
   <main>
-    <Box height="5000px" />
+    <Box />
   </main>
     );
 

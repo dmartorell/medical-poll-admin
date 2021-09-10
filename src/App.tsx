@@ -16,7 +16,6 @@ function App() {
         <Route exact path="/" component={Home}>
           <Redirect to="/home" />
         </Route>
-
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
