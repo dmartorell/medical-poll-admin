@@ -16,14 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { BiChevronDown } from 'react-icons/bi';
-import { iProjects } from '../interfaces/interfaces';
 import logo from '../assets/icons/logo.png';
+import { Projects } from '../types';
 
-type Props = {
-  projects: iProjects[] | null
-};
-
-const NavBar: FC<Props> = ({ projects }) => (
+const NavBar: FC<Projects> = ({ projects }) => (
   <Stack direction="row" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
     <Box maxWidth="1400px" backgroundColor="white" w="100%" pt={6}>
       <Stack direction="row" px="24px" justifyContent="space-between">
@@ -49,7 +45,7 @@ const NavBar: FC<Props> = ({ projects }) => (
                   projects?.map((project) => (
                     <Link
                       key={project.id}
-                      to={`/project/${project.id}`}
+                      to={`/project/${project.id}/${project.project_name}`}
                     >
                       <MenuItem>
                         {project.project_name}

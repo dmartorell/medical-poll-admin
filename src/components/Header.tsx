@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
-import { fetchProjectNames } from '../helpers/fetchDB';
+import React, { FC, useState, useEffect } from 'react';
 import NavBar from './NavBar';
+import { fetchProjectNames } from '../helpers/fetchDB';
 
-const Header = () => {
+const Header: FC = () => {
   const [projectNames, setProjectNames] = useState([]);
   useEffect(() => {
     fetchProjectNames()

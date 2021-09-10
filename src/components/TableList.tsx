@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
- Stack, Text, Table, Thead, Tr, Th, Td, Tbody, Tfoot, TableCaption,
+ Stack, Table, Thead, Tr, Th, Td, Tbody, Tfoot, TableCaption,
 } from '@chakra-ui/react';
+import { Projects } from '../types';
 
-const TableList = () => (
+const TableList: FC<Projects> = ({ projects }) => (
   <Stack spacing={8}>
-    <Text as="h2" fontSize="4xl" color="blue.700">Project TC</Text>
     <Table variant="simple">
       <TableCaption>Last Update: 23/12/2021</TableCaption>
       <Thead>
@@ -13,19 +13,33 @@ const TableList = () => (
           <Th
             fontWeight="900"
             size="2em"
+            backgroundColor="gray.100"
             _hover={
               {
                 cursor: 'pointer',
-                backgroundColor: 'gray.100',
-                borderRadius: 'md',
-                transition: 'all 350ms',
+                backgroundColor: 'gray.200',
+                transition: 'all 250ms',
               }
             }
           >
             Patient code
 
           </Th>
-          <Th>into</Th>
+          <Th
+            fontWeight="900"
+            size="2em"
+            backgroundColor="gray.100"
+            _hover={
+              {
+                cursor: 'pointer',
+                backgroundColor: 'gray.200',
+                transition: 'all 250ms',
+              }
+            }
+          >
+            into
+
+          </Th>
           <Th isNumeric>multiply by</Th>
         </Tr>
       </Thead>
