@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Patient from './pages/Patient';
 import Project from './pages/Project';
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
       <Switch>
         <Route exact path="/project/:id/:name">
           <Project />
+        </Route>
+        <Route exact path="/patient/:id/">
+          <Patient />
         </Route>
         <Route exact path="/home" component={Home} />
         <Route exact path="/" component={Home}>
