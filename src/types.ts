@@ -8,3 +8,16 @@ export interface iProjects {
     project_name: string,
     id: number
 }
+
+export type Surveys = {
+    surveys: iSurvey[]
+};
+
+export interface iSurvey {
+    date: string,
+    patientID: number,
+    project: {
+        project_name: string,
+        id: number
+    }
+}

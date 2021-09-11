@@ -2,21 +2,18 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Stack, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import TableList from '../components/TableList';
+import DefaultList from '../components/DefaultList';
 import { fetchDB } from '../helpers/fetchDB';
 import getSurveys from '../helpers/getSurveys';
 
 const Project: FC = () => {
   const { name, id } = (useParams<{name: string, id: string}>());
   const [surveys, setSurveys] = useState<any[]>([]);
-  const [lastUpdated, setLastUpdated] = useState<string>('');
 
   useEffect(() => {
     fetchDB('answer', `project=eq.${id}`, ['patientID', 'date', 'project(project_name, id)'])
       .then((data:any[]) => {
         setSurveys(getSurveys(data));
-        const [lastItem] = surveys.slice(-1);
-        console.log(new Date(lastItem.date).toLocaleString('es-SP', { timeZone: 'Europe/London' }));
       });
   }, [id]);
 
@@ -28,7 +25,7 @@ const Project: FC = () => {
           {' '}
           {name}
         </Text>
-        <TableList />
+        {surveys.length && <DefaultList surveys={surveys} />}
       </Stack>
     </Stack>
     );
