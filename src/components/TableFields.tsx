@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
-import { Th, Tr } from '@chakra-ui/react';
+import {
+ Th, Tr, Text, HStack,
+} from '@chakra-ui/react';
+import { TiArrowUnsorted } from 'react-icons/ti';
 
 type Props = {
   fields: string[]
@@ -26,7 +29,11 @@ const TableFields: FC<Props> = ({ fields }) => {
             }
           onClick={handleClick}
         >
-          {head.toUpperCase()}
+          <HStack>
+            <Text>{head.toUpperCase()}</Text>
+            <TiArrowUnsorted size="15px" />
+          </HStack>
+
         </Th>
       ))
     }
