@@ -9,11 +9,15 @@ import getSurveys from '../helpers/getSurveys';
 const Project: FC = () => {
   const { name, id } = (useParams<{name: string, id: string}>());
   const [surveys, setSurveys] = useState<any[]>([]);
-  console.log(surveys);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
 
   useEffect(() => {
     fetchDB('answer', `project=eq.${id}`, ['patientID', 'date', 'project(project_name, id)'])
-      .then((data:any[]) => setSurveys(getSurveys(data)));
+      .then((data:any[]) => {
+        setSurveys(getSurveys(data));
+        const [lastItem] = surveys.slice(-1);
+        console.log(new Date(lastItem.date).toLocaleString('es-SP', { timeZone: 'Europe/London' }));
+      });
   }, [id]);
 
   return (
