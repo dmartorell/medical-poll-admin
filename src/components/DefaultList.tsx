@@ -19,9 +19,9 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                   minute: '2-digit',
   });
   return (
-    <Stack spacing={8}>
+    <Stack>
       <Table variant="simple">
-        <TableCaption>
+        <TableCaption mt="-5px" mb={4} placement="top">
           Last Update:
           {' '}
           {formattedLastUpdateDate}
