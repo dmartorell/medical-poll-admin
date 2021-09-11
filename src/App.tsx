@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/project/:id">
+        <Route exact path="/project/:id/:name">
           <Project />
         </Route>
         <Route exact path="/home" component={Home} />

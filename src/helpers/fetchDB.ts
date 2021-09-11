@@ -11,9 +11,11 @@ export const fetchProjectNames = () : any => {
       }
 };
 
-export const fetchPatientId = (code : number) : any => {
+export const fetchDB = (table: string, filter: string = '', select: string[] = ['*']) : any => {
   try {
-    return fetch(`${apiUrl}/patient?id=eq.${code}`, { headers: { apiKey } });
+    return fetch(`${apiUrl}/${table}?${filter}&select=${[...select]}`, { headers: { apiKey } })
+    .then((res) => res.json())
+    .then((data) => data);
   } catch ({ message }) {
     return console.log(message);
   }

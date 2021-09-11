@@ -1,13 +1,37 @@
-import React from 'react';
-import { Stack } from '@chakra-ui/react';
+/* eslint-disable camelcase */
+import React, { FC, useState, useEffect } from 'react';
+import { Stack, Text } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 import TableList from '../components/TableList';
+import { fetchDB } from '../helpers/fetchDB';
+import getSurveys from '../helpers/getSurveys';
 
-const Project = () => (
-  <Stack as="main" direction="column" alignItems="center">
-    <Stack direction="column" maxWidth="1000px" w="100%">
-      <TableList />
+const Project: FC = () => {
+  const { name, id } = (useParams<{name: string, id: string}>());
+  const [surveys, setSurveys] = useState<any[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
+
+  useEffect(() => {
+    fetchDB('answer', `project=eq.${id}`, ['patientID', 'date', 'project(project_name, id)'])
+      .then((data:any[]) => {
+        setSurveys(getSurveys(data));
+        const [lastItem] = surveys.slice(-1);
+        console.log(new Date(lastItem.date).toLocaleString('es-SP', { timeZone: 'Europe/London' }));
+      });
+  }, [id]);
+
+  return (
+    <Stack as="main" direction="column" alignItems="center">
+      <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
+        <Text as="h2" fontSize="4xl" color="blue.700">
+          Project
+          {' '}
+          {name}
+        </Text>
+        <TableList />
+      </Stack>
     </Stack>
-  </Stack>
     );
+};
 
 export default Project;
