@@ -11,7 +11,7 @@ const Project: FC = () => {
   const [surveys, setSurveys] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchDB('answer', `project=eq.${id}`, ['patientID', 'date', 'project(project_name, id)'])
+    fetchDB('answer', `project=eq.${id}`, ['project(project_name, id)', 'patientID', 'date'])
       .then((data:any[]) => {
         setSurveys(getSurveys(data));
       });

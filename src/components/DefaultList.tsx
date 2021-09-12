@@ -8,6 +8,7 @@ import TableFields from './TableFields';
 
 const DefaultList: FC<Surveys> = ({ surveys }) => {
   const history = useHistory();
+  // const [resortedSurveys, setResortedSurveys] = useState<iSurvey[]>([...surveys]);
   const fields = Object.keys(surveys[0]);
   const [lastUpdateDate] = surveys.slice(-1);
   const formattedLastUpdateDate = new Date(lastUpdateDate.date)
@@ -18,6 +19,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                   hour: '2-digit',
                   minute: '2-digit',
   });
+
   return (
     <Stack>
       <Table variant="simple">
@@ -27,7 +29,9 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
           {formattedLastUpdateDate}
         </TableCaption>
         <Thead>
-          <TableFields fields={fields} />
+          <TableFields
+            fields={fields}
+          />
         </Thead>
         <Tbody>
           {
@@ -43,23 +47,36 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                 }
                   onClick={() => history.push(`/patient/${survey.patientID}/`)}
                 >
-                  <Td>
-                    {survey.patientID}
-                  </Td>
-                  <Td>
-                    {
-                        `${new Date(survey.date).toLocaleTimeString('sp-SP', {
-                          year: '2-digit',
-                          month: '2-digit',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          })} h`
-                    }
-                  </Td>
-                  <Td>
-                    {survey.project.project_name}
-                  </Td>
+                  {
+                    Object.keys(survey).map((property) => {
+                      if (property === 'date') {
+                        return (
+                          <Td key="">
+                            {
+                            `${new Date(survey.date).toLocaleTimeString('sp-SP', {
+                              year: '2-digit',
+                              month: '2-digit',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              })} h`
+                        }
+                          </Td>
+);
+                      } if (property === 'project') {
+                          return (
+                            <Td>
+                              {survey.project.project_name}
+                            </Td>
+);
+                      }
+                        return (
+                          <Td>
+                            {survey[property]}
+                          </Td>
+);
+})
+                  }
                 </Tr>
               ))
           }

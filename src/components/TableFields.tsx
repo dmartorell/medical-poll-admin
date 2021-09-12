@@ -5,7 +5,9 @@ import {
 import { TiArrowUnsorted } from 'react-icons/ti';
 
 type Props = {
-  fields: string[]
+  fields: string[],
+  // resortedSurveys: iSurvey[],
+  // setResortedSurveys: Dispatch<SetStateAction<iSurvey[]>>
 };
 const TableFields: FC<Props> = ({ fields }) => {
   const handleClick = () => {

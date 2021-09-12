@@ -11,13 +11,15 @@ export interface iProjects {
 
 export type Surveys = {
     surveys: iSurvey[]
+
 };
 
 export interface iSurvey {
+    [key: string]: string | number | object,
     date: string,
     patientID: number,
     project: {
         project_name: string,
         id: number
-    }
+    },
 }
