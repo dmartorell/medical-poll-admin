@@ -11,7 +11,7 @@ const Project: FC = () => {
   useEffect(() => {
     fetchDB('answer', undefined, ['patientID', 'project(project_name, id)', 'date'])
       .then((data:any[]) => {
-        setSurveys(getSurveys(data));
+        setSurveys(getSurveys(data).slice(0, 5));
       });
   }, []);
 
