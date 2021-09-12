@@ -24,7 +24,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
 
   return (
     <Stack>
-      <Table variant="simple">
+      <Table size="sm" variant="simple">
         <TableCaption mt="-5px" marginTop={4} placement="bottom">
           Last Update:
           {' '}
@@ -47,7 +47,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                     transition: 'all 250ms',
                   }
                 }
-                  onClick={() => history.push(`/patient/${survey.patientID}/`)}
+                  onClick={() => history.push(`/patient/${survey.patientID}/pro${survey.project.project_name}`)}
                 >
                   {
                     Object.keys(survey).map((property) => {
@@ -61,7 +61,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                               day: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit',
-                              })} h`
+                              })}h`
                         }
                           </Td>
 );

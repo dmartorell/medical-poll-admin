@@ -16,7 +16,7 @@ function App() {
         <Route exact path="/project/:id/:name">
           <Project />
         </Route>
-        <Route exact path="/patient/:id/">
+        <Route exact path="/patient/:id/pro:projectName">
           <Patient />
         </Route>
         <Route exact path="/home" component={Home} />
