@@ -11,14 +11,16 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
   // const [resortedSurveys, setResortedSurveys] = useState<iSurvey[]>([...surveys]);
   const fields = Object.keys(surveys[0]);
   const [lastUpdateDate] = surveys.slice(0, 1);
-  const formattedLastUpdateDate = new Date(lastUpdateDate.date)
+  const formattedLastUpdateDate = lastUpdateDate.date
+    ? new Date(lastUpdateDate.date)
               .toLocaleTimeString('sp-SP', {
                   year: 'numeric',
                   month: 'short',
                   day: 'numeric',
                   hour: '2-digit',
                   minute: '2-digit',
-  });
+  })
+  : 'unknown';
 
   return (
     <Stack>

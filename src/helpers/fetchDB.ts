@@ -19,8 +19,7 @@ export const fetchDB = (table: string, filter: string | undefined = '', select: 
     return fetch(`${apiUrl}/${table}?${filter}&select=${[...select]}`, { headers: { apiKey } })
     .then((res) => res.json())
     .then((data) => data
-    // sort by timeStamp
-        .sort((a: iSurvey, b: iSurvey) => toTimestamp(b.date) - toTimestamp(a.date)));
+      .sort((a: iSurvey, b: iSurvey) => toTimestamp(b.date) - toTimestamp(a.date)));
   } catch ({ message }) {
     return console.log(message);
   }

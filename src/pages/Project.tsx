@@ -13,6 +13,7 @@ const Project: FC = () => {
   useEffect(() => {
     fetchDB('answer', `project=eq.${id}`, ['patientID', 'project(project_name, id)', 'date'])
       .then((data:any[]) => {
+        console.log({ data });
         setSurveys(getSurveys(data));
       });
   }, [id]);
