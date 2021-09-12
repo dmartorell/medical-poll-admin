@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react';
 import { Surveys } from '../types';
 import TableFields from './TableFields';
+import toTimestamp from '../helpers/toTimestamp';
 
 const DefaultList: FC<Surveys> = ({ surveys }) => {
   const history = useHistory();
@@ -47,7 +48,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                     transition: 'all 250ms',
                   }
                 }
-                  onClick={() => history.push(`/patient/${survey.patientID}/pro${survey.project.project_name}`)}
+                  onClick={() => history.push(`/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`)}
                 >
                   {
                     Object.keys(survey).map((property) => {
