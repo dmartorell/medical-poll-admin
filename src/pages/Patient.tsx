@@ -48,6 +48,7 @@ const Patient: FC = () => {
                       minute: '2-digit',
 
   }))}
+              {' '}
               h
             </Text>
           </HStack>

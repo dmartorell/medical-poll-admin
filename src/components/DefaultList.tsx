@@ -32,6 +32,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
           Last Update:
           {' '}
           {formattedLastUpdateDate}
+          {' '}
           h
         </TableCaption>
         <Thead>
@@ -71,8 +72,10 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                               day: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit',
-                              })}h`
+                              })}`
                         }
+                            {' '}
+                            h
                           </Td>
 );
                       } if (property === 'project') {
