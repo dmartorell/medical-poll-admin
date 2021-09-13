@@ -43,8 +43,8 @@ const Patient: FC = () => {
               </Text>
             </HStack>
             <HStack alignItems="center" spacing={2}>
-              <Box color="gray.400"><IoMdTime size="15px" /></Box>
-              <Text as="h3" fontSize="sm" color="gray.400">
+              <Box color="gray.600"><IoMdTime size="15px" /></Box>
+              <Text as="h3" fontSize="sm" color="gray.600">
                 {(new Date(state.date).toLocaleDateString('sp-SP', { day: '2-digit', month: 'short', year: 'numeric' }))}
               </Text>
             </HStack>
