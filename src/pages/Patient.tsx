@@ -9,6 +9,7 @@ import TotalsList from '../components/TotalsList';
 import { fetchDB } from '../helpers/fetchDB';
 import getSurveys from '../helpers/getSurveys';
 import formatToDbDate from '../helpers/formatToDbDate';
+import NotFound from './NotFound';
 
 const Patient: FC = () => {
   const {
@@ -18,29 +19,33 @@ const Patient: FC = () => {
   const { state }:any = useLocation<unknown>();
   const [surveys, setSurveys] = useState<any[]>([]);
   useEffect(() => {
-    setSurveys([]);
-    fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['patientID', 'project(project_name, id)'])
-      .then((data:any[]) => {
-        setSurveys(getSurveys(data));
-      });
+    if (state) {
+      setSurveys([]);
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['patientID', 'project(project_name, id)'])
+        .then((data:any[]) => {
+          setSurveys(getSurveys(data));
+        });
+    }
   }, []);
   return (
-    <Stack as="main" direction="column" alignItems="center">
-      <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
-        <Stack spacing={0}>
-          <Text as="h4" fontSize="12px" color="gray.400">
-            {`PROJECT ${projectName}`}
-          </Text>
-          <HStack alignItems="center" spacing={2}>
-            <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
-            <Text as="h2" fontSize="2xl" color="blue.700">
-              {`Patient ${id}`}
+    state
+    ? (
+      <Stack as="main" direction="column" alignItems="center">
+        <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
+          <Stack spacing={0}>
+            <Text as="h4" fontSize="12px" color="gray.400">
+              {`PROJECT ${projectName}`}
             </Text>
-          </HStack>
-          <HStack alignItems="center" spacing={2}>
-            <Box color="gray.400"><IoMdTime size="15px" /></Box>
-            <Text as="h3" fontSize="sm" color="gray.400">
-              {(new Date(state.date).toLocaleTimeString('sp-SP', {
+            <HStack alignItems="center" spacing={2}>
+              <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
+              <Text as="h2" fontSize="2xl" color="blue.700">
+                {`Patient ${id}`}
+              </Text>
+            </HStack>
+            <HStack alignItems="center" spacing={2}>
+              <Box color="gray.400"><IoMdTime size="15px" /></Box>
+              <Text as="h3" fontSize="sm" color="gray.400">
+                {(new Date(state.date).toLocaleTimeString('sp-SP', {
                       year: '2-digit',
                       month: '2-digit',
                       day: 'numeric',
@@ -48,13 +53,13 @@ const Patient: FC = () => {
                       minute: '2-digit',
 
   }))}
-              {' '}
-              h
-            </Text>
-          </HStack>
+                {' '}
+                h
+              </Text>
+            </HStack>
 
-        </Stack>
-        {surveys.length
+          </Stack>
+          {surveys.length
         ? <TotalsList surveys={surveys} />
         : (
           <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
@@ -67,9 +72,11 @@ const Patient: FC = () => {
             />
           </Stack>
           )}
+        </Stack>
       </Stack>
-    </Stack>
-    );
+)
+    : <NotFound />
+);
  };
 
 export default Patient;

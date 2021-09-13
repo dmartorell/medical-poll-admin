@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import {
- Stack, Table, Thead, Tr, Td, Tbody, Tfoot,
+ Stack, Table, Thead, Tr, Td, Tbody,
 } from '@chakra-ui/react';
 import { Surveys } from '../types';
 import TableFields from './TableFields';
 
-const fields = ['HAD-A', 'HAD-D', 'HAD-Total'];
+const fields = ['had-a', 'had-d', 'dts-f', 'dts-g', 'had-total', 'dts-total'];
 
 const TotalsList: FC<Surveys> = ({ surveys }) => (
   <Stack>
@@ -21,12 +21,6 @@ const TotalsList: FC<Surveys> = ({ surveys }) => (
           <Td />
         </Tr>
       </Tbody>
-      <Tfoot>
-        <TableFields
-          fields={fields}
-          sortable={false}
-        />
-      </Tfoot>
     </Table>
   </Stack>
   );
