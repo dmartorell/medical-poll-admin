@@ -2,18 +2,24 @@ import {
  Stack, Text, Box, HStack, Spinner,
 } from '@chakra-ui/react';
 import React, { FC, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { RiFolderUserLine } from 'react-icons/ri';
-import DetailsList from '../components/DetailsList';
+import { IoMdTime } from 'react-icons/io';
+import TotalsList from '../components/TotalsList';
 import { fetchDB } from '../helpers/fetchDB';
 import getSurveys from '../helpers/getSurveys';
+import formatToDbDate from '../helpers/formatToDbDate';
 
 const Patient: FC = () => {
-  const { id, projectName } = (useParams<{id: string, projectName: string}>());
+  const {
+    id,
+    projectName,
+  } = (useParams<{id: string, projectName: string, date: string}>());
+  const { state }:any = useLocation<unknown>();
   const [surveys, setSurveys] = useState<any[]>([]);
   useEffect(() => {
     setSurveys([]);
-    fetchDB('answer', `patientID=eq.${id}&`, ['patientID', 'date', 'project(project_name, id)'])
+    fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['patientID', 'project(project_name, id)'])
       .then((data:any[]) => {
         setSurveys(getSurveys(data));
       });
@@ -22,18 +28,33 @@ const Patient: FC = () => {
     <Stack as="main" direction="column" alignItems="center">
       <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
         <Stack spacing={0}>
-          <Text as="h3" fontSize="0.9em" color="gray.400">
+          <Text as="h4" fontSize="12px" color="gray.400">
             {`PROJECT ${projectName}`}
           </Text>
           <HStack alignItems="center" spacing={2}>
-            <Box color="blue.700"><RiFolderUserLine size="30px" /></Box>
-            <Text as="h2" fontSize="3xl" color="blue.700">
+            <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
+            <Text as="h2" fontSize="2xl" color="blue.700">
               {`Patient ${id}`}
             </Text>
           </HStack>
+          <HStack alignItems="center" spacing={2}>
+            <Box color="gray.400"><IoMdTime size="15px" /></Box>
+            <Text as="h3" fontSize="sm" color="gray.400">
+              {(new Date(state.date).toLocaleTimeString('sp-SP', {
+                      year: '2-digit',
+                      month: '2-digit',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+
+  }))}
+              h
+            </Text>
+          </HStack>
+
         </Stack>
         {surveys.length
-        ? <DetailsList surveys={surveys} />
+        ? <TotalsList surveys={surveys} />
         : (
           <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
             <Spinner

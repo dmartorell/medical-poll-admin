@@ -20,6 +20,8 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                   day: 'numeric',
                   hour: '2-digit',
                   minute: '2-digit',
+                  second: '2-digit',
+
   })
   : 'unknown';
 
@@ -30,10 +32,12 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
           Last Update:
           {' '}
           {formattedLastUpdateDate}
+          h
         </TableCaption>
         <Thead>
           <TableFields
             fields={fields}
+            sortable
           />
         </Thead>
         <Tbody>
@@ -48,7 +52,12 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                     transition: 'all 250ms',
                   }
                 }
-                  onClick={() => history.push(`/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`)}
+                  onClick={() => {
+                    history.push({
+                      pathname: `/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`,
+                      state: { date: survey.date },
+                  });
+ }}
                 >
                   {
                     Object.keys(survey).map((property) => {
@@ -85,7 +94,10 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
           }
         </Tbody>
         <Tfoot>
-          <TableFields fields={fields} />
+          <TableFields
+            fields={fields}
+            sortable
+          />
         </Tfoot>
       </Table>
     </Stack>
