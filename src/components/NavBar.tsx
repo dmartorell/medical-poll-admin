@@ -32,7 +32,7 @@ const NavBar: FC<Projects> = ({ projects }) => (
                 alt="logo"
               />
             </Box>
-            <Heading as="h1" size="lg" color="blue.700">Admin</Heading>
+            <Heading as="h1" fontWeight="thin" size="lg" color="blue.700">Admin</Heading>
           </HStack>
         </Link>
         <HStack>

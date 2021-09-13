@@ -5,32 +5,39 @@ import {
 } from '@chakra-ui/react';
 import { Surveys } from '../types';
 import TableFields from './TableFields';
+import toTimestamp from '../helpers/toTimestamp';
 
 const DefaultList: FC<Surveys> = ({ surveys }) => {
   const history = useHistory();
   // const [resortedSurveys, setResortedSurveys] = useState<iSurvey[]>([...surveys]);
   const fields = Object.keys(surveys[0]);
   const [lastUpdateDate] = surveys.slice(0, 1);
-  const formattedLastUpdateDate = new Date(lastUpdateDate.date)
+  const formattedLastUpdateDate = lastUpdateDate.date
+    ? new Date(lastUpdateDate.date)
               .toLocaleTimeString('sp-SP', {
                   year: 'numeric',
                   month: 'short',
                   day: 'numeric',
                   hour: '2-digit',
                   minute: '2-digit',
-  });
+                  second: '2-digit',
+
+  })
+  : 'unknown';
 
   return (
     <Stack>
-      <Table variant="simple">
+      <Table size="sm" variant="simple">
         <TableCaption mt="-5px" marginTop={4} placement="bottom">
           Last Update:
           {' '}
           {formattedLastUpdateDate}
+          h
         </TableCaption>
         <Thead>
           <TableFields
             fields={fields}
+            sortable
           />
         </Thead>
         <Tbody>
@@ -45,7 +52,12 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                     transition: 'all 250ms',
                   }
                 }
-                  onClick={() => history.push(`/patient/${survey.patientID}/`)}
+                  onClick={() => {
+                    history.push({
+                      pathname: `/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`,
+                      state: { date: survey.date },
+                  });
+ }}
                 >
                   {
                     Object.keys(survey).map((property) => {
@@ -59,7 +71,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                               day: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit',
-                              })} h`
+                              })}h`
                         }
                           </Td>
 );
@@ -82,7 +94,10 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
           }
         </Tbody>
         <Tfoot>
-          <TableFields fields={fields} />
+          <TableFields
+            fields={fields}
+            sortable
+          />
         </Tfoot>
       </Table>
     </Stack>

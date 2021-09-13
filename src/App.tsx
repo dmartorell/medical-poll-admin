@@ -13,10 +13,11 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
+        {/* poner un context onc el patient id a esta altura */}
         <Route exact path="/project/:id/:name">
           <Project />
         </Route>
-        <Route exact path="/patient/:id/">
+        <Route exact path="/patient/:id/pro:projectName/ts:timestamp">
           <Patient />
         </Route>
         <Route exact path="/home" component={Home} />

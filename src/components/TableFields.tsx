@@ -6,10 +6,11 @@ import { TiArrowUnsorted } from 'react-icons/ti';
 
 type Props = {
   fields: string[],
+  sortable: boolean,
   // resortedSurveys: iSurvey[],
   // setResortedSurveys: Dispatch<SetStateAction<iSurvey[]>>
 };
-const TableFields: FC<Props> = ({ fields }) => {
+const TableFields: FC<Props> = ({ fields, sortable }) => {
   const handleClick = () => {
   };
   return (
@@ -22,20 +23,19 @@ const TableFields: FC<Props> = ({ fields }) => {
           size="2em"
           backgroundColor="blue.800"
           color="white"
-          _hover={
-              {
+          _hover={sortable
+              ? {
                 cursor: 'pointer',
                 backgroundColor: 'blue.600',
                 transition: 'all 250ms',
               }
-            }
+              : {}}
           onClick={handleClick}
         >
           <HStack>
             <Text>{head.toUpperCase()}</Text>
-            <TiArrowUnsorted size="15px" />
+            {sortable ? <TiArrowUnsorted size="15px" /> : null}
           </HStack>
-
         </Th>
       ))
     }
