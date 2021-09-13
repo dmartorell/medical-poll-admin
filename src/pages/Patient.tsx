@@ -33,10 +33,10 @@ const Patient: FC = () => {
       <Stack as="main" direction="column" alignItems="center">
         <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
           <Stack spacing={0}>
-            <Text as="h4" fontSize="12px" color="gray.400">
+            <Text as="h4" fontSize="sm" color="gray.400">
               {`PROJECT ${projectName}`}
             </Text>
-            <HStack alignItems="center" spacing={2}>
+            <HStack alignItems="center" spacing={2} pt={3}>
               <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
               <Text as="h2" fontSize="2xl" color="blue.700">
                 {`Patient ${id}`}
@@ -45,16 +45,7 @@ const Patient: FC = () => {
             <HStack alignItems="center" spacing={2}>
               <Box color="gray.400"><IoMdTime size="15px" /></Box>
               <Text as="h3" fontSize="sm" color="gray.400">
-                {(new Date(state.date).toLocaleTimeString('sp-SP', {
-                      year: '2-digit',
-                      month: '2-digit',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-
-  }))}
-                {' '}
-                h
+                {(new Date(state.date).toLocaleDateString('sp-SP', { day: '2-digit', month: 'short', year: 'numeric' }))}
               </Text>
             </HStack>
 
