@@ -17,14 +17,13 @@ export type Surveys = {
 
 export type HadsDtsTotals = {
     data: {
-        hadASum: number,
-        hadDSum: number,
-        dtsFSum: number,
-        dtsGSum: number,
-        dtsTotal: number,
-        date: string
+        [key: string]: number,
+        'had-a': number,
+        'had-d': number,
+        'dts-f': number,
+        'dts-g': number,
+        'dts-total': number,
     },
-    fields: string[],
 };
 
 export interface iSurvey {

@@ -59,11 +59,11 @@ const Patient: FC = () => {
 
       setMainResults(
         {
-          hadASum,
-          hadDSum,
-          dtsFSum,
-          dtsGSum,
-          dtsTotal: dtsFSum + dtsGSum,
+          'had-a': hadASum,
+          'had-d': hadDSum,
+          'dts-f': dtsFSum,
+          'dts-g': dtsGSum,
+          'dts-total': dtsFSum + dtsGSum,
         },
       );
     }
@@ -97,7 +97,6 @@ const Patient: FC = () => {
         ? (
           <TotalsList
             data={mainResults}
-            fields={['had-a', 'had-d', 'dts-f', 'dts-g', 'had-total', 'dts-total']}
           />
 )
         : (
