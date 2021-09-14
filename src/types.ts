@@ -11,6 +11,7 @@ export interface iProjects {
 
 export type Surveys = {
     surveys: iSurvey[]
+    fields?: string[]
 
 };
 
