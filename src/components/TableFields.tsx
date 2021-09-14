@@ -5,7 +5,7 @@ import {
 import { TiArrowUnsorted } from 'react-icons/ti';
 
 type Props = {
-  fields: string[],
+  fields: string[] | undefined,
   sortable: boolean,
   // resortedSurveys: iSurvey[],
   // setResortedSurveys: Dispatch<SetStateAction<iSurvey[]>>

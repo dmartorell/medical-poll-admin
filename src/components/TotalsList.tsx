@@ -5,9 +5,7 @@ import {
 import { Surveys } from '../types';
 import TableFields from './TableFields';
 
-const fields = ['had-a', 'had-d', 'dts-f', 'dts-g', 'had-total', 'dts-total'];
-
-const TotalsList: FC<Surveys> = ({ surveys }) => (
+const TotalsList: FC<Surveys> = ({ surveys, fields }) => (
   <Stack>
     <Table size="sm" variant="simple">
       <Thead>

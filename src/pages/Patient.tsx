@@ -7,29 +7,59 @@ import { RiFolderUserLine } from 'react-icons/ri';
 import { IoMdTime } from 'react-icons/io';
 import TotalsList from '../components/TotalsList';
 import { fetchDB } from '../helpers/fetchDB';
-import getSurveys from '../helpers/getSurveys';
 import formatToDbDate from '../helpers/formatToDbDate';
 import NotFound from './NotFound';
+import getSingleSum from '../helpers/getSingleSum';
 
 const Patient: FC = () => {
   const {
     id,
     projectName,
   } = (useParams<{id: string, projectName: string, date: string}>());
-  const { state }:any = useLocation<unknown>();
-  const [surveys, setSurveys] = useState<any[]>([]);
-  console.log(surveys);
+  const { state: patientState }:any = useLocation<unknown>();
+  const [hadA, setHadA] = useState<any[]>([]);
+  const [hadD, setHadD] = useState<any[]>([]);
+  const [dts, setDts] = useState<any[]>([]);
+  const [mainResults, setMainResults] = useState<any[]>([]);
+
+  const resetValues = () => {
+    setHadA([]);
+    setHadD([]);
+    setDts([]);
+  };
+  console.log({ hadA });
+  console.log({ hadD });
+  console.log({ dts });
+
   useEffect(() => {
-    if (state) {
-      setSurveys([]);
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['answer'])
+    if (patientState) {
+      resetValues();
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-a`, ['questionID', 'answer'])
         .then((data:any[]) => {
-          setSurveys(data);
+          setHadA(data);
+        });
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-d`, ['questionID', 'answer'])
+        .then((data:any[]) => {
+          setHadD(data);
+        });
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.dts`, ['questionID', 'answer'])
+        .then((data:any[]) => {
+          setDts(data);
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (patientState) {
+      setMainResults(
+        {
+          hadA: getSingleSum(),
+        },
+      );
+    }
+  }, []);
   return (
-    state
+    patientState
     ? (
       <Stack as="main" direction="column" alignItems="center">
         <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
@@ -46,15 +76,20 @@ const Patient: FC = () => {
             <HStack alignItems="center" spacing={2}>
               <Box color="gray.600"><IoMdTime size="15px" /></Box>
               <Text as="h3" fontSize="sm" color="gray.600">
-                {(new Date(state.date).toLocaleDateString('sp-SP', {
+                {(new Date(patientState.date).toLocaleDateString('sp-SP', {
  day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
 }))}
               </Text>
             </HStack>
 
           </Stack>
-          {surveys.length
-        ? <TotalsList surveys={surveys} />
+          {hadA.length
+        ? (
+          <TotalsList
+            surveys={hadA}
+            fields={['had-a', 'had-d', 'dts-f', 'dts-g', 'had-total', 'dts-total']}
+          />
+)
         : (
           <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
             <Spinner
