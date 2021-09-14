@@ -10,6 +10,7 @@ import { fetchDB } from '../helpers/fetchDB';
 import formatToDbDate from '../helpers/formatToDbDate';
 import NotFound from './NotFound';
 import getSingleSum from '../helpers/getSingleSum';
+import getDobleSum from '../helpers/getDobleSum';
 
 const Patient: FC = () => {
   const {
@@ -20,16 +21,17 @@ const Patient: FC = () => {
   const [hadA, setHadA] = useState<any[]>([]);
   const [hadD, setHadD] = useState<any[]>([]);
   const [dts, setDts] = useState<any[]>([]);
-  const [mainResults, setMainResults] = useState<any[]>([]);
+  const [mainResults, setMainResults] = useState<any>([]);
 
   const resetValues = () => {
     setHadA([]);
     setHadD([]);
     setDts([]);
   };
-  console.log({ hadA });
-  console.log({ hadD });
-  console.log({ dts });
+  // console.log({ hadA });
+  // console.log({ hadD });
+  // console.log({ dts });
+  console.log({ mainResults });
 
   useEffect(() => {
     if (patientState) {
@@ -51,13 +53,21 @@ const Patient: FC = () => {
 
   useEffect(() => {
     if (patientState) {
+      const { dtsFSum, dtsGSum } = getDobleSum(dts, 'dtsFSum', 'dtsGSum');
+      const hadASum = getSingleSum(hadA);
+      const hadDSum = getSingleSum(hadD);
+
       setMainResults(
         {
-          hadA: getSingleSum(),
+          hadASum,
+          hadDSum,
+          dtsFSum,
+          dtsGSum,
+          dtsTotal: dtsFSum + dtsGSum,
         },
       );
     }
-  }, []);
+  }, [hadA, hadD, dts]);
   return (
     patientState
     ? (
@@ -86,7 +96,7 @@ const Patient: FC = () => {
           {hadA.length
         ? (
           <TotalsList
-            surveys={hadA}
+            data={mainResults}
             fields={['had-a', 'had-d', 'dts-f', 'dts-g', 'had-total', 'dts-total']}
           />
 )

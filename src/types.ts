@@ -15,6 +15,18 @@ export type Surveys = {
 
 };
 
+export type HadsDtsTotals = {
+    data: {
+        hadASum: number,
+        hadDSum: number,
+        dtsFSum: number,
+        dtsGSum: number,
+        dtsTotal: number,
+        date: string
+    },
+    fields: string[],
+};
+
 export interface iSurvey {
     [key: string]: string | number | object,
     date: string,
