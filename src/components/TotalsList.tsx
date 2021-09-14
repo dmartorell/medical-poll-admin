@@ -45,6 +45,8 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
               return (
 
                 <Td
+                  borderWidth="1px"
+                  borderColor="white"
                   isNumeric
                   backgroundColor={
                     field.includes('had')

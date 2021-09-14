@@ -15,7 +15,7 @@ const TableFields: FC<Props> = ({ fields, sortable, isNumeric = false }) => {
   const handleClick = () => {
   };
   return (
-    <Tr>
+    <Tr border="1px" borderColor="white">
       {
       fields?.map((head: string) => (
         <Th
