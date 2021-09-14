@@ -14,6 +14,15 @@ const getHADBackgroundColor = (number: number) => {
   }
   return color;
 };
+const getDTSBackgroundColor = (number: number) => {
+  let color = 'red.400';
+  if (number >= 0 && number <= 26) {
+    color = 'green.400';
+  } else if (number >= 27 && number <= 54) {
+    color = 'yellow.400';
+  }
+  return color;
+};
 
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);
@@ -34,19 +43,21 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
             fields.map((field) => {
               const currentValue = data[field];
               return (
-                currentValue > 1 && currentValue < 4
-                && (
+
                 <Td
-                  backgroundColor={getHADBackgroundColor(currentValue)}
+                  backgroundColor={
+                    field.includes('had')
+                    ? getHADBackgroundColor(currentValue)
+                  : getDTSBackgroundColor(currentValue)
+}
                   color="white"
                   fontWeight="normal"
+                  margin={5}
                 >
                   {currentValue}
                 </Td>
-)
-
-            );
- })
+);
+})
             }
           </Tr>
         </Tbody>
