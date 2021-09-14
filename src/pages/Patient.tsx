@@ -18,12 +18,13 @@ const Patient: FC = () => {
   } = (useParams<{id: string, projectName: string, date: string}>());
   const { state }:any = useLocation<unknown>();
   const [surveys, setSurveys] = useState<any[]>([]);
+  console.log(surveys);
   useEffect(() => {
     if (state) {
       setSurveys([]);
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['patientID', 'project(project_name, id)'])
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(state.date)}`, ['answer'])
         .then((data:any[]) => {
-          setSurveys(getSurveys(data));
+          setSurveys(data);
         });
     }
   }, []);
@@ -45,7 +46,9 @@ const Patient: FC = () => {
             <HStack alignItems="center" spacing={2}>
               <Box color="gray.600"><IoMdTime size="15px" /></Box>
               <Text as="h3" fontSize="sm" color="gray.600">
-                {(new Date(state.date).toLocaleDateString('sp-SP', { day: '2-digit', month: 'short', year: 'numeric' }))}
+                {(new Date(state.date).toLocaleDateString('sp-SP', {
+ day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+}))}
               </Text>
             </HStack>
 

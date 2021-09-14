@@ -10,7 +10,7 @@ const Project: FC = () => {
 
   useEffect(() => {
     setSurveys([]);
-    fetchDB('answer', undefined, ['patientID', 'project(project_name, id)', 'date'])
+    fetchDB('answer', undefined, ['patientID', 'project(project_name, id)', 'date'], 'order=date.desc')
       .then((data:any[]) => {
         setSurveys(getSurveys(data).slice(0, 5));
       });
