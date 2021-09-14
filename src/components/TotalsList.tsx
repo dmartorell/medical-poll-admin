@@ -27,7 +27,6 @@ const getDTSBackgroundColor = (number: number) => {
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);
 
-  console.log(fields);
   return (
     <Stack>
       <Table size="sm" variant="simple">
@@ -35,6 +34,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
           <TableFields
             fields={fields}
             sortable={false}
+            isNumeric
           />
         </Thead>
         <Tbody>
@@ -45,14 +45,15 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
               return (
 
                 <Td
+                  isNumeric
                   backgroundColor={
                     field.includes('had')
                     ? getHADBackgroundColor(currentValue)
                   : getDTSBackgroundColor(currentValue)
 }
                   color="white"
-                  fontWeight="normal"
-                  margin={5}
+                  fontWeight="bold"
+                  fontSize="md"
                 >
                   {currentValue}
                 </Td>

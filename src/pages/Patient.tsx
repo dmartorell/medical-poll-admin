@@ -31,7 +31,7 @@ const Patient: FC = () => {
   // console.log({ hadA });
   // console.log({ hadD });
   // console.log({ dts });
-  console.log({ mainResults });
+  // console.log({ mainResults });
 
   useEffect(() => {
     if (patientState) {

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { FC } from 'react';
 import {
  Th, Tr, Text, HStack,
@@ -7,10 +8,10 @@ import { TiArrowUnsorted } from 'react-icons/ti';
 type Props = {
   fields: string[] | undefined,
   sortable: boolean,
-  // resortedSurveys: iSurvey[],
-  // setResortedSurveys: Dispatch<SetStateAction<iSurvey[]>>
+  isNumeric?: boolean
 };
-const TableFields: FC<Props> = ({ fields, sortable }) => {
+
+const TableFields: FC<Props> = ({ fields, sortable, isNumeric = false }) => {
   const handleClick = () => {
   };
   return (
@@ -32,7 +33,7 @@ const TableFields: FC<Props> = ({ fields, sortable }) => {
               : {}}
           onClick={handleClick}
         >
-          <HStack>
+          <HStack justifyContent={isNumeric ? 'flex-end' : ''}>
             <Text>{head.toUpperCase()}</Text>
             {sortable ? <TiArrowUnsorted size="15px" /> : null}
           </HStack>
