@@ -61,6 +61,7 @@ const Patient: FC = () => {
         {
           'had-a': hadASum,
           'had-d': hadDSum,
+          'had-total': hadASum + hadDSum,
           'dts-f': dtsFSum,
           'dts-g': dtsGSum,
           'dts-total': dtsFSum + dtsGSum,

@@ -6,18 +6,18 @@ import { HadsDtsTotals } from '../types';
 import TableFields from './TableFields';
 
 const getHADBackgroundColor = (number: number) => {
-  let color = 'red.400';
+  let color = 'red.500';
   if (number >= 0 && number <= 7) {
-    color = 'green.400';
+    color = 'green.500';
   } else if (number >= 8 && number <= 10) {
     color = 'yellow.400';
   }
   return color;
 };
-const getDTSBackgroundColor = (number: number) => {
-  let color = 'red.400';
+const getTotalDTSBackgroundColor = (number: number) => {
+  let color = 'red.500';
   if (number >= 0 && number <= 26) {
-    color = 'green.400';
+    color = 'green.500';
   } else if (number >= 27 && number <= 54) {
     color = 'yellow.400';
   }
@@ -49,13 +49,23 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
                   borderColor="white"
                   isNumeric
                   backgroundColor={
+                    // eslint-disable-next-line no-nested-ternary
                     field.includes('had')
+                    && !field.includes('total')
                     ? getHADBackgroundColor(currentValue)
-                  : getDTSBackgroundColor(currentValue)
+                  : field === 'dts-total'
+                  ? getTotalDTSBackgroundColor(currentValue)
+                  : 'inherit'
 }
-                  color="white"
+                  color={
+                    field.includes('f')
+                    || field.includes('g')
+                    || field === 'had-total'
+                    ? 'black'
+                    : 'white'
+
+                  }
                   fontWeight="bold"
-                  fontSize="md"
                 >
                   {currentValue}
                 </Td>
