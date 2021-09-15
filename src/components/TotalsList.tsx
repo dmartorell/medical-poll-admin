@@ -24,6 +24,8 @@ const getTotalDTSBackgroundColor = (number: number) => {
   return color;
 };
 
+const handleClick = () => { console.log('clicked'); };
+
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);
 
@@ -38,7 +40,16 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
           />
         </Thead>
         <Tbody>
-          <Tr>
+          <Tr
+            filter="saturate(125%)"
+            _hover={
+            {
+              cursor: 'pointer',
+              transition: 'all 100ms',
+            }
+          }
+            onClick={handleClick}
+          >
             {
             fields.map((field) => {
               const currentValue = data[field];
@@ -55,7 +66,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
                     ? getHADBackgroundColor(currentValue)
                   : field === 'dts-total'
                   ? getTotalDTSBackgroundColor(currentValue)
-                  : 'inherit'
+                  : 'gray.100'
 }
                   color={
                     field.includes('f')
@@ -65,7 +76,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
                     : 'white'
 
                   }
-                  fontWeight="bold"
+                  fontWeight="500"
                 >
                   {currentValue}
                 </Td>
