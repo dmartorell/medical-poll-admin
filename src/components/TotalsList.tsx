@@ -4,26 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { HadsDtsTotals } from '../types';
 import TableFields from './TableFields';
-
-const getHADBackgroundColor = (number: number) => {
-  let color = 'red.500';
-  if (number >= 0 && number <= 7) {
-    color = 'green.500';
-  } else if (number >= 8 && number <= 10) {
-    color = 'yellow.400';
-  }
-  return color;
-};
-const getTotalDTSBackgroundColor = (number: number) => {
-  let color = 'red.500';
-  if (number >= 0 && number <= 26) {
-    color = 'green.500';
-  } else if (number >= 27 && number <= 54) {
-    color = 'yellow.400';
-  }
-  return color;
-};
-
+import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
 // const handleClick = () => { console.log('clicked'); };
 
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
@@ -40,14 +21,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
         </Thead>
         <Tbody>
           <Tr
-            filter="saturate(120%)"
-          //   _hover={
-          //   {
-          //     cursor: 'pointer',
-          //     transition: 'all 100ms',
-          //   }
-          // }
-          //   onClick={handleClick}
+            filter="saturate(110%)"
           >
             {
             fields.map((field) => {

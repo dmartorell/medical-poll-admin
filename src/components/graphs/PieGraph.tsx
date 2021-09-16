@@ -2,9 +2,11 @@ import React, { FC } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 
 type Props = {
-  data: any[]
+  data: any[],
+  colors: string[],
 };
-const BarGraph: FC<Props> = ({ data }) => (
+
+const BarGraph: FC<Props> = ({ data, colors }) => (
   <ResponsiveBar
     data={data}
     keys={['HAD-A', 'HAD-D']}
@@ -13,9 +15,31 @@ const BarGraph: FC<Props> = ({ data }) => (
       top: 50, right: 130, bottom: 50, left: 60,
     }}
     padding={0.4}
+    maxValue={42}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={['#e53e3e', '#38a169', '#f3c823']}
+    colors={colors}
+    defs={[
+      {
+          id: 'lines',
+          type: 'patternLines',
+          background: (colors[0] === colors[1] ? `${colors[0]}f3` : 'inherit'),
+          color: colors[1],
+          rotation: -45,
+          lineWidth: 6,
+          spacing: 11,
+
+      },
+  ]}
+    fill={[
+      {
+          match: {
+              id: 'HAD-D',
+          },
+          id: 'lines',
+      },
+  ]}
+    borderWidth={1}
     borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
     axisTop={null}
     axisRight={null}

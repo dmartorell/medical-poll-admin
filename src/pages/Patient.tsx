@@ -13,14 +13,7 @@ import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
 import PieGraph from '../components/graphs/PieGraph';
-
-const barData = [
-  {
-    HADS: '',
-    'HAD-A': 14,
-    'HAD-D': 7,
-  },
-];
+import { getHADBackgroundColor } from '../helpers/getColors';
 
 const Patient: FC = () => {
   const {
@@ -33,6 +26,17 @@ const Patient: FC = () => {
   const [dts, setDts] = useState<any[]>([]);
   const [mainResults, setMainResults] = useState<any>([]);
   const [details, setDetails] = useState<any>([]);
+
+  const hadsBarData = [
+    {
+      HADS: '',
+      'HAD-A': mainResults['had-a'],
+      'HAD-D': mainResults['had-d'],
+    },
+  ];
+  const hadsBarColors = [
+    getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
+  ];
 
   const resetValues = () => {
     setHadA([]);
@@ -109,7 +113,7 @@ const Patient: FC = () => {
         ? (
           <>
             <HStack justifyContent="center" w="100%" h="400px">
-              <PieGraph data={barData} />
+              <PieGraph data={hadsBarData} colors={hadsBarColors} />
             </HStack>
             <TotalsList
               data={mainResults}
