@@ -12,6 +12,15 @@ import NotFound from './NotFound';
 import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
+import PieGraph from '../components/graphs/PieGraph';
+
+const barData = [
+  {
+    HADS: '',
+    'HAD-A': 14,
+    'HAD-D': 7,
+  },
+];
 
 const Patient: FC = () => {
   const {
@@ -99,6 +108,9 @@ const Patient: FC = () => {
           {hadA.length
         ? (
           <>
+            <HStack justifyContent="center" w="100%" h="400px">
+              <PieGraph data={barData} />
+            </HStack>
             <TotalsList
               data={mainResults}
             />
