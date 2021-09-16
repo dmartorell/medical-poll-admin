@@ -24,11 +24,10 @@ const getTotalDTSBackgroundColor = (number: number) => {
   return color;
 };
 
-const handleClick = () => { console.log('clicked'); };
+// const handleClick = () => { console.log('clicked'); };
 
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);
-
   return (
     <Stack>
       <Table size="sm" variant="simple">
@@ -41,20 +40,19 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
         </Thead>
         <Tbody>
           <Tr
-            filter="saturate(125%)"
-            _hover={
-            {
-              cursor: 'pointer',
-              transition: 'all 100ms',
-            }
-          }
-            onClick={handleClick}
+            filter="saturate(120%)"
+          //   _hover={
+          //   {
+          //     cursor: 'pointer',
+          //     transition: 'all 100ms',
+          //   }
+          // }
+          //   onClick={handleClick}
           >
             {
             fields.map((field) => {
               const currentValue = data[field];
               return (
-
                 <Td
                   borderWidth="1px"
                   borderColor="white"

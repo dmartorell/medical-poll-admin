@@ -11,6 +11,7 @@ import formatToDbDate from '../helpers/formatToDbDate';
 import NotFound from './NotFound';
 import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
+import DetailsList from '../components/DetailsList';
 
 const Patient: FC = () => {
   const {
@@ -22,31 +23,32 @@ const Patient: FC = () => {
   const [hadD, setHadD] = useState<any[]>([]);
   const [dts, setDts] = useState<any[]>([]);
   const [mainResults, setMainResults] = useState<any>([]);
+  const [details, setDetails] = useState<any>([]);
 
   const resetValues = () => {
     setHadA([]);
     setHadD([]);
     setDts([]);
   };
-  // console.log({ hadA });
-  // console.log({ hadD });
-  // console.log({ dts });
-  // console.log({ mainResults });
 
   useEffect(() => {
     if (patientState) {
       resetValues();
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-a`, ['questionID', 'answer'])
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-a`, ['answer'])
         .then((data:any[]) => {
           setHadA(data);
         });
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-d`, ['questionID', 'answer'])
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-d`, ['answer'])
         .then((data:any[]) => {
           setHadD(data);
         });
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.dts`, ['questionID', 'answer'])
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.dts`, ['answer'])
         .then((data:any[]) => {
           setDts(data);
+        });
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}`, ['answer', 'question_category', 'id', 'question(question)'], 'order=id.asc')
+        .then((data:any[]) => {
+          setDetails(data);
         });
     }
   }, []);
@@ -96,9 +98,12 @@ const Patient: FC = () => {
           </Stack>
           {hadA.length
         ? (
-          <TotalsList
-            data={mainResults}
-          />
+          <>
+            <TotalsList
+              data={mainResults}
+            />
+            <DetailsList data={details} />
+          </>
 )
         : (
           <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
