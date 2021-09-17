@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
  Stack, Text, Box, HStack, Spinner,
 } from '@chakra-ui/react';
@@ -15,6 +16,8 @@ import DetailsList from '../components/DetailsList';
 import PieGraph from '../components/graphs/PieGraph';
 import { getHADBackgroundColor } from '../helpers/getColors';
 import LineGraph from '../components/graphs/LineGraph';
+import getSurveys from '../helpers/getSurveys';
+import getSumsFromHistory from '../helpers/getSumsFromHistory';
 
 const Patient: FC = () => {
   const {
@@ -27,6 +30,21 @@ const Patient: FC = () => {
   const [dts, setDts] = useState<any[]>([]);
   const [mainResults, setMainResults] = useState<any>([]);
   const [details, setDetails] = useState<any>([]);
+  const [patientHistory, setPatientHistory] = useState<any>([]);
+
+  const historySums: object[] = getSumsFromHistory(patientHistory);
+  const SumDataForLineGraph = (sums) => {
+    const data: any = { dts: [], hadA: [], hadD: [] };
+    sums.forEach(({
+ date, dtsSum, hadASum, hadDSum,
+ }) => {
+      data.dts = [...data.dts, { x: new Date(date).toLocaleDateString('sp-SP'), y: dtsSum }];
+      data.hadA = [...data.hadA, { x: new Date(date).toLocaleDateString('sp-SP'), y: hadASum }];
+      data.hadD = [...data.hadD, { x: new Date(date).toLocaleDateString('sp-SP'), y: hadDSum }];
+    });
+    return data;
+  };
+  console.log(SumDataForLineGraph(historySums));
 
   const hadsBarData = [
     {
@@ -101,7 +119,6 @@ const Patient: FC = () => {
     setHadD([]);
     setDts([]);
   };
-
   useEffect(() => {
     if (patientState) {
       resetValues();
@@ -121,6 +138,31 @@ const Patient: FC = () => {
         .then((data:any[]) => {
           setDetails(data);
         });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (patientState) {
+      let dataObject: any[] = [];
+      fetchDB('answer', `patientID=eq.${id}`, ['date'], 'order=date.desc')
+      .then((data:any[]) => {
+        dataObject = getSurveys(data);
+        dataObject.forEach(({ date }, index: number) => {
+          fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-a`, ['answer'])
+        .then((data:any[]) => {
+          dataObject[index].hadA = data;
+        });
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-d`, ['answer'])
+        .then((data:any[]) => {
+          dataObject[index].hadD = data;
+        });
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.dts`, ['answer'])
+        .then((data:any[]) => {
+          dataObject[index].dts = data;
+          setPatientHistory(dataObject);
+        });
+        });
+      });
     }
   }, []);
 
