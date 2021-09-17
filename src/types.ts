@@ -26,6 +26,14 @@ export type HadsDtsTotals = {
     },
 };
 
+export type Details = {data: Detail[]};
+
+export type Detail = {
+    question: { question: string},
+    answer: string[],
+    question_category: string,
+};
+
 export interface iSurvey {
     [key: string]: string | number | object,
     date: string,

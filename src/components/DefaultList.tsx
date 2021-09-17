@@ -3,13 +3,12 @@ import { useHistory } from 'react-router-dom';
 import {
  Stack, Table, Thead, Tr, Td, Tbody, Tfoot, TableCaption,
 } from '@chakra-ui/react';
-import { Surveys } from '../types';
+import { Surveys, iSurvey } from '../types';
 import TableFields from './TableFields';
 import toTimestamp from '../helpers/toTimestamp';
 
 const DefaultList: FC<Surveys> = ({ surveys }) => {
   const history = useHistory();
-  // const [resortedSurveys, setResortedSurveys] = useState<iSurvey[]>([...surveys]);
   const fields = Object.keys(surveys[0]);
   const [lastUpdateDate] = surveys.slice(0, 1);
   const formattedLastUpdateDate = lastUpdateDate.date
@@ -23,6 +22,13 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
 
   })
   : 'unknown';
+
+  const handleClick = (survey:iSurvey) => {
+    history.push({
+      pathname: `/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`,
+      state: { date: survey.date },
+    });
+  };
 
   return (
     <Stack>
@@ -52,12 +58,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                     transition: 'all 250ms',
                   }
                 }
-                  onClick={() => {
-                    history.push({
-                      pathname: `/patient/${survey.patientID}/pro${survey.project.project_name}/ts${toTimestamp(survey.date)}`,
-                      state: { date: survey.date },
-                  });
- }}
+                  onClick={() => handleClick(survey)}
                 >
                   {
                     Object.keys(survey).map((property) => {

@@ -4,30 +4,11 @@ import {
 } from '@chakra-ui/react';
 import { HadsDtsTotals } from '../types';
 import TableFields from './TableFields';
-
-const getHADBackgroundColor = (number: number) => {
-  let color = 'red.400';
-  if (number >= 0 && number <= 7) {
-    color = 'green.400';
-  } else if (number >= 8 && number <= 10) {
-    color = 'yellow.400';
-  }
-  return color;
-};
-const getDTSBackgroundColor = (number: number) => {
-  let color = 'red.400';
-  if (number >= 0 && number <= 26) {
-    color = 'green.400';
-  } else if (number >= 27 && number <= 54) {
-    color = 'yellow.400';
-  }
-  return color;
-};
+import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
+// const handleClick = () => { console.log('clicked'); };
 
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);
-
-  console.log(fields);
   return (
     <Stack>
       <Table size="sm" variant="simple">
@@ -35,24 +16,39 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
           <TableFields
             fields={fields}
             sortable={false}
+            isNumeric
           />
         </Thead>
         <Tbody>
-          <Tr>
+          <Tr
+            filter="saturate(110%)"
+          >
             {
             fields.map((field) => {
               const currentValue = data[field];
               return (
-
                 <Td
+                  borderWidth="1px"
+                  borderColor="white"
+                  isNumeric
                   backgroundColor={
+                    // eslint-disable-next-line no-nested-ternary
                     field.includes('had')
+                    && !field.includes('total')
                     ? getHADBackgroundColor(currentValue)
-                  : getDTSBackgroundColor(currentValue)
+                  : field === 'dts-total'
+                  ? getTotalDTSBackgroundColor(currentValue)
+                  : 'gray.100'
 }
-                  color="white"
-                  fontWeight="normal"
-                  margin={5}
+                  color={
+                    field.includes('f')
+                    || field.includes('g')
+                    || field === 'had-total'
+                    ? 'black'
+                    : 'white'
+
+                  }
+                  fontWeight="500"
                 >
                   {currentValue}
                 </Td>
