@@ -12,7 +12,7 @@ const BarGraph: FC<Props> = ({ data, colors }) => (
     keys={['HAD-A', 'HAD-D']}
     indexBy="HADS"
     margin={{
-      top: 50, right: 130, bottom: 50, left: 60,
+      top: 20, right: 130, bottom: 50, left: 60,
     }}
     padding={0.4}
     maxValue={42}
@@ -48,7 +48,7 @@ const BarGraph: FC<Props> = ({ data, colors }) => (
       tickPadding: 5,
       legend: 'HADS',
       legendPosition: 'middle',
-      legendOffset: 22,
+      legendOffset: 40,
   }}
     axisLeft={{
       tickSize: 5,
