@@ -987,7 +987,7 @@
 
 "@nivo/core@^0.73.0":
   version "0.73.0"
-  resolved "https://registry.npmjs.org/@nivo/core/-/core-0.73.0.tgz"
+  resolved "https://registry.yarnpkg.com/@nivo/core/-/core-0.73.0.tgz#58fac20c8cd7eac12bfdc96619554764ca225cdf"
   integrity sha512-NFKSk5NQgC2NB3olG8hltN4b4Ri0rB0vt3q1yGmQj+RdGRS4f82Dtwt5Ratxu6QeZD8lt0DhqN9Q7TJ+j/kt0g==
   dependencies:
     "@nivo/recompose" "0.73.0"

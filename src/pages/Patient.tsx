@@ -41,19 +41,60 @@ const Patient: FC = () => {
 
   const dtsLineData = [
     {
-      id: 'japan',
-      color: 'hsl(315, 70%, 50%)',
+      id: 'DTS-T',
+      color: 'hsl(213, 64%, 42%)',
       data: [
         {
-          x: 'HADS',
+          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 40,
+        },
+        {
+          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 95,
+        },
+        {
+          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 65,
+        },
+      ],
+    },
+    {
+      id: 'HAD-A',
+      color: 'hsl(214, 20%, 69%)',
+      data: [
+        {
+          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
           y: 22,
         },
         {
-          x: 'DTS',
-          y: 95,
+          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 16,
+        },
+        {
+          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 10,
         },
       ],
-}];
+    },
+    {
+      id: 'HAD-D',
+      color: 'hsl(212, 26%, 33%)',
+      data: [
+        {
+          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 18,
+        },
+        {
+          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 10,
+        },
+        {
+          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
+          y: 15,
+        },
+      ],
+    },
+  ];
 
   const resetValues = () => {
     setHadA([]);

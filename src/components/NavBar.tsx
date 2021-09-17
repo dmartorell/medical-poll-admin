@@ -20,7 +20,7 @@ import logo from '../assets/icons/logo.png';
 import { Projects } from '../types';
 
 const NavBar: FC<Projects> = ({ projects }) => (
-  <Stack direction="row" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
+  <Stack direction="row" zIndex="2" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
     <Box maxWidth="1400px" backgroundColor="white" w="100%" pt={6}>
       <Stack direction="row" px="24px" justifyContent="space-between">
         <Link to="/">
