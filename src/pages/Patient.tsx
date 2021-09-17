@@ -14,6 +14,7 @@ import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
 import PieGraph from '../components/graphs/PieGraph';
 import { getHADBackgroundColor } from '../helpers/getColors';
+import LineGraph from '../components/graphs/LineGraph';
 
 const Patient: FC = () => {
   const {
@@ -37,6 +38,22 @@ const Patient: FC = () => {
   const hadsBarColors = [
     getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
   ];
+
+  const dtsLineData = [
+    {
+      id: 'japan',
+      color: 'hsl(315, 70%, 50%)',
+      data: [
+        {
+          x: 'HADS',
+          y: 22,
+        },
+        {
+          x: 'DTS',
+          y: 95,
+        },
+      ],
+}];
 
   const resetValues = () => {
     setHadA([]);
@@ -112,8 +129,9 @@ const Patient: FC = () => {
           {hadA.length
         ? (
           <>
-            <HStack justifyContent="center" w="100%" h="400px">
+            <HStack justifyContent="center" w="100%" height="400px">
               <PieGraph data={hadsBarData} colors={hadsBarColors} />
+              <LineGraph data={dtsLineData} />
             </HStack>
             <TotalsList
               data={mainResults}

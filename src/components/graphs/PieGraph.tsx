@@ -40,7 +40,7 @@ const BarGraph: FC<Props> = ({ data, colors }) => (
       },
   ]}
     borderWidth={1}
-    borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+    borderColor={{ from: 'color', modifiers: [['darker', 0.4]] }}
     axisTop={null}
     axisRight={null}
     axisBottom={{
