@@ -18,6 +18,13 @@ import { getHADBackgroundColor } from '../helpers/getColors';
 import LineGraph from '../components/graphs/LineGraph';
 import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
+import getHistoryData from '../helpers/getHistoryData';
+
+type HistoryData = {
+  dts: [{x: string, y: number}],
+  hadA: [{x: string, y: number}],
+  hadD: [{x: string, y: number}],
+};
 
 const Patient: FC = () => {
   const {
@@ -31,20 +38,19 @@ const Patient: FC = () => {
   const [mainResults, setMainResults] = useState<any>([]);
   const [details, setDetails] = useState<any>([]);
   const [patientHistory, setPatientHistory] = useState<any>([]);
+  const [historyData, setHistoryData] = useState<any>([]);
+  const [historySums, setHistorySums] = useState<any>([]);
 
-  const historySums: object[] = getSumsFromHistory(patientHistory);
-  const SumDataForLineGraph = (sums) => {
-    const data: any = { dts: [], hadA: [], hadD: [] };
-    sums.forEach(({
- date, dtsSum, hadASum, hadDSum,
- }) => {
-      data.dts = [...data.dts, { x: new Date(date).toLocaleDateString('sp-SP'), y: dtsSum }];
-      data.hadA = [...data.hadA, { x: new Date(date).toLocaleDateString('sp-SP'), y: hadASum }];
-      data.hadD = [...data.hadD, { x: new Date(date).toLocaleDateString('sp-SP'), y: hadDSum }];
-    });
-    return data;
-  };
-  console.log(SumDataForLineGraph(historySums));
+  useEffect(() => {
+    setHistoryData([]);
+    // setHistorySums([]);
+    setHistorySums(getSumsFromHistory(patientHistory));
+    setHistoryData(getHistoryData(historySums));
+  }, [patientHistory]);
+
+  console.log({ historySums });
+  console.log({ historyData });
+  console.log({ patientHistory });
 
   const hadsBarData = [
     {
@@ -56,61 +62,21 @@ const Patient: FC = () => {
   const hadsBarColors = [
     getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
   ];
-
   const dtsLineData = [
     {
       id: 'DTS-T',
       color: 'hsl(213, 64%, 42%)',
-      data: [
-        {
-          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 40,
-        },
-        {
-          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 95,
-        },
-        {
-          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 65,
-        },
-      ],
+      data: historyData.dts,
     },
     {
       id: 'HAD-A',
       color: 'hsl(214, 20%, 69%)',
-      data: [
-        {
-          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 22,
-        },
-        {
-          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 16,
-        },
-        {
-          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 10,
-        },
-      ],
+      data: historyData.hadA,
     },
     {
       id: 'HAD-D',
       color: 'hsl(212, 26%, 33%)',
-      data: [
-        {
-          x: new Date('2021-02-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 18,
-        },
-        {
-          x: new Date('2021-04-20T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 10,
-        },
-        {
-          x: new Date('2021-08-11T12:14:11.628599+00:00').toLocaleDateString('sp-SP'),
-          y: 15,
-        },
-      ],
+      data: historyData.hadD,
     },
   ];
 

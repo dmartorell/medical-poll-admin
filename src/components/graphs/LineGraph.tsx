@@ -43,7 +43,7 @@ const LineGraph: FC<Props> = ({ data }) => (
     useMesh
     legends={[
       {
-          anchor: 'right',
+          anchor: 'bottom-right',
           direction: 'column',
           justify: false,
           translateX: 100,
