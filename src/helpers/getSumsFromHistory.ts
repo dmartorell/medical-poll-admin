@@ -6,22 +6,24 @@ type Entry = {
     hadA: object[],
     hadD: object[],
     dts: object[],
-    date: string
+    date: string,
 };
 const getSumsFromHistory = (history: Entry[]) => {
-    const result: object[] = [];
-    history.forEach((entry: Entry) => {
-        const entryResult = {
- hadASum: 0, hadDSum: 0, dtsSum: {}, date: '',
-};
-        entryResult.hadASum = getSingleSum(entry.hadA);
-        entryResult.hadDSum = getSingleSum(entry.hadD);
-        const { frecuencia, gravedad } = getDobleSum(entry.dts, 'frecuencia', 'gravedad');
-        entryResult.dtsSum = frecuencia + gravedad;
-        entryResult.date = formatToDbDate(entry.date);
-        result.push(entryResult);
-    });
-    return result;
+    const mapped = history.map((entry: Entry) => {
+    const { frecuencia, gravedad } = getDobleSum(entry.dts, 'frecuencia', 'gravedad');
+    const date = formatToDbDate(entry.date);
+    const hadASum = getSingleSum(entry.hadA);
+    const hadDSum = getSingleSum(entry.hadD);
+    const dtsSum = frecuencia + gravedad;
+
+    return {
+        date,
+        hadASum,
+        hadDSum,
+        dtsSum,
+        };
+  });
+return mapped;
 };
 
 export default getSumsFromHistory;

@@ -20,12 +20,6 @@ import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
 
-type HistoryData = {
-  dts: [{x: string, y: number}],
-  hadA: [{x: string, y: number}],
-  hadD: [{x: string, y: number}],
-};
-
 const Patient: FC = () => {
   const {
     id,
@@ -40,17 +34,6 @@ const Patient: FC = () => {
   const [patientHistory, setPatientHistory] = useState<any>([]);
   const [historyData, setHistoryData] = useState<any>([]);
   const [historySums, setHistorySums] = useState<any>([]);
-
-  useEffect(() => {
-    setHistoryData([]);
-    // setHistorySums([]);
-    setHistorySums(getSumsFromHistory(patientHistory));
-    setHistoryData(getHistoryData(historySums));
-  }, [patientHistory]);
-
-  console.log({ historySums });
-  console.log({ historyData });
-  console.log({ patientHistory });
 
   const hadsBarData = [
     {
@@ -79,12 +62,30 @@ const Patient: FC = () => {
       data: historyData.hadD,
     },
   ];
-
   const resetValues = () => {
     setHadA([]);
     setHadD([]);
     setDts([]);
   };
+
+  useEffect(() => {
+    if (patientState) {
+      const { dtsFSum, dtsGSum } = getDobleSum(dts, 'dtsFSum', 'dtsGSum');
+      const hadASum = getSingleSum(hadA);
+      const hadDSum = getSingleSum(hadD);
+
+      setMainResults(
+        {
+          'had-a': hadASum,
+          'had-d': hadDSum,
+          'had-total': hadASum + hadDSum,
+          'dts-f': dtsFSum,
+          'dts-g': dtsGSum,
+          'dts-total': dtsFSum + dtsGSum,
+        },
+      );
+    }
+  }, [hadA, hadD, dts]);
   useEffect(() => {
     if (patientState) {
       resetValues();
@@ -106,50 +107,39 @@ const Patient: FC = () => {
         });
     }
   }, []);
-
   useEffect(() => {
     if (patientState) {
-      let dataObject: any[] = [];
-      fetchDB('answer', `patientID=eq.${id}`, ['date'], 'order=date.desc')
-      .then((data:any[]) => {
-        dataObject = getSurveys(data);
-        dataObject.forEach(({ date }, index: number) => {
-          fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-a`, ['answer'])
-        .then((data:any[]) => {
-          dataObject[index].hadA = data;
-        });
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-d`, ['answer'])
-        .then((data:any[]) => {
-          dataObject[index].hadD = data;
-        });
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.dts`, ['answer'])
-        .then((data:any[]) => {
-          dataObject[index].dts = data;
-          setPatientHistory(dataObject);
-        });
-        });
-      });
+      getPatientHistory(Number(id));
+    }
+    async function getPatientHistory(id:number) {
+      const allAnswers = await fetchDB('answer', `patientID=eq.${id}`, ['date'], 'order=date.asc');
+      const rawData: any[] = getSurveys(allAnswers);
+      const mapped = await Promise.all(
+        rawData.map(async ({ date }) => {
+          const hadA = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-a`, ['answer']);
+          const hadD = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-d`, ['answer']);
+          const dts = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.dts`, ['answer']);
+          return {
+            date, hadA: await hadA, hadD: await hadD, dts: await dts,
+          };
+        }),
+      );
+
+      const total = await mapped;
+      setPatientHistory(total);
     }
   }, []);
 
   useEffect(() => {
-    if (patientState) {
-      const { dtsFSum, dtsGSum } = getDobleSum(dts, 'dtsFSum', 'dtsGSum');
-      const hadASum = getSingleSum(hadA);
-      const hadDSum = getSingleSum(hadD);
+    const data = getHistoryData(historySums);
+    setHistoryData(data);
+  }, [historySums]);
 
-      setMainResults(
-        {
-          'had-a': hadASum,
-          'had-d': hadDSum,
-          'had-total': hadASum + hadDSum,
-          'dts-f': dtsFSum,
-          'dts-g': dtsGSum,
-          'dts-total': dtsFSum + dtsGSum,
-        },
-      );
-    }
-  }, [hadA, hadD, dts]);
+  useEffect(() => {
+    const data = getSumsFromHistory(patientHistory);
+    setHistorySums(data);
+  }, [patientHistory]);
+
   return (
     patientState
     ? (
