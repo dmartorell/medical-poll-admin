@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import {
- Stack, Text, Box, HStack, Spinner,
+ Stack, Text, Box, Flex, HStack, Spinner,
 } from '@chakra-ui/react';
 import React, { FC, useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -159,7 +159,7 @@ const Patient: FC = () => {
               <Box color="gray.600"><IoMdTime size="15px" /></Box>
               <Text as="h3" fontSize="sm" color="gray.600">
                 {(new Date(patientState.date).toLocaleDateString('sp-SP', {
- day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+ day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
 }))}
               </Text>
             </HStack>
@@ -168,10 +168,14 @@ const Patient: FC = () => {
           {hadA.length
         ? (
           <>
-            <HStack justifyContent="center" w="100%" height="400px">
-              <PieGraph data={hadsBarData} colors={hadsBarColors} />
-              <LineGraph data={dtsLineData} />
-            </HStack>
+            <Flex justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', lg: 'row' }}>
+              <Box w={{ sm: '100%', lg: '40%' }} h={{ sm: '250px', lg: '400px' }}>
+                <PieGraph data={hadsBarData} colors={hadsBarColors} />
+              </Box>
+              <Box w={{ sm: '100%', lg: '60%' }} h={{ sm: '300px', lg: '400px' }}>
+                <LineGraph data={dtsLineData} />
+              </Box>
+            </Flex>
             <TotalsList
               data={mainResults}
             />
