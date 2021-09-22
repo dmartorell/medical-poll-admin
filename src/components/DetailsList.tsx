@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { FC, useState } from 'react';
 import {
-    Table, Stack, Thead, Tr, Th, Td, Tbody,
+    Table, Stack, Thead, Text, Tr, Th, Td, Tbody,
    } from '@chakra-ui/react';
 import { Details } from '../types';
 import TableFields from './TableFields';
@@ -33,7 +33,7 @@ const DetailsList: FC<Details> = ({ data }) => {
         <Tbody>
           {isExpanded
           && (
-          <Stack>
+          <Stack maxW={{ sm: '0px', md: '100%', lg: '100%' }}>
             <Table size="sm" variant="simple">
               <Thead>
                 <Tr>
@@ -64,7 +64,9 @@ const DetailsList: FC<Details> = ({ data }) => {
       color="gray.600"
       _hover={{ transition: 'all 200ms', color: 'blue.900' }}
     >
-      {question}
+      <Text noOfLines={[7, 7, 10]}>
+        {question}
+      </Text>
     </Td>
     <Td
       color="gray.900"
@@ -97,7 +99,7 @@ const DetailsList: FC<Details> = ({ data }) => {
     <Td
       color="gray900"
     >
-      {clt}
+      <Text>{clt}</Text>
     </Td>
   </Tr>
 ))

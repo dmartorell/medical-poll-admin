@@ -14,7 +14,7 @@ import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
 import PieGraph from '../components/graphs/PieGraph';
-import { getHADBackgroundColor } from '../helpers/getColors';
+import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
 import LineGraph from '../components/graphs/LineGraph';
 import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
@@ -42,9 +42,20 @@ const Patient: FC = () => {
       'HAD-D': mainResults['had-d'],
     },
   ];
-  const hadsBarColors = [
+  const dtsBarData = [
+    {
+      DTS: '',
+      FRECUENCIA: mainResults['dts-f'],
+      GRAVEDAD: mainResults['dts-g'],
+    },
+  ];
+  const HADS_BAR_COLORS = [
     getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
   ];
+  const DTS_BAR_COLORS = [
+    getTotalDTSBackgroundColor(mainResults['dts-f']), getTotalDTSBackgroundColor(mainResults['dts-g']),
+  ];
+
   const dtsLineData = [
     {
       id: 'DTS-T',
@@ -169,16 +180,17 @@ const Patient: FC = () => {
         ? (
           <>
             <Flex justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', lg: 'row' }}>
-              <Box w={{ sm: '100%', lg: '40%' }} h={{ sm: '250px', lg: '400px' }}>
-                <PieGraph data={hadsBarData} colors={hadsBarColors} />
+              <Box w={{ sm: '100%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+                <PieGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
               </Box>
-              <Box w={{ sm: '100%', lg: '60%' }} h={{ sm: '300px', lg: '400px' }}>
+              <Box w={{ sm: '100%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+                <PieGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
+              </Box>
+              <Box w={{ sm: '100%', lg: '50%' }} h={{ sm: '300px', lg: '400px' }}>
                 <LineGraph data={dtsLineData} />
               </Box>
             </Flex>
-            <TotalsList
-              data={mainResults}
-            />
+            <TotalsList data={mainResults} />
             <DetailsList data={details} />
           </>
 )
