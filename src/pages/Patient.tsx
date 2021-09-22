@@ -206,6 +206,11 @@ const Patient: FC = () => {
           </Stack>
           )}
         </Stack>
+        {
+          hadA.length
+          && <Text>OTHER COMPONENTS HERE</Text>
+        }
+
       </Stack>
 )
     : <NotFound />
