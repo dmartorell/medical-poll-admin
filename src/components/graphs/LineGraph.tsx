@@ -31,11 +31,11 @@ const LineGraph: FC<Props> = ({ data }) => (
   }}
     enableGridX
     colors={[data[0].color, data[1].color, data[2].color]}
-    curve="linear"
+    curve="monotoneX"
     lineWidth={2}
-    pointSize={5}
+    pointSize={4}
     pointColor={{ from: 'color', modifiers: [] }}
-    pointBorderWidth={2}
+    pointBorderWidth={1}
     pointBorderColor={{ from: 'serieColor' }}
     pointLabelYOffset={-12}
     areaOpacity={0.1}
