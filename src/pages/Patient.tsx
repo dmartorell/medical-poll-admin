@@ -101,7 +101,7 @@ const Patient: FC = () => {
         .then((data:any[]) => {
           setDts(data);
         });
-      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}`, ['answer', 'question_category', 'id', 'question(question)'], 'order=id.asc')
+      fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}`, ['answer', 'question_category', 'id', 'question(question)'], 'order=question_category.desc')
         .then((data:any[]) => {
           setDetails(data);
         });
@@ -125,7 +125,7 @@ const Patient: FC = () => {
         }),
       );
 
-      const total = await mapped;
+      const total = mapped;
       setPatientHistory(total);
     }
   }, []);
