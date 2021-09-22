@@ -54,7 +54,7 @@ const DetailsList: FC<Details> = ({ data }) => {
     key={question}
     _hover={
     {
-      cursor: 'pointer',
+      cursor: 'default',
       backgroundColor: 'gray.100',
       transition: 'all 250ms',
     }
