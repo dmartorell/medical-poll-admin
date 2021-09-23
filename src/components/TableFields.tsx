@@ -29,7 +29,7 @@ const TableFields: FC<Props> = ({
           fontWeight="900"
           size="2em"
           transition="all 250ms"
-          backgroundColor={color}
+          backgroundColor={isExpanded ? 'blue.600' : color}
           color="white"
           _hover={sortable || isExpandible
                ? {
