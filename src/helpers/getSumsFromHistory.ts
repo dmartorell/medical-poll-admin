@@ -1,6 +1,5 @@
 import getSingleSum from './getSingleSum';
 import getDobleSum from './getDobleSum';
-import formatToDbDate from './formatToDbDate';
 
 type Entry = {
     hadA: object[],

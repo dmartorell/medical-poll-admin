@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
+import { useMediaQuery } from '@chakra-ui/react';
 
 type Props = {
   data: any[],
@@ -12,7 +13,11 @@ type Props = {
 
 const BarGraph: FC<Props> = ({
  data, colors, keys, indexBy, maxValue,
-}) => (
+}) => {
+  const [isLargerThan250] = useMediaQuery('(min-width: 250px)');
+  const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
+
+return (
   <ResponsiveBar
     data={data}
     keys={keys}
@@ -20,13 +25,15 @@ const BarGraph: FC<Props> = ({
     margin={{
       top: 20, right: 130, bottom: 50, left: 60,
     }}
-    padding={0.4}
+    // eslint-disable-next-line no-nested-ternary
+    padding={isLargerThan250 ? 0.5 : isLargerThan450 ? 0.8 : 0.2}
+    innerPadding={2}
     maxValue={maxValue}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
     colors={colors}
-    borderWidth={2}
-    borderColor={{ from: 'color', modifiers: [['darker', 0.4]] }}
+    borderWidth={1}
+    borderColor={{ from: 'color', modifiers: [['darker', 0.7]] }}
     axisTop={null}
     axisRight={null}
     axisBottom={{
@@ -49,5 +56,6 @@ const BarGraph: FC<Props> = ({
     labelTextColor={{ from: 'color', modifiers: [['darker', 3.6]] }}
   />
 );
+};
 
 export default BarGraph;

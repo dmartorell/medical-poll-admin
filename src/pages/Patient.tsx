@@ -13,12 +13,14 @@ import NotFound from './NotFound';
 import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
-import PieGraph from '../components/graphs/PieGraph';
+import BarGraph from '../components/graphs/BarGraph';
 import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
 import LineGraph from '../components/graphs/LineGraph';
 import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
+import AllEntriesList from '../components/AllEntriesList';
+import Anotations from '../components/graphs/Anotations';
 
 const Patient: FC = () => {
   const {
@@ -55,7 +57,6 @@ const Patient: FC = () => {
   const DTS_BAR_COLORS = [
     getTotalDTSBackgroundColor(mainResults['dts-f']), getTotalDTSBackgroundColor(mainResults['dts-g']),
   ];
-
   const dtsLineData = [
     {
       id: 'DTS-T',
@@ -73,11 +74,6 @@ const Patient: FC = () => {
       data: historyData.hadD,
     },
   ];
-  const resetValues = () => {
-    setHadA([]);
-    setHadD([]);
-    setDts([]);
-  };
 
   useEffect(() => {
     if (patientState) {
@@ -99,7 +95,6 @@ const Patient: FC = () => {
   }, [hadA, hadD, dts]);
   useEffect(() => {
     if (patientState) {
-      resetValues();
       fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-a`, ['answer'])
         .then((data:any[]) => {
           setHadA(data);
@@ -117,7 +112,7 @@ const Patient: FC = () => {
           setDetails(data);
         });
     }
-  }, []);
+  }, [patientState]);
   useEffect(() => {
     if (patientState) {
       getPatientHistory(Number(id));
@@ -155,7 +150,7 @@ const Patient: FC = () => {
     patientState
     ? (
       <Stack as="main" direction="column" alignItems="center">
-        <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
+        <Stack direction="column" maxWidth="1200px" w="100%" spacing="2em" mt={5}>
           <Stack spacing={0}>
             <Text as="h4" fontSize="sm" color="gray.400">
               {`PROJECT ${projectName}`}
@@ -176,15 +171,15 @@ const Patient: FC = () => {
             </HStack>
 
           </Stack>
-          {hadA.length
+          {patientHistory.length
         ? (
           <>
-            <Flex justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', lg: 'row' }}>
-              <Box w={{ sm: '100%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
-                <PieGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
+            <Flex p={5} boxShadow="base" borderWidth="0.5px" borderRadius="lg" overflow="hidden" justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', lg: 'row' }}>
+              <Box w={{ sm: '70%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+                <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
               </Box>
-              <Box w={{ sm: '100%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
-                <PieGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
+              <Box w={{ sm: '70%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+                <BarGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
               </Box>
               <Box w={{ sm: '100%', lg: '50%' }} h={{ sm: '300px', lg: '400px' }}>
                 <LineGraph data={dtsLineData} />
@@ -205,11 +200,16 @@ const Patient: FC = () => {
             />
           </Stack>
           )}
-        </Stack>
-        {
-          hadA.length
-          && <Text>OTHER COMPONENTS HERE</Text>
+          {
+          patientHistory.length
+          && (
+          <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
+            <AllEntriesList dates={patientHistory} />
+            <Anotations />
+          </HStack>
+)
         }
+        </Stack>
 
       </Stack>
 )

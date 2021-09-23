@@ -1,4 +1,9 @@
-const getHistoryData = (sums) => {
+const getHistoryData = (sums: {
+  date: string,
+  hadASum: number,
+  hadDSum: number,
+  dtsSum: number,
+}[]) => {
     const data: any = { dts: [], hadA: [], hadD: [] };
     sums.forEach(({
  date, dtsSum, hadASum, hadDSum,

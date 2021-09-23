@@ -38,7 +38,6 @@ const LineGraph: FC<Props> = ({ data }) => (
     pointBorderWidth={1}
     pointBorderColor={{ from: 'serieColor' }}
     pointLabelYOffset={-12}
-    areaOpacity={0.1}
     enableSlices="x"
     useMesh
     legends={[
@@ -52,19 +51,11 @@ const LineGraph: FC<Props> = ({ data }) => (
           itemDirection: 'left-to-right',
           itemWidth: 80,
           itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
+          itemOpacity: 1,
+          symbolSize: 9,
           symbolShape: 'circle',
           symbolBorderColor: 'rgba(0, 0, 0, .5)',
-          effects: [
-              {
-                  on: 'hover',
-                  style: {
-                      itemBackground: 'rgba(0, 0, 0, .03)',
-                      itemOpacity: 1,
-                  },
-              },
-          ],
+
       },
   ]}
   />

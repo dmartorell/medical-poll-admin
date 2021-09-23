@@ -51,18 +51,19 @@ const DetailsList: FC<Details> = ({ data }) => {
  question, hadA, hadD, dtsF, dtsG, clt,
 }) => (
   <Tr
+    transition="all 250ms"
     key={question}
     _hover={
     {
       cursor: 'default',
       backgroundColor: 'gray.100',
-      transition: 'all 250ms',
     }
   }
   >
     <Td
+      transition="all 200ms"
       color="gray.600"
-      _hover={{ transition: 'all 200ms', color: 'blue.900' }}
+      _hover={{ color: 'blue.900' }}
     >
       <Text noOfLines={[7, 7, 10]}>
         {question}
