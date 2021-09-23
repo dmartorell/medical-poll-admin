@@ -20,18 +20,19 @@ const DetailsList: FC<Details> = ({ data }) => {
             }));
 
     return (
-      <Table variant="simple" size="sm">
-        <Thead>
-          <TableFields
-            fields={fields}
-            sortable={false}
-            isExpanded={isExpanded}
-            isExpandible
-            onClick={() => setIsExpanded((prevValue) => !prevValue)}
-          />
-        </Thead>
-        <Tbody>
-          {isExpanded
+      <Stack pb="1em">
+        <Table variant="simple" size="sm">
+          <Thead>
+            <TableFields
+              fields={fields}
+              sortable={false}
+              isExpanded={isExpanded}
+              isExpandible
+              onClick={() => setIsExpanded((prevValue) => !prevValue)}
+            />
+          </Thead>
+          <Tbody>
+            {isExpanded
           && (
           <Stack maxW={{ sm: '0px', md: '100%', lg: '100%' }}>
             <Table size="sm" variant="simple">
@@ -109,8 +110,10 @@ const DetailsList: FC<Details> = ({ data }) => {
             </Table>
           </Stack>
 )}
-        </Tbody>
-      </Table>
+          </Tbody>
+        </Table>
+      </Stack>
+
     );
 };
 
