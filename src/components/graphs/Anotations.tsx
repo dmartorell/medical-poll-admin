@@ -3,9 +3,9 @@ import {
  Tag, TagLabel, Stack, List, ListItem, Divider, ListIcon,
 } from '@chakra-ui/react';
 import { RiStickyNoteLine } from 'react-icons/ri';
-import { HiMinusCircle, HiPlusCircle } from 'react-icons/hi';
+import { HiMinusCircle } from 'react-icons/hi';
 
-const Anotations: FC = () => (
+const Anotations: FC = ({ children }) => (
   <Stack width="100%" alignItems="flex-start">
     <Tag size="md" mb={2}>
       <RiStickyNoteLine size={19} />
@@ -35,23 +35,7 @@ const Anotations: FC = () => (
         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
         architecto beatae vitae dicta sunt explicabo.
       </ListItem>
-      <ListItem
-        px={3}
-        color="gray.700"
-        fontSize="sm"
-        onClick={() => console.log('')}
-      >
-        <ListIcon
-          as={HiPlusCircle}
-          transition="all 200ms"
-          color="gray.300"
-          fontSize="18px"
-          _hover={{
-            cursor: 'pointer',
-            transform: 'scale(1.5)',
-          }}
-        />
-      </ListItem>
+      {children}
 
     </List>
   </Stack>

@@ -23,3 +23,15 @@ export const fetchDB = (table: string, filter: string | undefined = '', select: 
     return console.log(message);
   }
 };
+
+export const postNote = (data: any) => {
+  try {
+    return fetch(`${apiUrl}/note`, {
+      headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+      body: JSON.stringify(data),
+      method: 'POST',
+});
+  } catch ({ message }) {
+    return console.log(message);
+  }
+};

@@ -21,6 +21,7 @@ import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
 import AllEntriesList from '../components/AllEntriesList';
 import Anotations from '../components/graphs/Anotations';
+import AddNoteDrawer from '../components/AddNoteDrawer';
 
 const Patient: FC = () => {
   const {
@@ -135,7 +136,6 @@ const Patient: FC = () => {
       setPatientHistory(total);
     }
   }, []);
-
   useEffect(() => {
     const data = getHistoryData(historySums);
     setHistoryData(data);
@@ -205,7 +205,13 @@ const Patient: FC = () => {
           && (
           <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
             <AllEntriesList dates={patientHistory} />
-            <Anotations />
+            <Anotations>
+              <AddNoteDrawer
+                patientId={id}
+                projectName={projectName}
+                surveyDate={patientState.date}
+              />
+            </Anotations>
           </HStack>
 )
         }
