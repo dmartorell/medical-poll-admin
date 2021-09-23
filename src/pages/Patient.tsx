@@ -26,7 +26,7 @@ const Patient: FC = () => {
   const {
     id,
     projectName,
-  } = (useParams<{id: string, projectName: string, date: string}>());
+  } = (useParams<{id: string, projectName: string, timestamp: string}>());
   const { state: patientState }:any = useLocation<unknown>();
   const [hadA, setHadA] = useState<any[]>([]);
   const [hadD, setHadD] = useState<any[]>([]);

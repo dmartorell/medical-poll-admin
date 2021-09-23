@@ -22,11 +22,13 @@ const Anotations: FC = () => (
         <ListIcon
           as={HiMinusCircle}
           transition="all 200ms"
-          color="gray.300"
+          color="gray.100"
           fontSize="18px"
           _hover={{
             cursor: 'pointer',
             transform: 'scale(1.5)',
+            color: 'gray.300',
+
           }}
         />
         Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
