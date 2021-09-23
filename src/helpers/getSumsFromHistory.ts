@@ -11,7 +11,7 @@ type Entry = {
 const getSumsFromHistory = (history: Entry[]) => {
     const mapped = history.map((entry: Entry) => {
     const { frecuencia, gravedad } = getDobleSum(entry.dts, 'frecuencia', 'gravedad');
-    const date = formatToDbDate(entry.date);
+    const { date } = entry;
     const hadASum = getSingleSum(entry.hadA);
     const hadDSum = getSingleSum(entry.hadD);
     const dtsSum = frecuencia + gravedad;
