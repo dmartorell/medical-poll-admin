@@ -175,10 +175,10 @@ const Patient: FC = () => {
         ? (
           <>
             <Flex p={5} boxShadow="base" borderWidth="0.5px" borderRadius="lg" overflow="hidden" justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', lg: 'row' }}>
-              <Box w={{ sm: '70%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+              <Box w={{ sm: '90%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
                 <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
               </Box>
-              <Box w={{ sm: '70%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
+              <Box w={{ sm: '90%', lg: '25%' }} h={{ sm: '250px', lg: '400px' }}>
                 <BarGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
               </Box>
               <Box w={{ sm: '100%', lg: '50%' }} h={{ sm: '300px', lg: '400px' }}>

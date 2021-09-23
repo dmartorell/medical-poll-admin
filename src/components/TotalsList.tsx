@@ -31,6 +31,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
                   borderWidth="1px"
                   borderColor="white"
                   isNumeric
+                  transition="all 400ms"
                   backgroundColor={
                     // eslint-disable-next-line no-nested-ternary
                     field.includes('had')

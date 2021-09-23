@@ -14,8 +14,7 @@ type Props = {
 const BarGraph: FC<Props> = ({
  data, colors, keys, indexBy, maxValue,
 }) => {
-  const [isLargerThan250] = useMediaQuery('(min-width: 250px)');
-  const [isLargerThan450] = useMediaQuery('(min-width: 450px)');
+  const [isLargerThan650] = useMediaQuery('(max-width: 1050px)');
 
 return (
   <ResponsiveBar
@@ -26,7 +25,7 @@ return (
       top: 20, right: 130, bottom: 50, left: 60,
     }}
     // eslint-disable-next-line no-nested-ternary
-    padding={isLargerThan250 ? 0.5 : isLargerThan450 ? 0.8 : 0.2}
+    padding={isLargerThan650 ? 0.5 : 0.2}
     innerPadding={2}
     maxValue={maxValue}
     valueScale={{ type: 'linear' }}

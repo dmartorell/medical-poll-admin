@@ -3,7 +3,7 @@ import {
  Tag, TagLabel, Stack, List, ListItem, Divider, ListIcon,
 } from '@chakra-ui/react';
 import { RiStickyNoteLine } from 'react-icons/ri';
-import { HiMinusCircle } from 'react-icons/hi';
+import { HiMinusCircle, HiPlusCircle } from 'react-icons/hi';
 
 const Anotations: FC = () => (
   <Stack width="100%" alignItems="flex-start">
@@ -22,12 +22,11 @@ const Anotations: FC = () => (
         <ListIcon
           as={HiMinusCircle}
           transition="all 200ms"
-          color="gray.100"
+          color="gray.300"
           fontSize="18px"
           _hover={{
             cursor: 'pointer',
             transform: 'scale(1.5)',
-            color: 'gray.300',
 
           }}
         />
@@ -36,6 +35,24 @@ const Anotations: FC = () => (
         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
         architecto beatae vitae dicta sunt explicabo.
       </ListItem>
+      <ListItem
+        px={3}
+        color="gray.700"
+        fontSize="sm"
+        onClick={() => console.log('')}
+      >
+        <ListIcon
+          as={HiPlusCircle}
+          transition="all 200ms"
+          color="gray.300"
+          fontSize="18px"
+          _hover={{
+            cursor: 'pointer',
+            transform: 'scale(1.5)',
+          }}
+        />
+      </ListItem>
+
     </List>
   </Stack>
     );
