@@ -37,6 +37,7 @@ const Patient: FC = () => {
   const [patientHistory, setPatientHistory] = useState<any>([]);
   const [historyData, setHistoryData] = useState<any>([]);
   const [historySums, setHistorySums] = useState<any>([]);
+  const [patientNotes, setPatientNotes] = useState<any>([]);
 
   const hadsBarData = [
     {
@@ -123,6 +124,7 @@ const Patient: FC = () => {
       const rawData: any[] = getSurveys(allAnswers);
       const mapped = await Promise.all(
         rawData.map(async ({ date }) => {
+          console.log({ date });
           const hadA = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-a`, ['answer']);
           const hadD = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-d`, ['answer']);
           const dts = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.dts`, ['answer']);
@@ -145,6 +147,15 @@ const Patient: FC = () => {
     const data = getSumsFromHistory(patientHistory);
     setHistorySums(data);
   }, [patientHistory]);
+console.log(typeof patientState.date);
+  useEffect(() => {
+    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}, ['text', 'created_by']`)
+        .then((data:any[]) => {
+          setPatientNotes(data);
+        });
+  }, []);
+
+  console.log(patientState.date);
 
   return (
     patientState
