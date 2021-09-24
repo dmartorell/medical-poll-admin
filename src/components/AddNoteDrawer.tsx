@@ -1,4 +1,6 @@
-import React, { FC, useState, Dispatch } from 'react';
+import React, {
+ FC, useState, Dispatch, useRef,
+} from 'react';
 import {
     Button,
     Drawer,
@@ -7,10 +9,10 @@ import {
     DrawerCloseButton,
     DrawerHeader,
     DrawerBody,
-    Input,
     DrawerFooter,
     useDisclosure,
     Icon,
+    Textarea,
 
 } from '@chakra-ui/react';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -35,18 +37,22 @@ const AddNoteDrawer:FC<Props> = (
 ) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
+    const firstField = useRef<any>();
+
+    console.log(notes);
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         try {
           postNewNote().then((newNote) => {
-            console.log(newNote);
             setNotes([...notes, newNote]);
             onClose();
           }); // send toaster GREEN
         } catch (error) {
           alert(error.message); // send toaster RED
         }
+
+        setValue('');
         async function postNewNote() {
           const response: Promise<any> = await postNote(
             {
@@ -70,7 +76,7 @@ const AddNoteDrawer:FC<Props> = (
       <Icon
         as="button"
         transition="all 200ms"
-        color="gray.300"
+        color="gray.200"
         mx={3}
         fontSize="21px"
         onClick={onOpen}
@@ -83,6 +89,7 @@ const AddNoteDrawer:FC<Props> = (
       </Icon>
       <Drawer
         isOpen={isOpen}
+        initialFocusRef={firstField}
         onClose={onClose}
         size="md"
         placement="right"
@@ -98,8 +105,9 @@ const AddNoteDrawer:FC<Props> = (
               id="add-note"
               onSubmit={handleSubmit}
             >
-              <Input
+              <Textarea
                 name="newNote"
+                ref={firstField}
                 placeholder="Type here..."
                 value={value}
                 onChange={({ target }) => { setValue(target.value); }}
@@ -107,7 +115,19 @@ const AddNoteDrawer:FC<Props> = (
             </form>
           </DrawerBody>
           <DrawerFooter justifyContent="center">
-            <Button size="md" type="submit" form="add-note">
+            <Button size="sm" p={4} mb="2em" variant="outline" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              p={4}
+              mb="2em"
+              color="white"
+              backgroundColor="blue.800"
+              type="submit"
+              form="add-note"
+              _hover={{ backgroundColor: 'blue.600' }}
+            >
               Save
             </Button>
           </DrawerFooter>

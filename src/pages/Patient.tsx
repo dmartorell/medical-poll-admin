@@ -20,8 +20,9 @@ import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
 import AllEntriesList from '../components/AllEntriesList';
-import NotesComponent from '../components/graphs/NotesComponent';
+import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
+import DeleteNoteButton from '../components/DeleteNoteButton';
 
 const Patient: FC = () => {
   const {
@@ -95,6 +96,7 @@ const Patient: FC = () => {
       );
     }
   }, [hadA, hadD, dts]);
+
   useEffect(() => {
     if (patientState) {
       fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(patientState.date)}&question_category=eq.had-a`, ['answer'])
@@ -115,6 +117,7 @@ const Patient: FC = () => {
         });
     }
   }, [patientState]);
+
   useEffect(() => {
     if (patientState) {
       getPatientHistory(Number(id));
@@ -148,17 +151,20 @@ const Patient: FC = () => {
   }, [patientHistory]);
 
   useEffect(() => {
-    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at'])
+    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
         .then((data:any[]) => {
           setPatientNotes(data);
         });
-      }, [patientNotes.length]);
-  return (
+      }, [patientNotes.length, patientState]);
+
+      return (
     patientState
     ? (
       <Stack as="main" direction="column" alignItems="center">
         <Stack direction="column" maxWidth="1200px" w="100%" spacing="2em" mt={5}>
           <Stack spacing={0}>
+            <DeleteNoteButton />
+
             <Text as="h4" fontSize="sm" color="gray.400">
               {`PROJECT ${projectName}`}
             </Text>
@@ -176,7 +182,6 @@ const Patient: FC = () => {
 }))}
               </Text>
             </HStack>
-
           </Stack>
           {patientHistory.length
         ? (

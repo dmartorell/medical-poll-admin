@@ -1,15 +1,16 @@
 /* eslint-disable camelcase */
 import React, { FC, ReactNode } from 'react';
 import {
- Tag, TagLabel, Stack, List, ListItem, Divider, ListIcon,
+ Tag, TagLabel, Stack, List, ListItem, Divider,
 } from '@chakra-ui/react';
 import { RiStickyNoteLine } from 'react-icons/ri';
-import { HiMinusCircle } from 'react-icons/hi';
+import DeleteNoteButton from './DeleteNoteButton';
 
 type Note = {
   text: string,
   created_by: string,
   saved_at: string,
+  id: number
 };
 
 type Props = {
@@ -27,28 +28,20 @@ const NotesComponent: FC<Props> = ({ children, notes }) => (
     <List spacing={2}>
       {
       notes.length
-      && notes.map(({ text }) => (
+      && notes.map(({ text, id }) => (
         <ListItem
+          key={id}
           px={3}
           color="gray.700"
           fontSize="sm"
           onClick={() => console.log('')}
         >
-          <ListIcon
-            as={HiMinusCircle}
-            transition="all 200ms"
-            color="gray.300"
-            fontSize="18px"
-            _hover={{
-            cursor: 'pointer',
-            transform: 'scale(1.5)',
-
-          }}
-          />
+          <DeleteNoteButton />
           {text}
         </ListItem>
 ))
       }
+
       {children}
     </List>
   </Stack>
