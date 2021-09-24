@@ -20,7 +20,7 @@ import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
 import AllEntriesList from '../components/AllEntriesList';
-import Anotations from '../components/graphs/Anotations';
+import NotesComponent from '../components/graphs/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 
 const Patient: FC = () => {
@@ -124,7 +124,6 @@ const Patient: FC = () => {
       const rawData: any[] = getSurveys(allAnswers);
       const mapped = await Promise.all(
         rawData.map(async ({ date }) => {
-          console.log({ date });
           const hadA = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-a`, ['answer']);
           const hadD = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.had-d`, ['answer']);
           const dts = fetchDB('answer', `patientID=eq.${id}&date=eq.${formatToDbDate(date)}&question_category=eq.dts`, ['answer']);
@@ -147,16 +146,13 @@ const Patient: FC = () => {
     const data = getSumsFromHistory(patientHistory);
     setHistorySums(data);
   }, [patientHistory]);
-console.log(typeof patientState.date);
+
   useEffect(() => {
-    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}, ['text', 'created_by']`)
+    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at'])
         .then((data:any[]) => {
           setPatientNotes(data);
         });
-  }, []);
-
-  console.log(patientState.date);
-
+      }, [patientNotes.length]);
   return (
     patientState
     ? (
@@ -216,13 +212,15 @@ console.log(typeof patientState.date);
           && (
           <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
             <AllEntriesList dates={patientHistory} />
-            <Anotations>
+            <NotesComponent notes={patientNotes}>
               <AddNoteDrawer
                 patientId={id}
                 projectName={projectName}
                 surveyDate={patientState.date}
+                notes={patientNotes}
+                setNotes={setPatientNotes}
               />
-            </Anotations>
+            </NotesComponent>
           </HStack>
 )
         }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, Dispatch } from 'react';
 import {
     Button,
     Drawer,
@@ -17,9 +17,11 @@ import { HiPlusCircle } from 'react-icons/hi';
 import { postNote } from '../helpers/fetchDB';
 
 type Props = {
-    patientId: string
-    projectName: string
-    surveyDate: string
+    patientId: string,
+    projectName: string,
+    surveyDate: string,
+    notes: any[],
+    setNotes: Dispatch<any>
 
 };
 const AddNoteDrawer:FC<Props> = (
@@ -27,14 +29,26 @@ const AddNoteDrawer:FC<Props> = (
         patientId,
         projectName,
         surveyDate,
+        notes,
+        setNotes,
     },
 ) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
-        postNote(
+        try {
+          postNewNote().then((newNote) => {
+            console.log(newNote);
+            setNotes([...notes, newNote]);
+            onClose();
+          }); // send toaster GREEN
+        } catch (error) {
+          alert(error.message); // send toaster RED
+        }
+        async function postNewNote() {
+          const response: Promise<any> = await postNote(
             {
                 created_by: null,
                 project_name: projectName,
@@ -43,7 +57,13 @@ const AddNoteDrawer:FC<Props> = (
                 survey_date: surveyDate,
             },
         );
-        onClose();
+        if (!response.ok) {
+          const message: string = `An error has occured: ${response.status}`;
+          throw new Error(message);
+        }
+        const [newNote] = await response.json();
+        return newNote;
+        }
     };
   return (
     <>

@@ -24,14 +24,8 @@ export const fetchDB = (table: string, filter: string | undefined = '', select: 
   }
 };
 
-export const postNote = (data: any) => {
-  try {
-    return fetch(`${apiUrl}/note`, {
+export const postNote = (data: any) => fetch(`${apiUrl}/note`, {
       headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
       body: JSON.stringify(data),
       method: 'POST',
 });
-  } catch ({ message }) {
-    return console.log(message);
-  }
-};
