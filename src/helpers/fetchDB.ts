@@ -1,6 +1,3 @@
-// import { iSurvey } from '../types';
-// import toTimestamp from './toTimestamp';
-
 const apiKey: any = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const apiUrl: any = import.meta.env.VITE_SUPABASE_URL;
 
@@ -29,3 +26,13 @@ export const postNote = (data: any) => fetch(`${apiUrl}/note`, {
       body: JSON.stringify(data),
       method: 'POST',
 });
+export const deleteNote = async (id: number) => {
+  const response = await fetch(`${apiUrl}/note?id=eq.${id}`, {
+    headers: { apiKey, 'Content-Type': 'application/json' },
+    method: 'DELETE',
+});
+    if (!response.ok) {
+      const message:string = `Something went wrong: ${response.status}`;
+      throw new Error(message);
+    }
+};

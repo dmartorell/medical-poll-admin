@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { FC, ReactNode } from 'react';
+import React, { Dispatch, FC, ReactNode } from 'react';
 import {
  Tag, TagLabel, Stack, List, ListItem, Divider,
 } from '@chakra-ui/react';
@@ -15,10 +15,11 @@ type Note = {
 
 type Props = {
   notes: Note[],
+  setNotes: Dispatch<any>,
   children:ReactNode,
 };
 
-const NotesComponent: FC<Props> = ({ children, notes }) => (
+const NotesComponent: FC<Props> = ({ children, notes, setNotes }) => (
   <Stack width="100%" alignItems="flex-start">
     <Tag size="md" mb={2}>
       <RiStickyNoteLine size={19} />
@@ -34,9 +35,12 @@ const NotesComponent: FC<Props> = ({ children, notes }) => (
           px={3}
           color="gray.700"
           fontSize="sm"
-          onClick={() => console.log('')}
         >
-          <DeleteNoteButton />
+          <DeleteNoteButton
+            noteId={id}
+            notes={notes}
+            setNotes={setNotes}
+          />
           {text}
         </ListItem>
 ))

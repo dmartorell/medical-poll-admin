@@ -214,7 +214,10 @@ const Patient: FC = () => {
           && (
           <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
             <AllEntriesList dates={patientHistory} />
-            <NotesComponent notes={patientNotes}>
+            <NotesComponent
+              notes={patientNotes}
+              setNotes={setPatientNotes}
+            >
               <AddNoteDrawer
                 patientId={id}
                 projectName={projectName}

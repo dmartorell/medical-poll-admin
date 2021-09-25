@@ -35,7 +35,7 @@ const AllEntriesList: FC<Props> = ({ dates }) => {
       <Stack alignItems="flex-start">
         <Tag size="md" mb={2}>
           <HiOutlineClipboardList size={20} />
-          <TagLabel margin={2}>All Entries</TagLabel>
+          <TagLabel margin={2}>All Evaluations</TagLabel>
         </Tag>
         <Divider />
         <List spacing={2}>

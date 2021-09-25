@@ -1,4 +1,6 @@
-import React, { useState, useRef, MutableRefObject } from 'react';
+import React, {
+ FC, useState, useRef, MutableRefObject, Dispatch,
+} from 'react';
 import {
  Button,
  AlertDialog,
@@ -11,14 +13,33 @@ import {
 } from '@chakra-ui/react';
 
 import { HiMinusCircle } from 'react-icons/hi';
+import { deleteNote } from '../helpers/fetchDB';
 
-const DeleteNoteButton = () => {
+type Props = {
+  noteId: number,
+  notes: any[],
+  setNotes: Dispatch<any>,
+};
+const DeleteNoteButton: FC<Props> = ({
+ noteId,
+ notes,
+ setNotes,
+
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef: MutableRefObject<any> = useRef();
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    try {
+      await deleteNote(noteId);
+      const updatedNotes = notes.filter((note) => note.id !== noteId);
+      setNotes(updatedNotes);
+      onClose();
+    } catch (error: any) {
+      alert(error.message);
     onClose();
+    }
   };
 
   return (
@@ -26,7 +47,7 @@ const DeleteNoteButton = () => {
       <Icon
         as="button"
         mr={3}
-        transition="all 200ms"
+        transition="transform 200ms"
         color="gray.200"
         fontSize="21px"
         onClick={() => setIsOpen(true)}
