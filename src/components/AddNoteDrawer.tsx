@@ -37,24 +37,33 @@ const AddNoteDrawer:FC<Props> = (
 ) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
+    const [isInvalidInput, setIsInvalidInput] = useState(false);
+
     const firstField = useRef<any>();
     const handleCancel = () => {
       setValue('');
+      setIsInvalidInput(false);
       onClose();
     };
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        try {
-          postNewNote().then((newNote) => {
-            setNotes([...notes, newNote]);
-            onClose();
-          }); // send toaster GREEN
-        } catch (error) {
-          alert(error.message); // send toaster RED
+        if (value.trim() === '') {
+          setIsInvalidInput(true);
+          return;
         }
+          try {
+            postNewNote().then((newNote) => {
+              setNotes([...notes, newNote]);
+              onClose();
+            }); // send toaster GREEN
+          } catch (error:unknown) {
+            alert(error.message); // send toaster RED
+          }
 
-        setValue('');
+        setTimeout(() => setValue(''), 1000);
+        setIsInvalidInput(false);
+
         async function postNewNote() {
           const response: any = await postNote(
             {
@@ -110,7 +119,13 @@ const AddNoteDrawer:FC<Props> = (
               <Textarea
                 name="newNote"
                 ref={firstField}
+                onFocus={() => {
+                  setIsInvalidInput(false);
+                }}
+                errorBorderColor="red.500"
                 placeholder="Type here..."
+                _placeholder={{ color: isInvalidInput ? 'red.500' : 'inherit' }}
+                isInvalid={isInvalidInput}
                 value={value}
                 onChange={({ target }) => { setValue(target.value); }}
               />
