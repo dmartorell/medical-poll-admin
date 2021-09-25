@@ -17,6 +17,10 @@ const DeleteNoteButton = () => {
   const onClose = () => setIsOpen(false);
   const cancelRef: MutableRefObject<any> = useRef();
 
+  const handleDelete = () => {
+    onClose();
+  };
+
   return (
     <>
       <Icon
@@ -53,7 +57,7 @@ const DeleteNoteButton = () => {
               <Button ref={cancelRef} size="sm" onClick={onClose}>
                 Cancel
               </Button>
-              <Button size="sm" colorScheme="red" onClick={onClose} ml={3}>
+              <Button size="sm" colorScheme="red" onClick={handleDelete} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>

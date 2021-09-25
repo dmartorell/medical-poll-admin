@@ -38,8 +38,10 @@ const AddNoteDrawer:FC<Props> = (
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
     const firstField = useRef<any>();
-
-    console.log(notes);
+    const handleCancel = () => {
+      setValue('');
+      onClose();
+    };
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
@@ -54,7 +56,7 @@ const AddNoteDrawer:FC<Props> = (
 
         setValue('');
         async function postNewNote() {
-          const response: Promise<any> = await postNote(
+          const response: any = await postNote(
             {
                 created_by: null,
                 project_name: projectName,
@@ -115,7 +117,7 @@ const AddNoteDrawer:FC<Props> = (
             </form>
           </DrawerBody>
           <DrawerFooter justifyContent="center">
-            <Button size="sm" p={4} mb="2em" variant="outline" mr={3} onClick={onClose}>
+            <Button size="sm" p={4} mb="2em" variant="outline" mr={3} onClick={handleCancel}>
               Cancel
             </Button>
             <Button

@@ -22,7 +22,6 @@ import getHistoryData from '../helpers/getHistoryData';
 import AllEntriesList from '../components/AllEntriesList';
 import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
-import DeleteNoteButton from '../components/DeleteNoteButton';
 
 const Patient: FC = () => {
   const {
@@ -163,8 +162,6 @@ const Patient: FC = () => {
       <Stack as="main" direction="column" alignItems="center">
         <Stack direction="column" maxWidth="1200px" w="100%" spacing="2em" mt={5}>
           <Stack spacing={0}>
-            <DeleteNoteButton />
-
             <Text as="h4" fontSize="sm" color="gray.400">
               {`PROJECT ${projectName}`}
             </Text>
