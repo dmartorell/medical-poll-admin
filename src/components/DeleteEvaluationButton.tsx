@@ -1,5 +1,5 @@
 import React, {
-    FC, useState, useRef, MutableRefObject,
+    FC, useState, useRef, MutableRefObject, Dispatch,
    } from 'react';
    import {
     Button,
@@ -16,13 +16,18 @@ import { deleteEvaluation } from '../helpers/fetchDB';
 
    type Props = {
      patientId: number,
-     date: string,
+     currentDate: string,
+     list: string[],
+     updateList: Dispatch<any>
+
    };
    const DeleteEvaluationButton: FC<Props> = (
        {
-patientId,
-    date,
-},
+    patientId,
+    currentDate,
+    list,
+    updateList,
+    },
 
    ) => {
      const [isOpen, setIsOpen] = useState(false);
@@ -30,8 +35,10 @@ patientId,
      const cancelRef: MutableRefObject<any> = useRef();
      const handleDelete = async () => {
        try {
-         await deleteEvaluation(patientId, date);
-         // TOASTER
+         await deleteEvaluation(patientId, currentDate);
+        // TOASTER
+        const updatedList = list.filter((date) => date !== currentDate);
+        updateList(updatedList);
          onClose();
        } catch (error: any) {
          alert(error.message);

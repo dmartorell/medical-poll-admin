@@ -1,7 +1,7 @@
 // DEJAR MARCADA EL ENTRIE EN LA QUE ESTÁ<S></S>
 
 import React, {
- FC, Dispatch, useState, useEffect,
+ FC, useState, useEffect,
 } from 'react';
 import {
  Tag, TagLabel, Stack, List, ListItem, Divider,
@@ -12,7 +12,6 @@ import toTimestamp from '../helpers/toTimestamp';
 
 type Props = {
     dates : string[],
-    setPatientHistory: Dispatch<any>
 };
 
 const AllEntriesList: FC<Props> = ({ dates }) => {

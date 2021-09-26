@@ -40,6 +40,7 @@ const Patient: FC = () => {
   const [historyData, setHistoryData] = useState<any>([]);
   const [historySums, setHistorySums] = useState<any>([]);
   const [patientNotes, setPatientNotes] = useState<any>([]);
+  const [evaluationsList, setEvaluationsList] = useState<string[]>([]);
 
   const hadsBarData = [
     {
@@ -152,6 +153,10 @@ const Patient: FC = () => {
   }, [patientHistory]);
 
   useEffect(() => {
+    setEvaluationsList(patientHistory.map(({ date } : PatientHistory) => date));
+}, [patientHistory]);
+
+  useEffect(() => {
     fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
         .then((data:any[]) => {
           setPatientNotes(data);
@@ -186,7 +191,9 @@ const Patient: FC = () => {
             <HStack>
               <DeleteEvaluationButton
                 patientId={Number(id)}
-                date={patientState.date}
+                currentDate={patientState.date}
+                list={evaluationsList}
+                updateList={setEvaluationsList}
               />
             </HStack>
           </HStack>
@@ -226,9 +233,8 @@ const Patient: FC = () => {
           <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
             <AllEntriesList
               dates={
-              patientHistory.map(({ date } : PatientHistory) => date)
+              evaluationsList
             }
-              setPatientHistory={setPatientHistory}
             />
             <NotesComponent
               notes={patientNotes}
