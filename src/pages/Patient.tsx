@@ -22,6 +22,7 @@ import getHistoryData from '../helpers/getHistoryData';
 import AllEntriesList from '../components/AllEntriesList';
 import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
+import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
 
 const Patient: FC = () => {
   const {
@@ -161,25 +162,35 @@ const Patient: FC = () => {
     ? (
       <Stack as="main" direction="column" alignItems="center">
         <Stack direction="column" maxWidth="1200px" w="100%" spacing="2em" mt={5}>
-          <Stack spacing={0}>
-            <Text as="h4" fontSize="sm" color="gray.400">
-              {`PROJECT ${projectName}`}
-            </Text>
-            <HStack alignItems="center" spacing={2} pt={3}>
-              <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
-              <Text as="h2" fontSize="2xl" color="blue.700">
-                {`Patient ${id}`}
+          <HStack justifyContent="space-between">
+            <Stack spacing={0}>
+              <Text as="h4" fontSize="sm" color="gray.400">
+                {`PROJECT ${projectName}`}
               </Text>
-            </HStack>
-            <HStack alignItems="center" spacing={2}>
-              <Box color="gray.600"><IoMdTime size="15px" /></Box>
-              <Text as="h3" fontSize="sm" color="gray.600">
-                {(new Date(patientState.date).toLocaleDateString('sp-SP', {
+              <HStack alignItems="center" spacing={2} pt={3}>
+                <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
+                <Text as="h2" fontSize="2xl" color="blue.700">
+                  {`Patient ${id}`}
+                </Text>
+              </HStack>
+              <HStack alignItems="center" spacing={2}>
+                <Box color="gray.600"><IoMdTime size="15px" /></Box>
+                <Text as="h3" fontSize="sm" color="gray.600">
+                  {(new Date(patientState.date).toLocaleDateString('sp-SP', {
  day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
 }))}
-              </Text>
+                </Text>
+              </HStack>
+            </Stack>
+            <HStack>
+
+              <DeleteEvaluationButton
+                patientId={Number(id)}
+                date={patientState.date}
+              />
             </HStack>
-          </Stack>
+          </HStack>
+
           {patientHistory.length
         ? (
           <>
