@@ -1,6 +1,8 @@
 // DEJAR MARCADA EL ENTRIE EN LA QUE ESTÁ<S></S>
 
-import React, { FC, useState, useEffect } from 'react';
+import React, {
+ FC, Dispatch, useState, useEffect,
+} from 'react';
 import {
  Tag, TagLabel, Stack, List, ListItem, Divider,
 } from '@chakra-ui/react';
@@ -9,8 +11,10 @@ import { useParams, useHistory } from 'react-router-dom';
 import toTimestamp from '../helpers/toTimestamp';
 
 type Props = {
-    dates : {date: string}[],
+    dates : string[],
+    setPatientHistory: Dispatch<any>
 };
+
 const AllEntriesList: FC<Props> = ({ dates }) => {
     const history = useHistory();
     const {
@@ -27,7 +31,7 @@ const AllEntriesList: FC<Props> = ({ dates }) => {
     };
     useEffect(() => {
         const firstSelectedIndex = dates
-        .findIndex((element: {date: string}) => Date.parse(element.date)
+        .findIndex((date: string) => Date.parse(date)
             === Number(timestamp));
         setSelectedIndex(firstSelectedIndex);
 }, []);
@@ -40,7 +44,7 @@ const AllEntriesList: FC<Props> = ({ dates }) => {
         <Divider />
         <List spacing={2}>
           {
-                dates?.map(({ date }, index) => (
+                dates?.map((date, index) => (
                   <ListItem
                     key={date}
                     cursor="pointer"

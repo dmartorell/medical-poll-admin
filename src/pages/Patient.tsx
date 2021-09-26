@@ -23,6 +23,7 @@ import AllEntriesList from '../components/AllEntriesList';
 import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
+import { PatientHistory } from '../types';
 
 const Patient: FC = () => {
   const {
@@ -183,7 +184,6 @@ const Patient: FC = () => {
               </HStack>
             </Stack>
             <HStack>
-
               <DeleteEvaluationButton
                 patientId={Number(id)}
                 date={patientState.date}
@@ -224,7 +224,12 @@ const Patient: FC = () => {
           patientHistory.length
           && (
           <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
-            <AllEntriesList dates={patientHistory} />
+            <AllEntriesList
+              dates={
+              patientHistory.map(({ date } : PatientHistory) => date)
+            }
+              setPatientHistory={setPatientHistory}
+            />
             <NotesComponent
               notes={patientNotes}
               setNotes={setPatientNotes}

@@ -43,3 +43,10 @@ export interface iSurvey {
         id: number
     },
 }
+
+export type PatientHistory = {
+    date: string,
+    hadA: [],
+    hadD: [],
+    dts: [],
+  };
