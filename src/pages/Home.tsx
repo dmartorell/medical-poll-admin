@@ -20,7 +20,7 @@ const Project: FC = () => {
     <Stack as="main" direction="column" alignItems="center">
       <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
         <Text as="h2" fontSize={{ base: 'xl', md: 'xl', lg: '3xl' }} color="blue.700">
-          Latest Entries
+          Latest Evaluations
         </Text>
         {surveys.length
         ? <DefaultList surveys={surveys} />

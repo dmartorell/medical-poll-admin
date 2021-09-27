@@ -39,17 +39,18 @@ const NavBar: FC<Projects> = ({ projects }) => {
               <Heading as="h1" fontWeight="thin" size="lg" color="blue.700">Admin</Heading>
             </HStack>
           </Link>
-          <HStack>
-            <Menu>
-              <MenuButton
-                size={isLargerThan860 ? 'sm' : 'xs'}
-                as={Button}
-                rightIcon={<BiChevronDown />}
-              >
-                Projects
-              </MenuButton>
-              <MenuList>
-                {
+          <HStack spacing={3}>
+            <HStack mr={{ base: '', md: '2em', lg: '3em' }}>
+              <Menu>
+                <MenuButton
+                  size={isLargerThan860 ? 'sm' : 'xs'}
+                  as={Button}
+                  rightIcon={<BiChevronDown />}
+                >
+                  Projects
+                </MenuButton>
+                <MenuList>
+                  {
                   projects?.map((project) => (
                     <Link
                       key={project.id}
@@ -61,8 +62,9 @@ const NavBar: FC<Projects> = ({ projects }) => {
                     </Link>
 ))
                 }
-              </MenuList>
-            </Menu>
+                </MenuList>
+              </Menu>
+            </HStack>
             <Avatar size={isLargerThan860 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
             <Button colorScheme="facebook" size={isLargerThan860 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
               Log Out

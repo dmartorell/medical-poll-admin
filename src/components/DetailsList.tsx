@@ -7,7 +7,7 @@ import { Details } from '../types';
 import TableFields from './TableFields';
 
 const DetailsList: FC<Details> = ({ data }) => {
-    const fields = ['survey details'];
+    const fields = ['evaluation details'];
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const detailedData = data
             .map((element) => ({
