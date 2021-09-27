@@ -56,7 +56,7 @@ const AddNoteDrawer:FC<Props> = (
             postNewNote().then((newNote) => {
               setNotes([...notes, newNote]);
               onClose();
-            }); // send toaster GREEN
+            });
           } catch (error: any) {
             alert(error.message); // send toaster RED
           }
