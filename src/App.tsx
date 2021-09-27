@@ -3,6 +3,7 @@ import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
 import Header from './components/Header';
+import LoginButton from './components/LoginButton';
 import { fetchProjectNames } from './helpers/fetchDB';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
@@ -29,6 +30,8 @@ function App() {
         </Route>
         <Route exact path="/home">
           <Home projects={projectNames} />
+          <LoginButton />
+
         </Route>
         <Route exact path="/" component={Home}>
           <Redirect to="/home" />
