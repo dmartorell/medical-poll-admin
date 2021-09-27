@@ -158,10 +158,14 @@ const Patient: FC = () => {
 }, [patientHistory]);
 
   useEffect(() => {
-    fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
+    try {
+      fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
         .then((data:any[]) => {
           setPatientNotes(data);
         });
+      } catch (err) {
+        console.error(err);
+      }
       }, [patientNotes.length, patientState]);
 
       return (
