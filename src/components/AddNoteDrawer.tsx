@@ -55,9 +55,9 @@ const AddNoteDrawer:FC<Props> = (
           return;
         }
           try {
+            onClose();
             postNewNote().then((newNote) => {
               setNotes([...notes, newNote]);
-              onClose();
             });
           } catch (error: any) {
             toast({

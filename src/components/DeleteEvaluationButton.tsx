@@ -45,8 +45,8 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
          await deleteEvaluation(patientId, currentDate);
          await deleteNoteByPatientId(patientId);
         const updatedList = list.filter((date) => date !== currentDate);
-        updateList(updatedList);
         onClose();
+        updateList(updatedList);
         toast({
           title: 'Evaluation deleted',
           description: 'The evaluation has been succesfully removed',
@@ -59,6 +59,7 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
           history.push('/home');
         }
        } catch (error: any) {
+        onClose();
         toast({
           title: 'Error',
           description: error.message,
@@ -67,8 +68,6 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
           duration: 4500,
           isClosable: false,
           });
-
-       onClose();
        }
      };
 

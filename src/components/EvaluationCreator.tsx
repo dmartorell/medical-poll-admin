@@ -38,12 +38,12 @@ const EvaluationCreator: FC<Projects> = ({ projects }) => {
   };
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    onClose();
     try {
       const newPatient = {
         project_name: selectedProject,
       };
       await createPatient(newPatient);
-      onClose();
       toast({
         title: 'Patient Created',
         description: '',
