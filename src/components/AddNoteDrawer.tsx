@@ -13,7 +13,6 @@ import {
     useDisclosure,
     Icon,
     Textarea,
-
 } from '@chakra-ui/react';
 import { HiPlusCircle } from 'react-icons/hi';
 import { postNote } from '../helpers/fetchDB';
@@ -37,7 +36,7 @@ const AddNoteDrawer:FC<Props> = (
 ) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
-    const [isInvalidInput, setIsInvalidInput] = useState(false);
+    const [isInvalidInput, setIsInvalidInput] = useState<boolean>(false);
 
     const firstField = useRef<any>();
     const handleCancel = () => {
@@ -106,9 +105,7 @@ const AddNoteDrawer:FC<Props> = (
         placement="right"
       >
         <DrawerOverlay />
-        <DrawerContent
-          transform="translateX(-100%)"
-        >
+        <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Add note</DrawerHeader>
           <DrawerBody>
@@ -130,6 +127,7 @@ const AddNoteDrawer:FC<Props> = (
                 onChange={({ target }) => { setValue(target.value); }}
               />
             </form>
+
           </DrawerBody>
           <DrawerFooter justifyContent="center">
             <Button size="sm" p={4} mb="2em" variant="outline" mr={3} onClick={handleCancel}>

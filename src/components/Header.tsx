@@ -1,19 +1,15 @@
 /* eslint-disable camelcase */
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import NavBar from './NavBar';
-import { fetchProjectNames } from '../helpers/fetchDB';
+import { iProjects } from '../types';
 
-const Header: FC = () => {
-  const [projectNames, setProjectNames] = useState([]);
-  useEffect(() => {
-    fetchProjectNames()
-    .then((data: any) => setProjectNames(data));
-  }, []);
-  return (
-    <header>
-      <NavBar projects={projectNames} />
-    </header>
-    );
+type Props = {
+  projects : iProjects[],
 };
+const Header: FC<Props> = ({ projects }) => (
+  <header>
+    <NavBar projects={projects} />
+  </header>
+    );
 
 export default Header;

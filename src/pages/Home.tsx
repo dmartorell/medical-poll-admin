@@ -4,8 +4,10 @@ import { Stack, Spinner, Text } from '@chakra-ui/react';
 import DefaultList from '../components/DefaultList';
 import { fetchDB } from '../helpers/fetchDB';
 import getSurveys from '../helpers/getSurveys';
+import EvaluationCreator from '../components/EvaluationCreator';
+import { Projects } from '../types';
 
-const Project: FC = () => {
+const Project: FC<Projects> = ({ projects }) => {
   const [surveys, setSurveys] = useState<any[]>([]);
 
   useEffect(() => {
@@ -23,7 +25,12 @@ const Project: FC = () => {
           Latest Evaluations
         </Text>
         {surveys.length
-        ? <DefaultList surveys={surveys} />
+        ? (
+          <>
+            <DefaultList surveys={surveys} />
+            <EvaluationCreator projects={projects} />
+          </>
+)
         : (
           <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
             <Spinner

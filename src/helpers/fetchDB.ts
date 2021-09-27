@@ -28,13 +28,25 @@ export const postNote = (data: any) => fetch(`${apiUrl}/note`, {
       body: JSON.stringify(data),
       method: 'POST',
 });
+
+export const createPatient = async (data: any) => {
+  const response = await fetch(`${apiUrl}/patient`, {
+    headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(data),
+    method: 'POST',
+  });
+    if (!response.ok) {
+      const message:string = 'Something went wrong.';
+      throw new Error(message);
+    }
+};
 export const deleteNote = async (id: number) => {
   const response = await fetch(`${apiUrl}/note?id=eq.${id}`, {
     headers: { apiKey, 'Content-Type': 'application/json' },
     method: 'DELETE',
 });
     if (!response.ok) {
-      const message:string = `Something went wrong: ${response.status}`;
+      const message:string = 'Something went wrong.';
       throw new Error(message);
     }
 };
@@ -44,7 +56,7 @@ export const deleteNoteByPatientId = async (id: number) => {
     method: 'DELETE',
 });
     if (!response.ok) {
-      const message:string = `Something went wrong: ${response.status}`;
+      const message:string = 'Something went wrong.';
       throw new Error(message);
     }
 };
@@ -54,7 +66,7 @@ export const deleteEvaluation = async (id: number, date: string) => {
     method: 'DELETE',
 });
     if (!response.ok) {
-      const message:string = `Something went wrong: ${response.status}`;
+      const message:string = 'Something went wrong.';
       throw new Error(message);
     }
 };

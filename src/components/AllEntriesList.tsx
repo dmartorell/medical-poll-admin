@@ -1,5 +1,3 @@
-// DEJAR MARCADA EL ENTRIE EN LA QUE ESTÁ<S></S>
-
 import React, {
  FC, useState, useEffect,
 } from 'react';

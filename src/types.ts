@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 export type Projects = {
-    projects: iProjects[] | null
+    projects: iProjects[]
 };
 
 export interface iProjects {

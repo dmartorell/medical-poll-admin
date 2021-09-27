@@ -61,7 +61,7 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
        } catch (error: any) {
         toast({
           title: 'Error',
-          description: error,
+          description: error.message,
           status: 'error',
           position: 'top-right',
           duration: 4500,
