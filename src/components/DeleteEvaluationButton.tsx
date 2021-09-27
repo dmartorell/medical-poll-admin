@@ -10,10 +10,11 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  useToast,
 } from '@chakra-ui/react';
 
 import { AiOutlineDelete } from 'react-icons/ai';
-import { deleteEvaluation, deleteNoteByPatientId, deleteNoteByPatientIdAndDate } from '../helpers/fetchDB';
+import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
 
    type Props = {
      patientId: number,
@@ -35,19 +36,35 @@ import { deleteEvaluation, deleteNoteByPatientId, deleteNoteByPatientIdAndDate }
      const onClose = () => setIsOpen(false);
      const cancelRef: MutableRefObject<any> = useRef();
      const history = useHistory();
+     const toast = useToast();
      const handleDelete = async () => {
        try {
          await deleteEvaluation(patientId, currentDate);
          await deleteNoteByPatientId(patientId);
-        // TOASTER
         const updatedList = list.filter((date) => date !== currentDate);
         updateList(updatedList);
         onClose();
+        toast({
+          title: 'Evaluation deleted',
+          description: 'The evaluation has been succesfully removed',
+          status: 'success',
+          position: 'top-right',
+          duration: 4500,
+          isClosable: false,
+          });
         if (!updatedList.length) {
           history.push('/home');
         }
        } catch (error: any) {
-         alert(error.message);
+        toast({
+          title: 'Error',
+          description: error.message,
+          status: 'success',
+          position: 'top-right',
+          duration: 4500,
+          isClosable: false,
+          });
+
        onClose();
        }
      };
