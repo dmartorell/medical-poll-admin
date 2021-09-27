@@ -38,6 +38,16 @@ export const deleteNote = async (id: number) => {
       throw new Error(message);
     }
 };
+export const deleteNoteByPatientId = async (id: number) => {
+  const response = await fetch(`${apiUrl}/note?patient_id=eq.${id}`, {
+    headers: { apiKey, 'Content-Type': 'application/json' },
+    method: 'DELETE',
+});
+    if (!response.ok) {
+      const message:string = `Something went wrong: ${response.status}`;
+      throw new Error(message);
+    }
+};
 export const deleteEvaluation = async (id: number, date: string) => {
   const response = await fetch(`${apiUrl}/answer?patientID=eq.${id}&date=eq.${formatToDbDate(date)}`, {
     headers: { apiKey, 'Content-Type': 'application/json' },

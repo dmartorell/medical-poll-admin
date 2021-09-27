@@ -13,27 +13,26 @@ import toTimestamp from '../helpers/toTimestamp';
 type Props = {
     dates : string[],
 };
-
 const AllEntriesList: FC<Props> = ({ dates }) => {
-    const history = useHistory();
-    const {
-        id,
-        projectName,
-        timestamp,
-    } = (useParams<{id: string, projectName: string, timestamp: string}>());
-    const [selectedIndex, setSelectedIndex] = useState<number|null>(null);
+  const history = useHistory();
+  const {
+    id,
+    projectName,
+    timestamp,
+  } = (useParams<{id: string, projectName: string, timestamp: string}>());
+  const [selectedIndex, setSelectedIndex] = useState<number|null>(null);
     const handleClick = (date: string) => {
         history.push({
             pathname: `/patient/${id}/pro${projectName}/ts${toTimestamp(date)}`,
             state: { date },
         });
     };
+
     useEffect(() => {
-        const firstSelectedIndex = dates
-        .findIndex((date: string) => Date.parse(date)
+        const firstSelectedIndex = dates?.findIndex((date: string) => Date.parse(date)
             === Number(timestamp));
         setSelectedIndex(firstSelectedIndex);
-}, []);
+}, [dates]);
     return (
       <Stack alignItems="flex-start">
         <Tag size="md" mb={2}>

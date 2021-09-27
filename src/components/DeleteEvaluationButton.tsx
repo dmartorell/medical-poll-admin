@@ -1,18 +1,19 @@
 import React, {
     FC, useState, useRef, MutableRefObject, Dispatch,
-   } from 'react';
-   import {
-    Button,
-    AlertDialog,
-    AlertDialogOverlay,
-    AlertDialogContent,
-    AlertDialogHeader,
-    AlertDialogBody,
-    AlertDialogFooter,
-   } from '@chakra-ui/react';
+} from 'react';
+import { useHistory } from 'react-router-dom';
+import {
+  Button,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+} from '@chakra-ui/react';
 
-   import { AiOutlineDelete } from 'react-icons/ai';
-import { deleteEvaluation } from '../helpers/fetchDB';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { deleteEvaluation, deleteNoteByPatientId, deleteNoteByPatientIdAndDate } from '../helpers/fetchDB';
 
    type Props = {
      patientId: number,
@@ -33,13 +34,19 @@ import { deleteEvaluation } from '../helpers/fetchDB';
      const [isOpen, setIsOpen] = useState(false);
      const onClose = () => setIsOpen(false);
      const cancelRef: MutableRefObject<any> = useRef();
+     const history = useHistory();
      const handleDelete = async () => {
        try {
          await deleteEvaluation(patientId, currentDate);
+         await deleteNoteByPatientId(patientId);
         // TOASTER
         const updatedList = list.filter((date) => date !== currentDate);
         updateList(updatedList);
-         onClose();
+        onClose();
+        // BORRA POSIBLES COMMENTS COLGADOS
+        if (!updatedList.length) {
+          history.push('/home');
+        }
        } catch (error: any) {
          alert(error.message);
        onClose();
