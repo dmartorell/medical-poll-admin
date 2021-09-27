@@ -11,6 +11,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useToast,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -37,6 +38,8 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
      const cancelRef: MutableRefObject<any> = useRef();
      const history = useHistory();
      const toast = useToast();
+     const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
+
      const handleDelete = async () => {
        try {
          await deleteEvaluation(patientId, currentDate);
@@ -75,7 +78,7 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
            type="submit"
            w="auto"
            color="gray.400"
-           size="sm"
+           size={isLargerThan860 ? 'sm' : 'xs'}
            fontWeight="400"
            variant="ghost"
            rightIcon={<AiOutlineDelete />}
@@ -85,8 +88,7 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
             }}
            onClick={() => setIsOpen(true)}
          >
-           Delete Evaluation
-
+           {isLargerThan860 ? 'Delete Evaluation' : 'Delete'}
          </Button>
 
          <AlertDialog

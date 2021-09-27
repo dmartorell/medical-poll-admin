@@ -27,7 +27,6 @@ const TableFields: FC<Props> = ({
         <Th
           key={head}
           fontWeight="900"
-          size="2em"
           transition="all 250ms"
           backgroundColor={isExpanded ? 'blue.600' : color}
           color="white"
