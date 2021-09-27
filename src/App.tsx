@@ -12,6 +12,7 @@ import { iProjects } from './types';
 
 function App() {
   const [projectNames, setProjectNames] = useState<iProjects[]>([]);
+
   useEffect(() => {
     fetchProjectNames()
     .then((data: any) => setProjectNames(data));

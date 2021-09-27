@@ -29,7 +29,8 @@ const EvaluationCreator: FC<Projects> = ({ projects }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
   const firstField = useRef<any>();
-  const [selectedProject, setSelectedProject] = useState<string>(projects[0].project_name);
+  const [selectedProject, setSelectedProject] = useState<string>(projects[0]?.project_name);
+
   const toast = useToast();
 
   const handleCancel = () => {
@@ -46,7 +47,6 @@ const EvaluationCreator: FC<Projects> = ({ projects }) => {
       await createPatient(newPatient);
       toast({
         title: 'Patient Created',
-        description: '',
         status: 'success',
         position: 'top-right',
         duration: 4500,
