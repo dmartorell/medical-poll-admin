@@ -175,18 +175,18 @@ const Patient: FC = () => {
         <Stack direction="column" maxWidth="1200px" w="100%" spacing="2em" mt={5}>
           <HStack justifyContent="space-between" alignItems="flex-end">
             <Stack spacing={0}>
-              <Text as="h4" fontSize={{ base: 'xs', md: 'sm', lg: 'sm' }} color="gray.400">
+              <Text as="h4" fontSize={{ base: 'xs', md: 'xs', lg: 'sm' }} color="gray.400">
                 {`PROJECT ${projectName}`}
               </Text>
               <HStack alignItems="center" spacing={2} pt={3}>
                 <Box color="blue.700"><RiFolderUserLine size="22px" /></Box>
-                <Text as="h2" fontSize={{ base: '1.2em', md: '1.5em', lg: '1.8em' }} color="blue.700">
+                <Text as="h2" fontSize={{ base: '1.2em', md: '1.2em', lg: '1.8em' }} color="blue.700">
                   {`Patient ${id}`}
                 </Text>
               </HStack>
               <HStack alignItems="center" spacing={2}>
                 <Box color="gray.600"><IoMdTime size="15px" /></Box>
-                <Text as="h3" fontSize={{ base: 'xs', md: 'sm', lg: 'sm' }} color="gray.600">
+                <Text as="h3" fontSize={{ base: 'xs', md: 'xs', lg: 'sm' }} color="gray.600">
                   {(new Date(patientState.date).toLocaleDateString('sp-SP', {
  day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
 }))}

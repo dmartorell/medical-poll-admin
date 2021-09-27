@@ -21,7 +21,7 @@ import logo from '../assets/icons/logo.png';
 import { Projects } from '../types';
 
 const NavBar: FC<Projects> = ({ projects }) => {
-  const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
+  const [isLargerThan1300] = useMediaQuery('(min-width: 1300px)');
 
   return (
     <Stack direction="row" zIndex="2" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
@@ -39,18 +39,17 @@ const NavBar: FC<Projects> = ({ projects }) => {
               <Heading as="h1" fontWeight="thin" size="lg" color="blue.700">Admin</Heading>
             </HStack>
           </Link>
-          <HStack spacing={3}>
-            <HStack mr={{ base: '', md: '2em', lg: '3em' }}>
-              <Menu>
-                <MenuButton
-                  size={isLargerThan860 ? 'sm' : 'xs'}
-                  as={Button}
-                  rightIcon={<BiChevronDown />}
-                >
-                  Projects
-                </MenuButton>
-                <MenuList>
-                  {
+          <HStack>
+            <Menu>
+              <MenuButton
+                size={isLargerThan1300 ? 'sm' : 'xs'}
+                as={Button}
+                rightIcon={<BiChevronDown />}
+              >
+                Projects
+              </MenuButton>
+              <MenuList>
+                {
                   projects?.map((project) => (
                     <Link
                       key={project.id}
@@ -62,11 +61,10 @@ const NavBar: FC<Projects> = ({ projects }) => {
                     </Link>
 ))
                 }
-                </MenuList>
-              </Menu>
-            </HStack>
-            <Avatar size={isLargerThan860 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
-            <Button colorScheme="facebook" size={isLargerThan860 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
+              </MenuList>
+            </Menu>
+            <Avatar size={isLargerThan1300 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
+            <Button colorScheme="facebook" size={isLargerThan1300 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
               Log Out
             </Button>
           </HStack>

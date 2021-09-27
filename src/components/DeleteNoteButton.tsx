@@ -10,6 +10,7 @@ import {
  AlertDialogBody,
  AlertDialogFooter,
  Icon,
+ useToast,
 } from '@chakra-ui/react';
 
 import { HiMinusCircle } from 'react-icons/hi';
@@ -29,6 +30,7 @@ const DeleteNoteButton: FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef: MutableRefObject<any> = useRef();
+  const toast = useToast();
 
   const handleDelete = async () => {
     try {
@@ -37,7 +39,14 @@ const DeleteNoteButton: FC<Props> = ({
       setNotes(updatedNotes);
       onClose();
     } catch (error: any) {
-      alert(error.message);
+      toast({
+        title: 'Error',
+        description: error,
+        status: 'error',
+        position: 'top-right',
+        duration: 4500,
+        isClosable: false,
+        });
     onClose();
     }
   };
