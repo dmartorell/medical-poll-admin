@@ -21,7 +21,11 @@ import logo from '../assets/icons/logo.png';
 import { Projects } from '../types';
 
 const NavBar: FC<Projects> = ({ projects }) => {
+<<<<<<< HEAD
   const [isLargerThan1300] = useMediaQuery('(min-width: 1300px)');
+=======
+  const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
+>>>>>>> 537836e798d45c158c066c4537e7005a26967460
 
   return (
     <Stack direction="row" zIndex="2" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
@@ -42,7 +46,11 @@ const NavBar: FC<Projects> = ({ projects }) => {
           <HStack>
             <Menu>
               <MenuButton
+<<<<<<< HEAD
                 size={isLargerThan1300 ? 'sm' : 'xs'}
+=======
+                size={isLargerThan860 ? 'sm' : 'xs'}
+>>>>>>> 537836e798d45c158c066c4537e7005a26967460
                 as={Button}
                 rightIcon={<BiChevronDown />}
               >
@@ -63,8 +71,13 @@ const NavBar: FC<Projects> = ({ projects }) => {
                 }
               </MenuList>
             </Menu>
+<<<<<<< HEAD
             <Avatar size={isLargerThan1300 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
             <Button colorScheme="facebook" size={isLargerThan1300 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
+=======
+            <Avatar size={isLargerThan860 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
+            <Button colorScheme="facebook" size={isLargerThan860 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
+>>>>>>> 537836e798d45c158c066c4537e7005a26967460
               Log Out
             </Button>
           </HStack>
