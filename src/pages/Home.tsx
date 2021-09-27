@@ -1,11 +1,15 @@
 /* eslint-disable camelcase */
 import React, { FC, useState, useEffect } from 'react';
-import { Stack, Spinner, Text } from '@chakra-ui/react';
+import {
+ Stack, Spinner, Text,
+} from '@chakra-ui/react';
 import DefaultList from '../components/DefaultList';
 import { fetchDB } from '../helpers/fetchDB';
 import getSurveys from '../helpers/getSurveys';
 import EvaluationCreator from '../components/EvaluationCreator';
 import { Projects } from '../types';
+import LoginButton from '../components/LoginButton';
+import LogoutButton from '../components/LogOutButton';
 
 const Project: FC<Projects> = ({ projects }) => {
   const [surveys, setSurveys] = useState<any[]>([]);
@@ -20,6 +24,8 @@ const Project: FC<Projects> = ({ projects }) => {
 
   return (
     <Stack as="main" direction="column" alignItems="center">
+      <LoginButton />
+      <LogoutButton />
       <Stack direction="column" maxWidth="1000px" w="100%" spacing="2em" mt={5}>
         <Text as="h2" fontSize={{ base: 'xl', md: 'xl', lg: '3xl' }} color="blue.700">
           Latest Evaluations

@@ -21,7 +21,7 @@ ReactDOM.render(
     <ChakraProvider theme={theme}>
       <Auth0Provider
         domain="dev-kn5i5b65.eu.auth0.com"
-        clientId="Ra6Yso2Doc2dJNqaKvb6kY17U7gRcoHm"
+        clientId="sLPFBbyNRrl7CW4geOJWq2RXiiaNJSkb"
         redirectUri={window.location.origin}
       >
         <App />

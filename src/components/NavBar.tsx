@@ -64,6 +64,7 @@ const NavBar: FC<Projects> = ({ projects }) => {
               </MenuList>
             </Menu>
             <Avatar size={isLargerThan1300 ? 'sm' : 'xs'} src="https://bit.ly/dan-abramov" />
+
             <Button colorScheme="facebook" size={isLargerThan1300 ? 'sm' : 'xs'} variant="ghost" rightIcon={<BsBoxArrowRight />}>
               Log Out
             </Button>
