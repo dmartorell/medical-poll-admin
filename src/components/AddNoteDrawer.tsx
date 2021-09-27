@@ -13,6 +13,7 @@ import {
     useDisclosure,
     Icon,
     Textarea,
+    useToast,
 
 } from '@chakra-ui/react';
 import { HiPlusCircle } from 'react-icons/hi';
@@ -38,6 +39,7 @@ const AddNoteDrawer:FC<Props> = (
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
     const [isInvalidInput, setIsInvalidInput] = useState(false);
+    const toast = useToast();
 
     const firstField = useRef<any>();
     const handleCancel = () => {
@@ -58,7 +60,14 @@ const AddNoteDrawer:FC<Props> = (
               onClose();
             });
           } catch (error: any) {
-            alert(error.message); // send toaster RED
+            toast({
+              title: 'Error',
+              description: error,
+              status: 'error',
+              position: 'top-right',
+              duration: 4500,
+              isClosable: false,
+              });
           }
 
         setTimeout(() => setValue(''), 1000);
