@@ -9,9 +9,24 @@ import NotFound from './pages/NotFound';
 import Patient from './pages/Patient';
 import Project from './pages/Project';
 import { iProjects } from './types';
+import AuthContainer from './components/AuthContainer';
+import supabase from './SupabaseClient';
+
+type SessionContext = {
+  session: any,
+} | null;
+export const sessionContext = React.createContext<SessionContext>(null);
 
 function App() {
   const [projectNames, setProjectNames] = useState<iProjects[]>([]);
+  const [currentSession, setCurrentSession] = useState<any>(null);
+  console.log({ currentSession });
+
+useEffect(() => {
+  supabase.auth.onAuthStateChange((event, session) => {
+    setCurrentSession(session);
+  });
+}, []);
 
   useEffect(() => {
     fetchProjectNames()
@@ -20,22 +35,26 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header projects={projectNames} />
-      <Switch>
-        <Route exact path="/project/:id/:name">
-          <Project />
-        </Route>
-        <Route exact path="/patient/:id/pro:projectName/ts:timestamp">
-          <Patient />
-        </Route>
-        <Route exact path="/home">
-          <Home projects={projectNames} />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route component={NotFound} />
-      </Switch>
+      <sessionContext.Provider value={currentSession}>
+        <Header projects={projectNames} />
+        <AuthContainer>
+          <Switch>
+            <Route exact path="/project/:id/:name">
+              <Project />
+            </Route>
+            <Route exact path="/patient/:id/pro:projectName/ts:timestamp">
+              <Patient />
+            </Route>
+            <Route exact path="/home">
+              <Home projects={projectNames} />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route component={NotFound} />
+          </Switch>
+        </AuthContainer>
+      </sessionContext.Provider>
     </BrowserRouter>
   );
 }
