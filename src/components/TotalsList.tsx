@@ -28,6 +28,7 @@ const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
               const currentValue = data[field];
               return (
                 <Td
+                  key={field}
                   borderWidth="1px"
                   borderColor="white"
                   isNumeric
