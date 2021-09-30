@@ -1,5 +1,5 @@
 import React, {
-    FC, useState, useRef, MutableRefObject, Dispatch,
+    FC, useState, useRef, MutableRefObject, Dispatch, useContext,
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
@@ -16,6 +16,7 @@ import {
 
 import { AiOutlineDelete } from 'react-icons/ai';
 import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
+import { sessionContext } from '../App';
 
    type Props = {
      patientId: number,
@@ -39,17 +40,18 @@ import { deleteEvaluation, deleteNoteByPatientId } from '../helpers/fetchDB';
      const history = useHistory();
      const toast = useToast();
      const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
+     const session = useContext(sessionContext);
 
      const handleDelete = async () => {
        try {
-         await deleteEvaluation(patientId, currentDate);
-         await deleteNoteByPatientId(patientId);
+         await deleteEvaluation(patientId, currentDate, session?.access_token);
+         await deleteNoteByPatientId(patientId, session?.access_token);
         const updatedList = list.filter((date) => date !== currentDate);
         onClose();
         updateList(updatedList);
         toast({
           title: 'Evaluation deleted',
-          description: 'The evaluation has been succesfully removed',
+          description: 'The evaluation has been succesfully removed.',
           status: 'success',
           position: 'top-right',
           duration: 4500,

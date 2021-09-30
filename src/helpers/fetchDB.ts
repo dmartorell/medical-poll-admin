@@ -23,9 +23,11 @@ export const fetchDB = (table: string, filter: string | undefined = '', select: 
   }
 };
 
-export const createPatient = async (data: any) => {
+export const createPatient = async (data: any, token: string | undefined) => {
   const response = await fetch(`${apiUrl}/patient`, {
-    headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    headers: {
+ apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation', Authorization: `Bearer ${token}`,
+},
     body: JSON.stringify(data),
     method: 'POST',
   });
@@ -53,9 +55,9 @@ export const deleteNote = async (id: number, token: string | undefined) => {
       throw new Error(message);
     }
 };
-export const deleteNoteByPatientId = async (id: number) => {
+export const deleteNoteByPatientId = async (id: number, token: string | undefined) => {
   const response = await fetch(`${apiUrl}/note?patient_id=eq.${id}`, {
-    headers: { apiKey, 'Content-Type': 'application/json' },
+    headers: { apiKey, 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     method: 'DELETE',
 });
     if (!response.ok) {
@@ -63,9 +65,9 @@ export const deleteNoteByPatientId = async (id: number) => {
       throw new Error(message);
     }
 };
-export const deleteEvaluation = async (id: number, date: string) => {
+export const deleteEvaluation = async (id: number, date: string, token: string | undefined) => {
   const response = await fetch(`${apiUrl}/answer?patientID=eq.${id}&date=eq.${formatToDbDate(date)}`, {
-    headers: { apiKey, 'Content-Type': 'application/json' },
+    headers: { apiKey, 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     method: 'DELETE',
 });
     if (!response.ok) {

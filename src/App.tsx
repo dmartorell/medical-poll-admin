@@ -14,14 +14,14 @@ import AuthContainer from './components/AuthContainer';
 import supabase from './SupabaseClient';
 
 type SessionContext = {
-  user: {id: string} | undefined, access_token: string | undefined,
+  user: {id: string, user_metadata: {avatar_url: string}} | undefined,
+  access_token: string | undefined,
 } | null;
 export const sessionContext = React.createContext<SessionContext>(null);
 
 function App() {
   const [projectNames, setProjectNames] = useState<iProjects[]>([]);
   const [currentSession, setCurrentSession] = useState<any>(null);
-console.log(currentSession);
 
 useEffect(() => {
   supabase.auth.onAuthStateChange((event, session) => {

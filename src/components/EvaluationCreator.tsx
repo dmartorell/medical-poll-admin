@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, {
- FC, useRef, useState,
+ FC, useRef, useState, useContext,
 } from 'react';
 import {
   Button,
@@ -24,10 +24,12 @@ import {
 import { AiOutlineFileAdd } from 'react-icons/ai';
 import { Projects } from '../types';
 import { createPatient } from '../helpers/fetchDB';
+import { sessionContext } from '../App';
 
 const EvaluationCreator: FC<Projects> = ({ projects }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan860] = useMediaQuery('(min-width: 860px)');
+  const session = useContext(sessionContext);
   const firstField = useRef<any>();
   const [selectedProject, setSelectedProject] = useState<string>(projects[0]?.project_name);
 
@@ -43,8 +45,9 @@ const EvaluationCreator: FC<Projects> = ({ projects }) => {
     try {
       const newPatient = {
         project_name: selectedProject,
+        created_by: session?.user?.id,
       };
-      await createPatient(newPatient);
+      await createPatient(newPatient, session?.access_token);
       toast({
         title: 'Patient Created',
         status: 'success',
