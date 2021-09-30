@@ -22,7 +22,7 @@ export const sessionContext = React.createContext<SessionContext>(null);
 function App() {
   const [projectNames, setProjectNames] = useState<iProjects[]>([]);
   const [currentSession, setCurrentSession] = useState<any>(null);
-
+console.log(currentSession);
 useEffect(() => {
   supabase.auth.onAuthStateChange((event, session) => {
     setCurrentSession(session);
