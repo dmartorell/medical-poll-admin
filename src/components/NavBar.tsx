@@ -14,6 +14,7 @@ import {
  Button,
  Avatar,
  useMediaQuery,
+ Text,
 } from '@chakra-ui/react';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { BiChevronDown } from 'react-icons/bi';
@@ -26,6 +27,8 @@ const NavBar: FC<Projects> = ({ projects }) => {
   const history = useHistory();
   const session = useContext(sessionContext);
   const [isLargerThan1300] = useMediaQuery('(min-width: 1300px)');
+  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+
   const handleLogOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -55,6 +58,7 @@ const NavBar: FC<Projects> = ({ projects }) => {
             <HStack>
               <Menu>
                 <MenuButton
+                  mr={{ sm: 1, md: 3, lg: 8 }}
                   size={isLargerThan1300 ? 'sm' : 'xs'}
                   as={Button}
                   rightIcon={<BiChevronDown />}
@@ -77,6 +81,9 @@ const NavBar: FC<Projects> = ({ projects }) => {
                 </MenuList>
               </Menu>
               <Avatar size={isLargerThan1300 ? 'sm' : 'xs'} src={session?.user?.user_metadata?.avatar_url} />
+              {
+                isLargerThan900 && <Text color="gray.600" fontSize="xs" fontWeight="500">{session?.user?.email.split('@')[0]}</Text>
+              }
 
               <Button
                 colorScheme="facebook"
