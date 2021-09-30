@@ -14,7 +14,7 @@ import AuthContainer from './components/AuthContainer';
 import supabase from './SupabaseClient';
 
 type SessionContext = {
-  user: {id: string, user_metadata: {avatar_url: string}} | undefined,
+  user: {id: string, user_metadata: {avatar_url: string}, email: string} | undefined,
   access_token: string | undefined,
 } | null;
 export const sessionContext = React.createContext<SessionContext>(null);
