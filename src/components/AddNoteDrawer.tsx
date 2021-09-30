@@ -1,5 +1,5 @@
 import React, {
- FC, useState, Dispatch, useRef,
+ FC, useState, Dispatch, useRef, useContext,
 } from 'react';
 import {
     Button,
@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { HiPlusCircle } from 'react-icons/hi';
 import { postNote } from '../helpers/fetchDB';
+import { sessionContext } from '../App';
 
 type Props = {
     patientId: string,
@@ -39,6 +40,7 @@ const AddNoteDrawer:FC<Props> = (
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [value, setValue] = useState<string>('');
     const [isInvalidInput, setIsInvalidInput] = useState(false);
+    const session = useContext(sessionContext);
     const toast = useToast();
 
     const firstField = useRef<any>();
@@ -81,7 +83,9 @@ const AddNoteDrawer:FC<Props> = (
                 patient_id: Number(patientId),
                 text: value,
                 survey_date: surveyDate,
+                user_id: session?.user?.id,
             },
+            session?.access_token,
         );
         if (!response.ok) {
           const message: string = `An error has occured: ${response.status}`;

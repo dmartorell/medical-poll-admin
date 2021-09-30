@@ -13,17 +13,15 @@ import { iProjects } from './types';
 import AuthContainer from './components/AuthContainer';
 import supabase from './SupabaseClient';
 
-type Session = {
-    user: object
-};
 type SessionContext = {
-  session: Session,
+  user: {id: string} | undefined, access_token: string | undefined,
 } | null;
 export const sessionContext = React.createContext<SessionContext>(null);
 
 function App() {
   const [projectNames, setProjectNames] = useState<iProjects[]>([]);
   const [currentSession, setCurrentSession] = useState<any>(null);
+console.log(currentSession);
 
 useEffect(() => {
   supabase.auth.onAuthStateChange((event, session) => {

@@ -1,5 +1,5 @@
 import React, {
- FC, useState, useRef, MutableRefObject, Dispatch,
+ FC, useState, useRef, MutableRefObject, Dispatch, useContext,
 } from 'react';
 import {
  Button,
@@ -15,6 +15,7 @@ import {
 
 import { HiMinusCircle } from 'react-icons/hi';
 import { deleteNote } from '../helpers/fetchDB';
+import { sessionContext } from '../App';
 
 type Props = {
   noteId: number,
@@ -31,10 +32,11 @@ const DeleteNoteButton: FC<Props> = ({
   const onClose = () => setIsOpen(false);
   const cancelRef: MutableRefObject<any> = useRef();
   const toast = useToast();
+  const session = useContext(sessionContext);
 
   const handleDelete = async () => {
     try {
-      await deleteNote(noteId);
+      await deleteNote(noteId, session?.access_token);
       const updatedNotes = notes.filter((note) => note.id !== noteId);
       setNotes(updatedNotes);
       onClose();

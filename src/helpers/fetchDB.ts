@@ -23,26 +23,29 @@ export const fetchDB = (table: string, filter: string | undefined = '', select: 
   }
 };
 
-export const postNote = (data: any) => fetch(`${apiUrl}/note`, {
-      headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
-      body: JSON.stringify(data),
-      method: 'POST',
-});
-
 export const createPatient = async (data: any) => {
   const response = await fetch(`${apiUrl}/patient`, {
     headers: { apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation' },
     body: JSON.stringify(data),
     method: 'POST',
   });
-    if (!response.ok) {
-      const message:string = 'Something went wrong.';
-      throw new Error(message);
-    }
+  if (!response.ok) {
+    const message:string = 'Something went wrong.';
+    throw new Error(message);
+  }
 };
-export const deleteNote = async (id: number) => {
+export const postNote = (data: any, token: string | undefined) => fetch(`${apiUrl}/note`, {
+      headers: {
+ apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation', Authorization: `Bearer ${token}`,
+},
+      body: JSON.stringify(data),
+      method: 'POST',
+});
+export const deleteNote = async (id: number, token: string | undefined) => {
   const response = await fetch(`${apiUrl}/note?id=eq.${id}`, {
-    headers: { apiKey, 'Content-Type': 'application/json' },
+    headers: {
+      apiKey, 'Content-Type': 'application/json', Prefer: 'return=representation', Authorization: `Bearer ${token}`,
+    },
     method: 'DELETE',
 });
     if (!response.ok) {

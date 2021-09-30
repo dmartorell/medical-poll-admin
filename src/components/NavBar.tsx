@@ -33,7 +33,6 @@ const NavBar: FC<Projects> = ({ projects }) => {
     }
     history.push('/home');
   };
-
   return (
     <Stack direction="row" zIndex="2" pos="fixed" justifyContent="center" h="85px" borderBottom="1px" borderBottomColor="gray.100" w="100%" backgroundColor="white">
       <Box maxWidth="1400px" backgroundColor="white" w="100%" pt={6}>
