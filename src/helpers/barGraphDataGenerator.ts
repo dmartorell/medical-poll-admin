@@ -25,13 +25,13 @@ const barGraphDataGenerator = (rawData : RawData) => {
     rawData.forEach((element: RawData) => {
       result.hadAData = [
           ...result.hadAData,
-          { date: new Date(element.date).toLocaleDateString(), value: element.hadASum }];
+          { date: new Date(element.date).toLocaleDateString('sp-SP', { day: '2-digit', month: '2-digit' }), value: element.hadASum }];
       result.hadDData = [
           ...result.hadDData,
-          { date: new Date(element.date).toLocaleDateString(), value: element.hadDSum }];
+          { date: new Date(element.date).toLocaleDateString('sp-SP', { day: '2-digit', month: '2-digit' }), value: element.hadDSum }];
       result.dtsData = [
           ...result.dtsData,
-          { date: new Date(element.date).toLocaleDateString(), value: element.dtsSum }];
+          { date: new Date(element.date).toLocaleDateString('sp-SP', { day: '2-digit', month: '2-digit' }), value: element.dtsSum }];
       result.hadAColors = [
           ...result.hadAColors, getHADBackgroundColor(element.hadASum)];
       result.hadDColors = [

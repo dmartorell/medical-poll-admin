@@ -20,9 +20,9 @@ const BarGraph: FC<Props> = ({
       data={data}
       indexBy="date"
       margin={{
-        top: 20, right: 130, bottom: 50, left: 60,
+        top: 0, right: 30, bottom: 50, left: 40,
       }}
-      padding={isLargerThan450 ? 0.4 : 0.6}
+      padding={isLargerThan450 ? 0.2 : 0.6}
       valueScale={{ type: 'linear' }}
       indexScale={{ type: 'band', round: true }}
       maxValue={maxValue}
@@ -41,10 +41,10 @@ const BarGraph: FC<Props> = ({
               legendPosition: 'middle',
               legendOffset: 42,
           }}
-      labelSkipWidth={12}
+      labelSkipWidth={20}
       labelSkipHeight={12}
       labelTextColor="white"
-
+      motionConfig="gentle"
     />
   );
 };
