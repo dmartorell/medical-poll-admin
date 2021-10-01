@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import {
- Stack, Text, Box, Flex, HStack, Spinner,
+ Stack, Text, Box, Flex, HStack, Spinner, Grid, GridItem,
 } from '@chakra-ui/react';
 
 import React, { FC, useState, useEffect } from 'react';
@@ -25,7 +25,8 @@ import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
 import { PatientHistory } from '../types';
-import BarHistory from '../components/graphs/BarHistory';
+import MyResponsiveBar from '../components/graphs/MyResponsiveBar';
+import barGraphDataGenerator from '../helpers/barGraphDataGenerator';
 
 const Patient: FC = () => {
   const {
@@ -44,44 +45,15 @@ const Patient: FC = () => {
   const [patientNotes, setPatientNotes] = useState<any>([]);
   const [evaluationsList, setEvaluationsList] = useState<string[]>([]);
 
-  const hadsBarData = [
-    {
-      HADS: '',
-      'HAD-A': mainResults['had-a'],
-      'HAD-D': mainResults['had-d'],
-    },
-  ];
-  const dtsBarData = [
-    {
-      DTS: '',
-      FRECUENCIA: mainResults['dts-f'],
-      GRAVEDAD: mainResults['dts-g'],
-    },
-  ];
-  const HADS_BAR_COLORS = [
-    getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
-  ];
-  const DTS_BAR_COLORS = [
-    getTotalDTSBackgroundColor(mainResults['dts-f']), getTotalDTSBackgroundColor(mainResults['dts-g']),
-  ];
+  const {
+    hadAData,
+    hadDData,
+    dtsData,
+    hadAColors,
+    hadDColors,
+    dtsColors,
+} = barGraphDataGenerator(historySums);
 
-  const mockedData = [
-    {
-      'HAD-A': '11/2/2021',
-      HADA: 17,
-      HADAColor: 'hsl(176, 70%, 50%)',
-    },
-    {
-      'HAD-A': '15/06/2021',
-      HADAB: 27,
-      HADABColor: 'hsl(226, 80%, 50%)',
-    },
-    {
-      'HAD-A': '04/11/2021',
-      HADAC: 37,
-      HADACColor: 'hsl(106, 80%, 50%)',
-    },
-  ];
   const dtsLineData = [
     {
       id: 'DTS-T',
@@ -225,21 +197,29 @@ const Patient: FC = () => {
         ? (
           <>
             <Flex p={5} boxShadow="base" borderWidth="0.5px" borderRadius="lg" overflow="hidden" justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', md: 'row', lg: 'row' }}>
-              {/* <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
-              </Box>
-              <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
-              </Box>     DATA TO PASS IS HISTORYSUMS!!!!!!!!!!!!!! */}
-              <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
+              {/* <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
+                <BarGraph legend="HAD-A" data={hadAData} maxValue={21} colors={hadAColors} />
               </Box>
               <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarHistory data={mockedData} maxValue={42} indexBy="HAD-A" keys={['HADA', 'HADAB', 'HADAC']} />
+                <BarGraph legend="HAD-D" data={hadDData} maxValue={21} colors={hadDColors} />
               </Box>
-              {/* <Box w={{ sm: '100%', md: '50%', lg: '50%' }} h={{ sm: '300px', md: '280px', lg: '400px' }}>
+              <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
+                <BarGraph legend="DTS" data={dtsData} maxValue={136} colors={dtsColors} />
+              </Box>
+              <Box w={{ sm: '100%', md: '50%', lg: '50%' }} h={{ sm: '300px', md: '280px', lg: '400px' }}>
                 <LineGraph data={dtsLineData} />
               </Box> */}
+              <Grid
+                h="600px"
+                templateRows="repeat(2, 1fr)"
+                templateColumns="repeat(5, 1fr)"
+                gap={4}
+              >
+                <GridItem rowSpan={2} colSpan={1} bg="tomato" />
+                <GridItem colSpan={2} bg="papayawhip" />
+                <GridItem colSpan={2} bg="papayawhip" />
+                <GridItem colSpan={4} bg="tomato" />
+              </Grid>
             </Flex>
             <TotalsList data={mainResults} />
             <DetailsList data={details} />

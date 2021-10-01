@@ -1036,6 +1036,18 @@
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.1"
 
+"@nivo/funnel@^0.73.0":
+  version "0.73.0"
+  resolved "https://registry.yarnpkg.com/@nivo/funnel/-/funnel-0.73.0.tgz#aa416c5fd4d143c208f054ae611a2edb4ddfe04e"
+  integrity sha512-oGMtTDb03pcpieRfGFO+zFK42qju0pxi55Fff8yBi7brFCSsdqwW3ecZJdpK72Uw/26kxafG9tBrx0D6TzLRoA==
+  dependencies:
+    "@nivo/annotations" "0.73.0"
+    "@nivo/colors" "0.73.0"
+    "@nivo/tooltip" "0.73.0"
+    "@react-spring/web" "9.2.4"
+    d3-scale "^3.2.3"
+    d3-shape "^1.3.5"
+
 "@nivo/legends@0.73.0":
   version "0.73.0"
   resolved "https://registry.yarnpkg.com/@nivo/legends/-/legends-0.73.0.tgz#ef344038c4ff03249ffffebaf14412d012004fda"
