@@ -4,18 +4,16 @@ import { useMediaQuery } from '@chakra-ui/react';
 
 type Props = {
   data: any[],
-  colors: string[],
   keys: string[],
   indexBy: string,
   maxValue: number,
 
 };
 
-const BarGraph: FC<Props> = ({
- data, colors, keys, indexBy, maxValue,
+const BarHistory: FC<Props> = ({
+ data, keys, indexBy, maxValue,
 }) => {
   const [isLargerThan450] = useMediaQuery('(max-width: 450px)');
-  console.log(data);
 
 return (
   <ResponsiveBar
@@ -31,7 +29,6 @@ return (
     maxValue={maxValue}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={colors}
     borderWidth={1}
     borderColor={{ from: 'color', modifiers: [['darker', 0.7]] }}
     axisTop={null}
@@ -58,4 +55,4 @@ return (
 );
 };
 
-export default BarGraph;
+export default BarHistory;

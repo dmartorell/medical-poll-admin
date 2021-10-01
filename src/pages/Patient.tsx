@@ -25,6 +25,7 @@ import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
 import { PatientHistory } from '../types';
+import BarHistory from '../components/graphs/BarHistory';
 
 const Patient: FC = () => {
   const {
@@ -62,6 +63,24 @@ const Patient: FC = () => {
   ];
   const DTS_BAR_COLORS = [
     getTotalDTSBackgroundColor(mainResults['dts-f']), getTotalDTSBackgroundColor(mainResults['dts-g']),
+  ];
+
+  const mockedData = [
+    {
+      'HAD-A': '11/2/2021',
+      HADA: 17,
+      HADAColor: 'hsl(176, 70%, 50%)',
+    },
+    {
+      'HAD-A': '15/06/2021',
+      HADAB: 27,
+      HADABColor: 'hsl(226, 80%, 50%)',
+    },
+    {
+      'HAD-A': '04/11/2021',
+      HADAC: 37,
+      HADACColor: 'hsl(106, 80%, 50%)',
+    },
   ];
   const dtsLineData = [
     {
@@ -167,7 +186,6 @@ const Patient: FC = () => {
         console.error(err);
       }
       }, [patientNotes.length, patientState]);
-
       return (
     patientState
     ? (
@@ -207,15 +225,21 @@ const Patient: FC = () => {
         ? (
           <>
             <Flex p={5} boxShadow="base" borderWidth="0.5px" borderRadius="lg" overflow="hidden" justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', md: 'row', lg: 'row' }}>
-              <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
+              {/* <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
                 <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
               </Box>
               <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
                 <BarGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
+              </Box>     DATA TO PASS IS HISTORYSUMS!!!!!!!!!!!!!! */}
+              <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
+                <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
               </Box>
-              <Box w={{ sm: '100%', md: '50%', lg: '50%' }} h={{ sm: '300px', md: '280px', lg: '400px' }}>
+              <Box w={{ sm: '70%', md: '50%', lg: '50%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
+                <BarHistory data={mockedData} maxValue={42} indexBy="HAD-A" keys={['HADA', 'HADAB', 'HADAC']} />
+              </Box>
+              {/* <Box w={{ sm: '100%', md: '50%', lg: '50%' }} h={{ sm: '300px', md: '280px', lg: '400px' }}>
                 <LineGraph data={dtsLineData} />
-              </Box>
+              </Box> */}
             </Flex>
             <TotalsList data={mainResults} />
             <DetailsList data={details} />

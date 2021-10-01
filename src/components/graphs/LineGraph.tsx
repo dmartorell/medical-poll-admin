@@ -8,20 +8,22 @@ type Props = {
 const theme = {
   background: 'white',
 };
-const LineGraph: FC<Props> = ({ data }) => (
-  <ResponsiveLine
-    theme={theme}
-    data={data}
-    margin={{
+const LineGraph: FC<Props> = ({ data }) => {
+  console.log({ data });
+  return (
+    <ResponsiveLine
+      theme={theme}
+      data={data}
+      margin={{
  top: 20, right: 110, bottom: 50, left: 60,
 }}
-    xScale={{ type: 'point' }}
-    yScale={{
+      xScale={{ type: 'point' }}
+      yScale={{
  type: 'linear', min: 0, max: 136, stacked: false, reverse: false,
 }}
-    axisTop={null}
-    axisRight={null}
-    axisBottom={{
+      axisTop={null}
+      axisRight={null}
+      axisBottom={{
       tickSize: 7,
       tickPadding: 6,
       tickRotation: 0,
@@ -29,18 +31,18 @@ const LineGraph: FC<Props> = ({ data }) => (
       legendOffset: 40,
       legendPosition: 'middle',
   }}
-    enableGridX
-    colors={[data[0].color, data[1].color, data[2].color]}
-    curve="monotoneX"
-    lineWidth={2}
-    pointSize={4}
-    pointColor={{ from: 'color', modifiers: [] }}
-    pointBorderWidth={1}
-    pointBorderColor={{ from: 'serieColor' }}
-    pointLabelYOffset={-12}
-    enableSlices="x"
-    useMesh
-    legends={[
+      enableGridX
+      colors={[data[0].color, data[1].color, data[2].color]}
+      curve="monotoneX"
+      lineWidth={2}
+      pointSize={4}
+      pointColor={{ from: 'color', modifiers: [] }}
+      pointBorderWidth={1}
+      pointBorderColor={{ from: 'serieColor' }}
+      pointLabelYOffset={-12}
+      enableSlices="x"
+      useMesh
+      legends={[
       {
           anchor: 'bottom-right',
           direction: 'column',
@@ -58,7 +60,8 @@ const LineGraph: FC<Props> = ({ data }) => (
 
       },
   ]}
-  />
+    />
 );
+};
 
 export default LineGraph;
