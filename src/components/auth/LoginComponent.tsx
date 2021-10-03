@@ -24,7 +24,7 @@ const LoginComponent = () => {
 
   return (
     <VStack spacing={8} alignItems="flex-start">
-      <FormControl id="logIn">
+      <FormControl>
         <VStack alignItems="flex-start" spacing={6}>
           <Box>
             <FormLabel fontSize={{ sm: 14, lg: 17 }}>
