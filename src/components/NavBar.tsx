@@ -82,7 +82,7 @@ const NavBar: FC<Projects> = ({ projects }) => {
               </Menu>
               <Avatar size={isLargerThan1300 ? 'sm' : 'xs'} src={session?.user?.user_metadata?.avatar_url} />
               {
-                isLargerThan900 && <Text color="gray.600" fontSize="xs" fontWeight="500">{session?.user?.email.split('@')[0]}</Text>
+                isLargerThan900 && <Text color="gray.500" fontSize="xs" fontWeight="500">{session?.user?.email.split('@')[0]}</Text>
               }
 
               <Button

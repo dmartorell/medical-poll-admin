@@ -5,56 +5,47 @@ import { useMediaQuery } from '@chakra-ui/react';
 type Props = {
   data: any[],
   colors: string[],
-  keys: string[],
-  indexBy: string,
   maxValue: number,
+  legend: string,
 
 };
 
 const BarGraph: FC<Props> = ({
- data, colors, keys, indexBy, maxValue,
+ data, colors, maxValue, legend,
 }) => {
   const [isLargerThan450] = useMediaQuery('(max-width: 450px)');
 
-return (
-  <ResponsiveBar
-    data={data}
-    keys={keys}
-    indexBy={indexBy}
-    margin={{
-      top: 20, right: 130, bottom: 50, left: 60,
-    }}
-    // eslint-disable-next-line no-nested-ternary
-    padding={isLargerThan450 ? 0.4 : 0.6}
-    innerPadding={2}
-    maxValue={maxValue}
-    valueScale={{ type: 'linear' }}
-    indexScale={{ type: 'band', round: true }}
-    colors={colors}
-    borderWidth={1}
-    borderColor={{ from: 'color', modifiers: [['darker', 0.7]] }}
-    axisTop={null}
-    axisRight={null}
-    axisBottom={{
-      tickSize: 0,
-      tickPadding: 5,
-      legend: indexBy,
-      legendPosition: 'middle',
-      legendOffset: 40,
-  }}
-    axisLeft={{
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legendPosition: 'middle',
-      legendOffset: -40,
-  }}
-    enableLabel={false}
-    labelSkipWidth={15}
-    labelSkipHeight={11}
-    labelTextColor={{ from: 'color', modifiers: [['darker', 3.6]] }}
-  />
-);
+  return (
+    <ResponsiveBar
+      data={data}
+      indexBy="date"
+      margin={{
+        top: 0, right: 30, bottom: 50, left: 40,
+      }}
+      padding={isLargerThan450 ? 0.2 : 0.6}
+      valueScale={{ type: 'linear' }}
+      indexScale={{ type: 'band', round: true }}
+      maxValue={maxValue}
+      colors={colors}
+      colorBy="indexValue"
+      borderRadius={2}
+      borderWidth={1}
+      borderColor={{ from: 'color', modifiers: [['darker', 0.3]] }}
+      axisTop={null}
+      axisRight={null}
+      axisBottom={{
+              tickSize: 10,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend,
+              legendPosition: 'middle',
+              legendOffset: 42,
+          }}
+      labelSkipWidth={20}
+      labelSkipHeight={12}
+      labelTextColor="white"
+      motionConfig="gentle"
+    />
+  );
 };
-
 export default BarGraph;

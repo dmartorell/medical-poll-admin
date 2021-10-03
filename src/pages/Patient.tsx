@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import {
- Stack, Text, Box, Flex, HStack, Spinner,
+ Stack, Text, Box, Flex, HStack, Spinner, Grid, GridItem,
 } from '@chakra-ui/react';
 
 import React, { FC, useState, useEffect } from 'react';
@@ -15,7 +15,6 @@ import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
 import BarGraph from '../components/graphs/BarGraph';
-import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
 import LineGraph from '../components/graphs/LineGraph';
 import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
@@ -25,6 +24,7 @@ import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
 import { PatientHistory } from '../types';
+import barGraphDataGenerator from '../helpers/barGraphDataGenerator';
 
 const Patient: FC = () => {
   const {
@@ -43,26 +43,21 @@ const Patient: FC = () => {
   const [patientNotes, setPatientNotes] = useState<any>([]);
   const [evaluationsList, setEvaluationsList] = useState<string[]>([]);
 
-  const hadsBarData = [
-    {
-      HADS: '',
-      'HAD-A': mainResults['had-a'],
-      'HAD-D': mainResults['had-d'],
-    },
-  ];
-  const dtsBarData = [
-    {
-      DTS: '',
-      FRECUENCIA: mainResults['dts-f'],
-      GRAVEDAD: mainResults['dts-g'],
-    },
-  ];
-  const HADS_BAR_COLORS = [
-    getHADBackgroundColor(mainResults['had-a']), getHADBackgroundColor(mainResults['had-d']),
-  ];
-  const DTS_BAR_COLORS = [
-    getTotalDTSBackgroundColor(mainResults['dts-f']), getTotalDTSBackgroundColor(mainResults['dts-g']),
-  ];
+  const {
+    hadAData,
+    hadDData,
+    dtsData,
+    hadAColors,
+    hadDColors,
+    dtsColors,
+} = barGraphDataGenerator(historySums);
+
+  const MAX_VALUES = {
+    hadA: 21,
+    hadD: 21,
+    dts: 136,
+  };
+
   const dtsLineData = [
     {
       id: 'DTS-T',
@@ -159,7 +154,7 @@ const Patient: FC = () => {
 
   useEffect(() => {
     try {
-      fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
+      fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'saved_at', 'id'])
         .then((data:any[]) => {
           setPatientNotes(data);
         });
@@ -167,7 +162,6 @@ const Patient: FC = () => {
         console.error(err);
       }
       }, [patientNotes.length, patientState]);
-
       return (
     patientState
     ? (
@@ -206,18 +200,48 @@ const Patient: FC = () => {
           {patientHistory.length
         ? (
           <>
-            <Flex p={5} boxShadow="base" borderWidth="0.5px" borderRadius="lg" overflow="hidden" justifyContent={{ sm: '', lg: 'center' }} alignItems={{ sm: 'center', lg: '' }} direction={{ sm: 'column', md: 'row', lg: 'row' }}>
-              <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarGraph data={hadsBarData} maxValue={42} colors={HADS_BAR_COLORS} indexBy="HADS" keys={['HAD-A', 'HAD-D']} />
-              </Box>
-              <Box w={{ sm: '70%', md: '25%', lg: '25%' }} h={{ sm: '250px', md: '280px', lg: '400px' }}>
-                <BarGraph data={dtsBarData} maxValue={136} colors={DTS_BAR_COLORS} indexBy="DTS" keys={['FRECUENCIA', 'GRAVEDAD']} />
-              </Box>
-              <Box w={{ sm: '100%', md: '50%', lg: '50%' }} h={{ sm: '300px', md: '280px', lg: '400px' }}>
-                <LineGraph data={dtsLineData} />
-              </Box>
-            </Flex>
             <TotalsList data={mainResults} />
+            <Flex
+              backgroundColor="rgba(247, 250, 252, 0.4)"
+              p={5}
+              boxShadow="base"
+              borderWidth="0.5px"
+              borderRadius="lg"
+              overflow="hidden"
+              justifyContent={{ sm: '', lg: 'center' }}
+              alignItems={{ sm: 'center', lg: '' }}
+              direction={{ sm: 'column', md: 'row', lg: 'row' }}
+            >
+
+              <Grid
+                h="100%"
+                w="100%"
+                templateRows="repeat(2, 1fr)"
+                templateColumns="repeat(6, 1fr)"
+                gap={5}
+              >
+                <GridItem rowSpan={2} colSpan={3} colStart={1} colEnd={7}>
+                  <Box w={{ sm: '100%', md: '70%', lg: '50%' }} h={{ sm: '300px', md: '300px', lg: '290px' }}>
+                    <LineGraph data={dtsLineData} />
+                  </Box>
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
+                    <BarGraph legend="HAD-A" data={hadAData} maxValue={MAX_VALUES.hadA} colors={hadAColors} />
+                  </Box>
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
+                    <BarGraph legend="HAD-D" data={hadDData} maxValue={MAX_VALUES.hadD} colors={hadDColors} />
+                  </Box>
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
+                    <BarGraph legend="DTS" data={dtsData} maxValue={MAX_VALUES.dts} colors={dtsColors} />
+                  </Box>
+                </GridItem>
+              </Grid>
+            </Flex>
             <DetailsList data={details} />
           </>
 )
