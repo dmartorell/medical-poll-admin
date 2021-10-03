@@ -78,7 +78,6 @@ const AddNoteDrawer:FC<Props> = (
         async function postNewNote() {
           const response: any = await postNote(
             {
-                created_by: null,
                 project_name: projectName,
                 patient_id: Number(patientId),
                 text: value,

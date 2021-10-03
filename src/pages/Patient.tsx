@@ -154,7 +154,7 @@ const Patient: FC = () => {
 
   useEffect(() => {
     try {
-      fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'created_by', 'saved_at', 'id'])
+      fetchDB('note', `patient_id=eq.${id}&survey_date=eq.${formatToDbDate(patientState.date)}`, ['text', 'saved_at', 'id'])
         .then((data:any[]) => {
           setPatientNotes(data);
         });
@@ -200,6 +200,7 @@ const Patient: FC = () => {
           {patientHistory.length
         ? (
           <>
+            <TotalsList data={mainResults} />
             <Flex
               backgroundColor="rgba(247, 250, 252, 0.4)"
               p={5}
@@ -220,28 +221,27 @@ const Patient: FC = () => {
                 gap={5}
               >
                 <GridItem rowSpan={2} colSpan={3} colStart={1} colEnd={7}>
-                  <Box w={{ sm: '100%', md: '70%', lg: '60%' }} h={{ sm: '300px', md: '300px', lg: '300px' }}>
+                  <Box w={{ sm: '100%', md: '70%', lg: '50%' }} h={{ sm: '300px', md: '300px', lg: '290px' }}>
                     <LineGraph data={dtsLineData} />
                   </Box>
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '300px' }}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
                     <BarGraph legend="HAD-A" data={hadAData} maxValue={MAX_VALUES.hadA} colors={hadAColors} />
                   </Box>
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '300px' }}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
                     <BarGraph legend="HAD-D" data={hadDData} maxValue={MAX_VALUES.hadD} colors={hadDColors} />
                   </Box>
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '300px' }}>
+                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
                     <BarGraph legend="DTS" data={dtsData} maxValue={MAX_VALUES.dts} colors={dtsColors} />
                   </Box>
                 </GridItem>
               </Grid>
             </Flex>
-            <TotalsList data={mainResults} />
             <DetailsList data={details} />
           </>
 )
