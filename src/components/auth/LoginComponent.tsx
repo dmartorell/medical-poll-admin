@@ -63,7 +63,7 @@ const LoginComponent = () => {
         </VStack>
       </FormControl>
       <HStack>
-        <Box p={5}>
+        <Box p={0}>
           <Button
             w="auto"
             onClick={() => handleClick(userEmail, userPassword)}
@@ -74,7 +74,7 @@ const LoginComponent = () => {
             LOG IN
           </Button>
         </Box>
-        <Box p={5}>
+        <Box p={0}>
           <Button
             w="auto"
             onClick={handleGoogleClick}
