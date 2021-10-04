@@ -47,49 +47,50 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
         },
       ];
 
-    return (
-      <Flex
-        backgroundColor="rgba(247, 250, 252, 0.4)"
-        p={5}
-        boxShadow="base"
-        borderWidth="0.5px"
-        borderRadius="lg"
-        overflow="hidden"
-        justifyContent={{ sm: '', md: 'center', lg: 'center' }}
-        alignItems={{ sm: 'center', lg: '' }}
-        direction={{ sm: 'column', md: 'row', lg: 'row' }}
-      >
-
-        <Grid
-          h="100%"
-          w="100%"
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(6, 1fr)"
-          gap={5}
-        >
-          <GridItem rowSpan={2} colStart={1} colEnd={7}>
-            <Box w={{ sm: '100%', md: '55%', lg: '50%' }} h={{ sm: '275px', md: '300px', lg: '290px' }}>
-              <LineGraph data={dtsLineData} />
-            </Box>
-          </GridItem>
-          <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
-            <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
-              <BarGraph legend="HAD-A" data={hadAData} maxValue={MAX_VALUES.hadA} colors={hadAColors} />
-            </Box>
-          </GridItem>
-          <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
-            <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
-              <BarGraph legend="HAD-D" data={hadDData} maxValue={MAX_VALUES.hadD} colors={hadDColors} />
-            </Box>
-          </GridItem>
-          <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
-            <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
-              <BarGraph legend="DTS" data={dtsData} maxValue={MAX_VALUES.dts} colors={dtsColors} />
-            </Box>
-          </GridItem>
-        </Grid>
-      </Flex>
-    );
+        return historySums.length > 1
+        ? (
+          <Flex
+            backgroundColor="rgba(247, 250, 252, 0.4)"
+            p={5}
+            boxShadow="base"
+            borderWidth="0.5px"
+            borderRadius="lg"
+            overflow="hidden"
+            justifyContent={{ sm: '', md: 'center', lg: 'center' }}
+            alignItems={{ sm: 'center', lg: '' }}
+            direction={{ sm: 'column', md: 'row', lg: 'row' }}
+          >
+            <Grid
+              h="100%"
+              w="100%"
+              templateRows="repeat(2, 1fr)"
+              templateColumns="repeat(6, 1fr)"
+              gap={5}
+            >
+              <GridItem rowSpan={2} colStart={1} colEnd={7}>
+                <Box w={{ sm: '100%', md: '55%', lg: '50%' }} h={{ sm: '275px', md: '300px', lg: '290px' }}>
+                  <LineGraph data={dtsLineData} />
+                </Box>
+              </GridItem>
+              <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
+                <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
+                  <BarGraph legend="HAD-A" data={hadAData} maxValue={MAX_VALUES.hadA} colors={hadAColors} />
+                </Box>
+              </GridItem>
+              <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
+                <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
+                  <BarGraph legend="HAD-D" data={hadDData} maxValue={MAX_VALUES.hadD} colors={hadDColors} />
+                </Box>
+              </GridItem>
+              <GridItem colSpan={isSmallerThan760 ? 7 : 2}>
+                <Box w={{ sm: '100%', md: '85%', lg: '100%' }} h={{ sm: '275px', md: '300px', lg: '250px' }}>
+                  <BarGraph legend="DTS" data={dtsData} maxValue={MAX_VALUES.dts} colors={dtsColors} />
+                </Box>
+              </GridItem>
+            </Grid>
+          </Flex>
+)
+        : null;
 };
 
 export default Graphs;
