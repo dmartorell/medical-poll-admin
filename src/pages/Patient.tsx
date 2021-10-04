@@ -166,8 +166,8 @@ const Patient: FC = () => {
           {patientHistory.length
         ? (
           <>
-            <TotalsList data={mainResults} />
             <Graphs historySums={historySums} historyData={historyData} />
+            <TotalsList data={mainResults} />
             <DetailsList data={details} />
           </>
 )

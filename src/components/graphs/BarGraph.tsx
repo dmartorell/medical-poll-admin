@@ -22,7 +22,7 @@ const BarGraph: FC<Props> = ({
       margin={{
         top: 0, right: 30, bottom: 50, left: 40,
       }}
-      padding={isLargerThan450 ? 0.2 : 0.6}
+      padding={isLargerThan450 ? 0.2 : 0.7}
       valueScale={{ type: 'linear' }}
       indexScale={{ type: 'band', round: true }}
       maxValue={maxValue}
