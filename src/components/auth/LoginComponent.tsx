@@ -31,6 +31,7 @@ const LoginComponent = () => {
               Email:
             </FormLabel>
             <Input
+              id="email"
               placeholder="Type email..."
               fontSize="sm"
               type="text"
@@ -47,6 +48,7 @@ const LoginComponent = () => {
               Password:
             </FormLabel>
             <Input
+              id="password"
               placeholder="Type password..."
               fontSize="sm"
               type="password"

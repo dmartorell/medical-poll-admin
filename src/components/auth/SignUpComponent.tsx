@@ -27,6 +27,7 @@ const SignUpComponent = () => {
               Username:
             </FormLabel>
             <Input
+              id="signupUsername"
               placeholder="Type your username..."
               fontSize="sm"
               type="text"
@@ -43,6 +44,7 @@ const SignUpComponent = () => {
               Email:
             </FormLabel>
             <Input
+              id="signupEmail"
               placeholder="Type email..."
               fontSize="sm"
               type="text"
@@ -59,6 +61,7 @@ const SignUpComponent = () => {
               Password:
             </FormLabel>
             <Input
+              id="signupPassword"
               placeholder="Type password..."
               fontSize="sm"
               type="text"
