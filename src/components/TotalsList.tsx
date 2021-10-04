@@ -5,7 +5,6 @@ import {
 import { HadsDtsTotals } from '../types';
 import TableFields from './TableFields';
 import { getHADBackgroundColor, getTotalDTSBackgroundColor } from '../helpers/getColors';
-// const handleClick = () => { console.log('clicked'); };
 
 const TotalsList: FC<HadsDtsTotals> = ({ data }) => {
   const fields = Object.keys(data);

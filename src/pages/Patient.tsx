@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import {
- Stack, Text, Box, Flex, HStack, Spinner, Grid, GridItem,
+ Stack, Text, Box, HStack, Spinner,
 } from '@chakra-ui/react';
 
 import React, { FC, useState, useEffect } from 'react';
@@ -14,8 +14,7 @@ import NotFound from './NotFound';
 import getSingleSum from '../helpers/getSingleSum';
 import getDobleSum from '../helpers/getDobleSum';
 import DetailsList from '../components/DetailsList';
-import BarGraph from '../components/graphs/BarGraph';
-import LineGraph from '../components/graphs/LineGraph';
+
 import getSurveys from '../helpers/getSurveys';
 import getSumsFromHistory from '../helpers/getSumsFromHistory';
 import getHistoryData from '../helpers/getHistoryData';
@@ -24,7 +23,7 @@ import NotesComponent from '../components/NotesComponent';
 import AddNoteDrawer from '../components/AddNoteDrawer';
 import DeleteEvaluationButton from '../components/DeleteEvaluationButton';
 import { PatientHistory } from '../types';
-import barGraphDataGenerator from '../helpers/barGraphDataGenerator';
+import Graphs from '../components/graphs/Graphs';
 
 const Patient: FC = () => {
   const {
@@ -42,39 +41,6 @@ const Patient: FC = () => {
   const [historySums, setHistorySums] = useState<any>([]);
   const [patientNotes, setPatientNotes] = useState<any>([]);
   const [evaluationsList, setEvaluationsList] = useState<string[]>([]);
-
-  const {
-    hadAData,
-    hadDData,
-    dtsData,
-    hadAColors,
-    hadDColors,
-    dtsColors,
-} = barGraphDataGenerator(historySums);
-
-  const MAX_VALUES = {
-    hadA: 21,
-    hadD: 21,
-    dts: 136,
-  };
-
-  const dtsLineData = [
-    {
-      id: 'DTS-T',
-      color: 'hsl(213, 64%, 42%)',
-      data: historyData.dts,
-    },
-    {
-      id: 'HAD-A',
-      color: 'hsl(214, 20%, 69%)',
-      data: historyData.hadA,
-    },
-    {
-      id: 'HAD-D',
-      color: 'hsl(212, 26%, 33%)',
-      data: historyData.hadD,
-    },
-  ];
 
   useEffect(() => {
     if (patientState) {
@@ -200,48 +166,8 @@ const Patient: FC = () => {
           {patientHistory.length
         ? (
           <>
+            <Graphs historySums={historySums} historyData={historyData} />
             <TotalsList data={mainResults} />
-            <Flex
-              backgroundColor="rgba(247, 250, 252, 0.4)"
-              p={5}
-              boxShadow="base"
-              borderWidth="0.5px"
-              borderRadius="lg"
-              overflow="hidden"
-              justifyContent={{ sm: '', lg: 'center' }}
-              alignItems={{ sm: 'center', lg: '' }}
-              direction={{ sm: 'column', md: 'row', lg: 'row' }}
-            >
-
-              <Grid
-                h="100%"
-                w="100%"
-                templateRows="repeat(2, 1fr)"
-                templateColumns="repeat(6, 1fr)"
-                gap={5}
-              >
-                <GridItem rowSpan={2} colSpan={3} colStart={1} colEnd={7}>
-                  <Box w={{ sm: '100%', md: '70%', lg: '50%' }} h={{ sm: '300px', md: '300px', lg: '290px' }}>
-                    <LineGraph data={dtsLineData} />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
-                    <BarGraph legend="HAD-A" data={hadAData} maxValue={MAX_VALUES.hadA} colors={hadAColors} />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
-                    <BarGraph legend="HAD-D" data={hadDData} maxValue={MAX_VALUES.hadD} colors={hadDColors} />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <Box w={{ sm: '100%', md: '100%', lg: '100%' }} h={{ sm: '300px', md: '300px', lg: '250px' }}>
-                    <BarGraph legend="DTS" data={dtsData} maxValue={MAX_VALUES.dts} colors={dtsColors} />
-                  </Box>
-                </GridItem>
-              </Grid>
-            </Flex>
             <DetailsList data={details} />
           </>
 )
