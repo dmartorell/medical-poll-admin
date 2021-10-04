@@ -13,7 +13,7 @@ const LineGraph: FC<Props> = ({ data }) => (
     theme={theme}
     data={data}
     margin={{
- top: 20, right: 110, bottom: 50, left: 45,
+ top: 20, right: 90, bottom: 50, left: 45,
 }}
     xScale={{ type: 'point' }}
     yScale={{

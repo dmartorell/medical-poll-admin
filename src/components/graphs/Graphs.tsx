@@ -67,7 +67,7 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
               templateColumns="repeat(6, 1fr)"
               gap={5}
             >
-              <GridItem rowSpan={2} colStart={1} colEnd={7}>
+              <GridItem colStart={1} colEnd={7}>
                 <Box w={{ sm: '100%', md: '55%', lg: '50%' }} h={{ sm: '275px', md: '300px', lg: '290px' }}>
                   <LineGraph data={dtsLineData} />
                 </Box>
