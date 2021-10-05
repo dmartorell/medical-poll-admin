@@ -1,4 +1,6 @@
-import React, { FC, useMemo } from 'react';
+import React, {
+ FC, useEffect, memo,
+} from 'react';
 import {
     Box, Flex, Grid, GridItem, useMediaQuery,
    } from '@chakra-ui/react';
@@ -18,6 +20,9 @@ import barGraphDataGenerator from '../../helpers/barGraphDataGenerator';
   };
 
 const Graphs: FC<Props> = ({ historySums, historyData }) => {
+  useEffect(() => {
+    console.log('Graphs rendered');
+  });
   const [isSmallerThan760] = useMediaQuery('(max-width: 760px)');
 
     const {
@@ -27,7 +32,7 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
         hadAColors,
         hadDColors,
         dtsColors,
-    } = useMemo(() => barGraphDataGenerator(historySums), [historySums]);
+    } = barGraphDataGenerator(historySums);
 
     const dtsLineData = [
         {
@@ -93,4 +98,4 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
         : null;
 };
 
-export default Graphs;
+export default memo(Graphs);
