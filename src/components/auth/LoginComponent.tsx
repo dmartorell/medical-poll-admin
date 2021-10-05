@@ -1,5 +1,5 @@
 import {
-    Box, Button, FormControl, FormLabel, HStack, Input, VStack,
+    Box, Button, FormControl, FormLabel, HStack, Input, VStack, useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import supabase from '../../SupabaseClient';
@@ -7,13 +7,23 @@ import supabase from '../../SupabaseClient';
 const LoginComponent = () => {
   const [userEmail, setUserEmail] = useState<string>('');
   const [userPassword, setUserPassword] = useState<string>('');
+  const toast = useToast();
 
   const handleClick = async (email: string, password: string) => {
     const { error } = await supabase.auth.signIn({
       email,
       password,
     });
-    if (error) console.log(error.message || 'ERROR');
+    if (error) {
+      toast({
+        title: 'Access Error',
+        description: error.message,
+        status: 'error',
+        position: 'top-right',
+        duration: 4500,
+        isClosable: false,
+      });
+    }
   };
   const handleGoogleClick = async () => {
     const { error } = await supabase.auth.signIn({
