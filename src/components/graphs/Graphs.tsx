@@ -1,5 +1,5 @@
 import React, {
- FC, useEffect, memo,
+ FC, memo,
 } from 'react';
 import {
     Box, Flex, Grid, GridItem, useMediaQuery,
@@ -20,9 +20,6 @@ import barGraphDataGenerator from '../../helpers/barGraphDataGenerator';
   };
 
 const Graphs: FC<Props> = ({ historySums, historyData }) => {
-  useEffect(() => {
-    console.log('Graphs rendered');
-  });
   const [isSmallerThan760] = useMediaQuery('(max-width: 760px)');
 
     const {

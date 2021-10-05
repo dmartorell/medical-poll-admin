@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-import React, { FC, useState, useEffect } from 'react';
+import React, {
+ FC, useState, useEffect, memo,
+} from 'react';
 import {
  Stack, Spinner, Text,
 } from '@chakra-ui/react';
@@ -13,11 +15,13 @@ const Project: FC<Projects> = ({ projects }) => {
   const [surveys, setSurveys] = useState<any[]>([]);
 
   useEffect(() => {
-    setSurveys([]);
     fetchDB('answer', undefined, ['patientID', 'project(project_name, id)', 'date'], 'order=date.desc')
       .then((data:any[]) => {
         setSurveys(getSurveys(data).slice(0, 5));
       });
+      return () => {
+        setSurveys([]);
+      };
   }, []);
 
   return (
@@ -49,4 +53,4 @@ const Project: FC<Projects> = ({ projects }) => {
     );
 };
 
-export default Project;
+export default memo(Project);

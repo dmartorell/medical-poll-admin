@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-import React, { FC, useState, useEffect } from 'react';
+import React, {
+ FC, useState, useEffect,
+} from 'react';
 import { Stack, Text, Spinner } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import DefaultList from '../components/DefaultList';
