@@ -13,7 +13,7 @@ type Result = {
     dtsColors: any[],
 
 };
-const barGraphDataGenerator = (rawData : RawData) => {
+const barGraphDataGenerator = (rawData : RawData[]) => {
     const result: Result = {
         hadAData: [],
         hadDData: [],
