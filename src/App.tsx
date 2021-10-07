@@ -60,3 +60,5 @@ useEffect(() => {
 }
 
 export default App;
+
+// If patient doesn't agree it should be reflected in ddbb

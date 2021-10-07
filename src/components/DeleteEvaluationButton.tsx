@@ -76,6 +76,7 @@ import { sessionContext } from '../App';
      return (
        <>
          <Button
+           isDisabled
            type="submit"
            w="auto"
            color="gray.400"
