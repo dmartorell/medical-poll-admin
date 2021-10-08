@@ -49,7 +49,7 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
         },
       ];
 
-        return historySums.length > 1
+        return historySums.length !== 1
         ? (
           <Flex
             backgroundColor="rgba(247, 250, 252, 0.4)"
