@@ -10,13 +10,15 @@ import getSurveys from '../helpers/getSurveys';
 
 const Project: FC = () => {
   const { name, id } = (useParams<{name: string, id: string}>());
-  const [surveys, setSurveys] = useState<any[]>([]);
+  const [surveys, setSurveys] = useState<any[] | undefined>();
 
   useEffect(() => {
-    setSurveys([]);
     fetchDB('answer', `project=eq.${id}`, ['patientID', 'project(project_name, id)', 'date'], 'order=date.desc')
       .then((data:any[]) => {
         setSurveys(getSurveys(data));
+      });
+      return (() => {
+        setSurveys(undefined);
       });
   }, [id]);
 
@@ -28,19 +30,24 @@ const Project: FC = () => {
           {' '}
           {name}
         </Text>
-        {surveys.length
-        ? <DefaultList surveys={surveys} />
-        : (
-          <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.600"
-              size="xl"
-            />
-          </Stack>
-        )}
+        {surveys?.length
+        && <DefaultList surveys={surveys} />}
+        {surveys && surveys?.length < 1
+        && <Text>There are no evaluations.</Text>}
+
+        {surveys?.length === undefined
+        && (
+        <Stack alignItems="center" justifyContent="center" width="100wv" height="100hv">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.600"
+            size="xl"
+          />
+        </Stack>
+)}
+
       </Stack>
     </Stack>
     );
