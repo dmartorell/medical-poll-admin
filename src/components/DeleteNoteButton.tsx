@@ -40,7 +40,7 @@ const DeleteNoteButton: FC<Props> = ({
       onClose();
       const updatedNotes = notes.filter((note) => note.id !== noteId);
       toast({
-        title: 'Note deleted',
+        title: 'Note Deleted',
         status: 'success',
         position: 'top-right',
         duration: 4500,
