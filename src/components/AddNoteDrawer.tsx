@@ -61,6 +61,14 @@ const AddNoteDrawer:FC<Props> = (
             postNewNote().then((newNote) => {
               setNotes([...notes, newNote]);
             });
+            toast({
+              title: 'Note created',
+              description: 'The note has been succesfully added.',
+              status: 'success',
+              position: 'top-right',
+              duration: 4500,
+              isClosable: false,
+              });
           } catch (error: any) {
             toast({
               title: 'Error',
