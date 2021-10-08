@@ -53,7 +53,7 @@ const Graphs: FC<Props> = ({ historySums, historyData }) => {
         ? (
           <Flex
             backgroundColor="rgba(247, 250, 252, 0.4)"
-            p={5}
+            p={9}
             boxShadow="base"
             borderWidth="0.5px"
             borderRadius="lg"
