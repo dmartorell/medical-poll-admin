@@ -41,7 +41,6 @@ const DeleteNoteButton: FC<Props> = ({
       const updatedNotes = notes.filter((note) => note.id !== noteId);
       toast({
         title: 'Note deleted',
-        description: 'The note has been succesfully removed.',
         status: 'success',
         position: 'top-right',
         duration: 4500,
