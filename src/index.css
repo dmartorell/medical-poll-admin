@@ -9,8 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overscroll-behavior:none; */
-  /* background-color: white; */
+  
 }
 
 code {
@@ -20,6 +19,6 @@ code {
 
 main {
   width: 100%;
-  padding: 85px 0.5em 6em 0.5em;
+  padding: 85px 0.7em 6em 0.7em;
 }
 

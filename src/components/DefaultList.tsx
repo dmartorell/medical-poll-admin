@@ -74,8 +74,7 @@ const DefaultList: FC<Surveys> = ({ surveys }) => {
                               minute: '2-digit',
                               })}`
                         }
-                            {' '}
-                            h
+
                           </Td>
 );
                       } if (property === 'project') {
