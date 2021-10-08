@@ -50,8 +50,13 @@ export const deleteNote = async (id: number, token: string | undefined) => {
     },
     method: 'DELETE',
 });
+  const json = await response.json();
     if (!response.ok) {
       const message:string = 'Something went wrong.';
+      throw new Error(message);
+    }
+    if (!json.length) {
+      const message:string = 'You can only remove your own notes.';
       throw new Error(message);
     }
 };

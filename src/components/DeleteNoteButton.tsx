@@ -37,19 +37,19 @@ const DeleteNoteButton: FC<Props> = ({
   const handleDelete = async () => {
     try {
       await deleteNote(noteId, session?.access_token);
+      onClose();
       const updatedNotes = notes.filter((note) => note.id !== noteId);
       setNotes(updatedNotes);
-      onClose();
     } catch (error: any) {
+      onClose();
       toast({
         title: 'Error',
-        description: error,
+        description: error.message,
         status: 'error',
         position: 'top-right',
         duration: 4500,
         isClosable: false,
         });
-    onClose();
     }
   };
 
