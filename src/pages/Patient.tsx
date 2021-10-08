@@ -169,6 +169,25 @@ const Patient: FC = () => {
             <Graphs historySums={historySums} historyData={historyData} />
             <TotalsList data={mainResults} />
             <DetailsList data={details} />
+            <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
+              <AllEntriesList
+                dates={
+              evaluationsList
+            }
+              />
+              <NotesComponent
+                notes={patientNotes}
+                setNotes={setPatientNotes}
+              >
+                <AddNoteDrawer
+                  patientId={id}
+                  projectName={projectName}
+                  surveyDate={patientState.date}
+                  notes={patientNotes}
+                  setNotes={setPatientNotes}
+                />
+              </NotesComponent>
+            </HStack>
           </>
 )
         : (
@@ -182,30 +201,7 @@ const Patient: FC = () => {
             />
           </Stack>
           )}
-          {
-          patientHistory.length
-          && (
-          <HStack justifyContent="center" alignItems="flex-start" spacing={8}>
-            <AllEntriesList
-              dates={
-              evaluationsList
-            }
-            />
-            <NotesComponent
-              notes={patientNotes}
-              setNotes={setPatientNotes}
-            >
-              <AddNoteDrawer
-                patientId={id}
-                projectName={projectName}
-                surveyDate={patientState.date}
-                notes={patientNotes}
-                setNotes={setPatientNotes}
-              />
-            </NotesComponent>
-          </HStack>
-)
-        }
+
         </Stack>
 
       </Stack>
