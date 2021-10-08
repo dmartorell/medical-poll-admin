@@ -33,7 +33,7 @@ const Project: FC = () => {
         {surveys?.length
         && <DefaultList surveys={surveys} />}
         {surveys && surveys?.length < 1
-        && <Text>There are no evaluations.</Text>}
+        && <Text>This project has no evaluations yet.</Text>}
 
         {surveys?.length === undefined
         && (
