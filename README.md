@@ -45,6 +45,10 @@ https://pcemev-admin.netlify.app/
   <img src="https://i.ibb.co/ZWMPGKG/smartmockups-kudzpwt3-peq.png" width="90%">
 </div>
 
-## Feedback
+## More info
+
+A more detailed explanation of the project can be found on this Notion page:
+
+https://dmartorell.notion.site/dmartorell/Post-COVID-19-Emotional-Evaluation-918d83b7cf184f5183234a89b8f9382d
 
 If you have any feedback, please reach out to me at dani.martorell@gmail.com or at my [LinkedIn](https://www.linkedin.com/in/daniel-martorell/) profile. Thanks for your interest!
